@@ -17,6 +17,7 @@ public class Main {
 		
 		long window = glfwCreateWindow(800,800, "My Game", 0, 0);
 		
+		
 		if(window == 0) {
 			throw new IllegalStateException("Failed to create Window");
 		}
