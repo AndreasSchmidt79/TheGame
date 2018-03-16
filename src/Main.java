@@ -22,7 +22,6 @@ public class Main {
 			throw new IllegalStateException("Failed to create Window");
 		}
 		
-		
 		glfwShowWindow(window);
 		
 		glfwMakeContextCurrent(window);
