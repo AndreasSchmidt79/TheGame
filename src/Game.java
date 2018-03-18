@@ -1,6 +1,5 @@
 import Drawing.Drawing;
-import GameMap.GameMap;
-import GameMap.MapTile;
+import GameMap.*;
 import Player.Player;
 
 
@@ -19,7 +18,8 @@ public class Game {
 	private void initGame(){
 		drawing = new Drawing();
 		drawing.setMapSizeInTiles(MAP_SIZE_IN_TILES);
-		gameMap = new GameMap();				
+		MapGenerator mapGenerator = new MapGenerator();
+		gameMap = mapGenerator.getGameMap();				
 		mapTiles = gameMap.getMapTiles();
 		player = new Player(8,8);	
 	}
