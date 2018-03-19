@@ -4,11 +4,11 @@ import Player.Player;
 
 
 public class Game {
-	private static int MAP_SIZE_IN_TILES = 9;
+	private static int MAP_SIZE_IN_TILES = 11;
 	private GameMap gameMap = null;
 	private MapTile[][] mapTiles = null;
 	private Player player;
-	Drawing drawing;
+	private Drawing drawing;
 	
 	
 	public Game() {
@@ -25,8 +25,8 @@ public class Game {
 	}
 
 	public void updateAll() {
-		drawing.drawBackgroundMap();
-		drawing.drawMap(gameMap, player);
+		//drawing.drawBackgroundMap(MAP_SIZE_IN_TILES);
+		drawing.drawMap(gameMap, player, MAP_SIZE_IN_TILES);
 		drawing.drawPlayer(player);			
 	}
 	

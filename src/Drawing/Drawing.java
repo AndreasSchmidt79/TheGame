@@ -1,5 +1,6 @@
 package Drawing;
 import GameMap.GameMap;
+import GameMap.MapTile;
 import Player.Player;
 
 
@@ -52,22 +53,36 @@ public class Drawing {
 		model.render();
 	}
 	
-	public void drawBackgroundMap(){
-		for(int i = -4; i < 5; i++){
-			for(int j = -4; j < 5; j++){
+	public void drawBackgroundMap(int mapSizeTiles){
+		for(int i = (int) (-1*Math.floor((double)mapSizeTiles/2)); i < (int) Math.round((double)mapSizeTiles/2); i++){
+			for(int j = (int) (-1*Math.floor((double)mapSizeTiles/2)); j < (int) Math.round((double)mapSizeTiles/2); j++){
 				drawQuadWithVertices(i, j, "./res/MapTile_1_grass.png");
 			}
 		}
 	}
 	
-	public void drawMap(GameMap gameMap, Player player){
-		int dimensions = gameMap.getDimensions();
-		
-		for(int i = 0; i < dimensions; i++){
-			for(int j = 0; j < dimensions; j++){
-				drawQuadWithVertices(i - player.getPosX(), j - player.getPosY(), gameMap.getMapTiles()[i][j].getTextureFilePath());
+	public void drawMap(GameMap gameMap, Player player, int mapSizeTiles){
+		//mapSizeTiles = mapSizeTiles - 2;
+		for(int i = (int) (-1*Math.floor((double)mapSizeTiles/2)); i < (int) Math.round((double)mapSizeTiles/2); i++){
+			for(int j = (int) (-1*Math.floor((double)mapSizeTiles/2)); j < (int) Math.round((double)mapSizeTiles/2); j++){
+				String textureFilePath = getTextureFilePath(gameMap, player.getPosX() + i, player.getPosY() + j);
+				if(textureFilePath != null) {
+					drawQuadWithVertices(i, j, textureFilePath);
+				}
 			}
 		}
+	}
+	
+	private String getTextureFilePath(GameMap gameMap, int x, int y) {
+		MapTile[][] mapTiles = gameMap.getMapTiles();
+		if(x>=0 && y>=0) {
+			if(mapTiles.length > x) {
+				if(mapTiles[0].length > y) {
+					return mapTiles[x][y].getTextureFilePath();
+				}
+			}
+		}
+		return null;
 	}
 
 	public void setMapSizeInTiles(int mapSizeInTiles) {
