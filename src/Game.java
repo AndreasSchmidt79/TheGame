@@ -31,7 +31,7 @@ public class Game {
 	}
 
 	public void updateAll() {
-		//drawing.drawBackgroundMap(MAP_SIZE_IN_TILES);
+		drawing.drawBackgroundMap(MAP_SIZE_IN_TILES);
 		drawing.drawMap(gameMap, player, MAP_SIZE_IN_TILES);
 		drawing.drawPlayer(player);			
 	}
