@@ -33,28 +33,32 @@ public class Main {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		
 		
-		Game theGame = new Game();
+		Game theGame = new Game(window);
+		glClear(GL_COLOR_BUFFER_BIT);
+		theGame.updateAll();
+		glfwSwapBuffers(window);
+		
 		while(glfwWindowShouldClose(window) != true ){
 			
 			glfwPollEvents();
-			glClear(GL_COLOR_BUFFER_BIT);
-		
-			theGame.updateAll();
-						
-			if(glfwGetKey(window, GLFW_KEY_A) == GL_TRUE || glfwGetKey(window, GLFW_KEY_LEFT) == GL_TRUE){				
-				theGame.update("left");						
+			
+			if(glfwGetKey(window, GLFW_KEY_A) == GL_TRUE || glfwGetKey(window, GLFW_KEY_LEFT) == GL_TRUE){
+				theGame.update("left");
 			}
 			if(glfwGetKey(window, GLFW_KEY_D) == GL_TRUE || glfwGetKey(window, GLFW_KEY_RIGHT) == GL_TRUE){
 				theGame.update("right");
 			}
-			if(glfwGetKey(window, GLFW_KEY_S) == GL_TRUE || glfwGetKey(window, GLFW_KEY_DOWN) == GL_TRUE){				
+			if(glfwGetKey(window, GLFW_KEY_S) == GL_TRUE || glfwGetKey(window, GLFW_KEY_DOWN) == GL_TRUE){
 				theGame.update("down");
 			}
-			if(glfwGetKey(window, GLFW_KEY_W) == GL_TRUE || glfwGetKey(window, GLFW_KEY_UP) == GL_TRUE){				
+			if(glfwGetKey(window, GLFW_KEY_W) == GL_TRUE || glfwGetKey(window, GLFW_KEY_UP) == GL_TRUE){
 				theGame.update("up");
 			}
 			
-			glfwSwapBuffers(window);
+			if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GL_TRUE) {
+				glfwTerminate();
+			}			
+			
 		}
 		
 		glfwTerminate();

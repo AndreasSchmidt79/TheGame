@@ -1,3 +1,7 @@
+import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.glClear;
+
 import Drawing.Drawing;
 import GameMap.*;
 import Player.Player;
@@ -9,13 +13,15 @@ public class Game {
 	private MapTile[][] mapTiles = null;
 	private Player player;
 	private Drawing drawing;
+	private long window;
 	
 	
-	public Game() {
-		initGame();
+	public Game(long window) {
+		initGame(window);
 	}
 	
-	private void initGame(){
+	private void initGame(long window){
+		this.window = window;
 		drawing = new Drawing();
 		drawing.setMapSizeInTiles(MAP_SIZE_IN_TILES);
 		MapGenerator mapGenerator = new MapGenerator();
@@ -38,7 +44,7 @@ public class Game {
 		if(direction == "left"){
 			setPlayerDirection("left");
 			if(mapTiles[player.getPosX()-1][player.getPosY()].isPassable()){
-				player.setPosX(player.getPosX()-1);
+				player.setPosX(player.getPosX()-1);				
 			}
 		}
 		if(direction == "right"){
@@ -57,6 +63,9 @@ public class Game {
 				player.setPosY(player.getPosY()-1);
 			}
 		}
+		glClear(GL_COLOR_BUFFER_BIT);
+		updateAll();
+		glfwSwapBuffers(window);
 		
 	}
 	
