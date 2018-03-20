@@ -7,6 +7,7 @@ public class MapGenerator {
 	public MapGenerator() {
 	
 	}
+	
 	public GameMap getGameMap() {
 		
 		
@@ -21,47 +22,44 @@ public class MapGenerator {
 		GameMap map = new GameMap(dimensions, gameMap, mapTiles);
 		return map;
 	}
+	
 	private int[][] generateMap(){
 		int dimensionsx = 19;
 		int dimensionsy = 19;
-		Random rand = new Random();
+		
+		Random rand = new Random();		
 		int[][] gameMap = new int[dimensionsx][dimensionsy];
-		for(int i = 0; i<dimensionsy; i++) {
-			for(int j=0;j<dimensionsx;j++) {
-				if(i==0 || i==dimensionsx || j==0 || j==dimensionsx) {
-					gameMap[i][j]=0;
+		
+		for(int i = 0; i < dimensionsy; i++) {
+			for(int j = 0; j < dimensionsx; j++) {
+				if(i == 0 || i == dimensionsx || j == 0 || j == dimensionsx) {
+					gameMap[i][j] = 0;
 				}
-				else if (i-1==1 && j-1==1 || i-1==2 && j-1 == 2) {
+				else if (gameMap[i-1][j] == 1 && gameMap[i][j-1] == 1 || gameMap[i-1][j] == 2 && gameMap[i][j-1] == 2) {
 					int x=rand.nextInt(10);
-					if (x>=7) {
+					if (x <= 7) {
+						gameMap[i][j] = gameMap[i-1][j];
+					}
+					else {
+						setGameMapToGrassOrRandomTile(i,j,gameMap,30,rand);						
+					}					
+				}
+				else if (gameMap[i-1][j] == 1 || gameMap[i-1][j] == 2)  {
+					int x=rand.nextInt(10);
+					if (x <= 3) {
 						gameMap[i][j]=gameMap[i-1][j];
 					}
 					else {
-						x=rand.nextInt(10);
-						if(x>3){
-							gameMap[i][j]=1;
-						}	
-						else {
-							gameMap[i][j]=rand.nextInt(2)+2;
-						}
+						setGameMapToGrassOrRandomTile(i,j,gameMap,30,rand);					
 					}					
 				}
-				else if (i-1==1 || i-1==2)  {
+				else if (gameMap[i][j-1] == 1 || gameMap[i][j-1] == 2)  {
 					int x=rand.nextInt(10);
-					if (x>=4) {
-						gameMap[i][j]=gameMap[i-1][j];
-					}
-					else {
-						gameMap[i][j]=rand.nextInt(3);
-					}					
-				}
-				else if (j-1==1 || j-1==2)  {
-					int x=rand.nextInt(10);
-					if (x>=4) {
+					if (x<=3) {
 						gameMap[i][j]=gameMap[i][j-1];
 					}
 					else {
-						gameMap[i][j]=rand.nextInt(3);
+						setGameMapToGrassOrRandomTile(i,j,gameMap,30,rand);
 					}
 				}
 				else {
@@ -93,4 +91,15 @@ public class MapGenerator {
 			};*/
 		return gameMap;
 	}
+	
+	private void setGameMapToGrassOrRandomTile(int i, int j, int[][] map, int probabilityGrass, Random rand) {
+		if(rand.nextInt(100) > probabilityGrass){
+			map[i][j] = 1;
+		}	
+		else {
+			map[i][j] = rand.nextInt(2)+1;
+		}
+	}
+	
+	
 }
