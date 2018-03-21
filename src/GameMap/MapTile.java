@@ -2,26 +2,19 @@ package GameMap;
 
 public class MapTile {
 	
-	public static final int MAPTILE_WALL = 2;
-	public static final int MAPTILE_GRASS = 1;
-	public static final int MAPTILE_WATER = 0;
-	protected String textureFilePath;
-	boolean isPassable = false;
+	private String textureFilePath;
+	boolean isPassable;
+	private String decorationFilePath;
+	MapTileMapping mapTileMapping = new MapTileMapping();
+	DecorationMapping decorationMapping = new DecorationMapping();
+	Scaling decorationScaling;
 	
-	public MapTile(int type){
-		switch(type){
-			case MAPTILE_WATER:
-				textureFilePath = "./res/MapTile_0_water.png";	
-				break;
-			case MAPTILE_GRASS:
-				textureFilePath = "./res/MapTile_1_grass.png";
-				isPassable = true;
-				break;
-			case MAPTILE_WALL:
-				textureFilePath = "./res/MapTile_2_wall.png";				
-				break;
-		}
-		
+	
+	public MapTile(int type, int decorationType){
+		textureFilePath = mapTileMapping.getTextureFilePath(type);
+		isPassable = mapTileMapping.IsPassable(type);
+		decorationFilePath = decorationMapping.getDecorationFilePath(decorationType);
+		decorationScaling = decorationMapping.getDecorationScaling(decorationType);
 	}
 
 	public boolean isPassable() {
@@ -30,6 +23,14 @@ public class MapTile {
 
 	public String getTextureFilePath() {
 		return textureFilePath;
+	}
+
+	public String getDecorationFilePath() {
+		return decorationFilePath;
+	}
+
+	public Scaling getDecorationScaling() {
+		return decorationScaling;
 	}
 	
 }

@@ -25,13 +25,12 @@ public class Game {
 		drawing = new Drawing();
 		drawing.setMapSizeInTiles(MAP_SIZE_IN_TILES);
 		MapGenerator mapGenerator = new MapGenerator();
-		gameMap = mapGenerator.getGameMap();				
+		gameMap = mapGenerator.getGameMapWithDecoration();				
 		mapTiles = gameMap.getMapTiles();
 		player = new Player(8,8);	
 	}
 
 	public void updateAll() {
-		drawing.drawBackgroundMap(MAP_SIZE_IN_TILES);
 		drawing.drawMap(gameMap, player, MAP_SIZE_IN_TILES);
 		drawing.drawPlayer(player);			
 	}

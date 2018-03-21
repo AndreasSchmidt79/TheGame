@@ -1,6 +1,8 @@
 package Drawing;
+
 import GameMap.GameMap;
 import GameMap.MapTile;
+import GameMap.Scaling;
 import Player.Player;
 
 
@@ -20,20 +22,24 @@ public class Drawing {
 		drawQuadWithVertices(0, 0, "./res/SteelHelm" + image_suffix + ".png");
 	}
 	
-	
 	public void drawQuadWithVertices(int posX, int posY, String filePath){
+		drawQuadWithVertices(posX, posY, filePath, new Scaling(1,1));
+	}
+	
+	
+	public void drawQuadWithVertices(int posX, int posY, String filePath, Scaling scaling){
 		
 		float tileSize = 2.0f/(float)mapSizeInTiles;
 		
 		float[] vertices = new float[]{
 
-				-0.5f*tileSize + posX*tileSize, 0.5f*tileSize + posY*tileSize,
-				0.5f*tileSize + posX*tileSize, 0.5f*tileSize + posY*tileSize,
-				0.5f*tileSize + posX*tileSize, -0.5f*tileSize + posY*tileSize,
+				-0.5f*tileSize*scaling.getScaleX() + posX*tileSize, 0.5f*tileSize*scaling.getScaleY() + posY*tileSize,
+				0.5f*tileSize*scaling.getScaleX() + posX*tileSize, 0.5f*tileSize*scaling.getScaleY() + posY*tileSize,
+				0.5f*tileSize*scaling.getScaleX() + posX*tileSize, -0.5f*tileSize*scaling.getScaleY() + posY*tileSize,
 				
-				0.5f*tileSize + posX*tileSize, -0.5f*tileSize + posY*tileSize,
-				-0.5f*tileSize + posX*tileSize, -0.5f*tileSize + posY*tileSize,
-				-0.5f*tileSize + posX*tileSize, 0.5f*tileSize + posY*tileSize,
+				0.5f*tileSize*scaling.getScaleX() + posX*tileSize, -0.5f*tileSize*scaling.getScaleY() + posY*tileSize,
+				-0.5f*tileSize*scaling.getScaleX() + posX*tileSize, -0.5f*tileSize*scaling.getScaleY() + posY*tileSize,
+				-0.5f*tileSize*scaling.getScaleX() + posX*tileSize, 0.5f*tileSize*scaling.getScaleY() + posY*tileSize,
 		};
 		
 		float[] texture = new float[] {
@@ -53,38 +59,47 @@ public class Drawing {
 		model.render();
 	}
 	
-	public void drawBackgroundMap(int mapSizeTiles){
-		for(int i = (int) (-1*Math.floor((double)mapSizeTiles/2)); i < (int) Math.round((double)mapSizeTiles/2); i++){
-			for(int j = (int) (-1*Math.floor((double)mapSizeTiles/2)); j < (int) Math.round((double)mapSizeTiles/2); j++){
-				drawQuadWithVertices(i, j, "./res/MapTile_1_grass.png");
-			}
-		}
-	}
-	
 	public void drawMap(GameMap gameMap, Player player, int mapSizeTiles){
 		//mapSizeTiles = mapSizeTiles - 2;
+		MapTile[][] mapTiles = gameMap.getMapTiles();
 		for(int i = (int) (-1*Math.floor((double)mapSizeTiles/2)); i < (int) Math.round((double)mapSizeTiles/2); i++){
 			for(int j = (int) (-1*Math.floor((double)mapSizeTiles/2)); j < (int) Math.round((double)mapSizeTiles/2); j++){
-				String textureFilePath = getTextureFilePath(gameMap, player.getPosX() + i, player.getPosY() + j);
-				if(textureFilePath != null) {
-					drawQuadWithVertices(i, j, textureFilePath);
+				if(isValidMapTile(mapTiles, player.getPosX() + i, player.getPosY() + j)) {
+					MapTile currentMapTile = mapTiles[player.getPosX() + i][player.getPosY() + j];
+					String textureFilePath = currentMapTile.getTextureFilePath();
+					if(!textureFilePath.isEmpty()) {
+						drawQuadWithVertices(i, j, textureFilePath);
+					}
+					
+				}
+			}
+		}
+		
+		for(int i = (int) (-1*Math.floor((double)mapSizeTiles/2)); i < (int) Math.round((double)mapSizeTiles/2); i++){
+			for(int j = (int) (-1*Math.floor((double)mapSizeTiles/2)); j < (int) Math.round((double)mapSizeTiles/2); j++){
+				if(isValidMapTile(mapTiles, player.getPosX() + i, player.getPosY() + j)) {
+					MapTile currentMapTile = mapTiles[player.getPosX() + i][player.getPosY() + j];
+					String decorationFilePath = currentMapTile.getDecorationFilePath();
+					Scaling decorationScaling = currentMapTile.getDecorationScaling();
+					if(!decorationFilePath.isEmpty() && decorationScaling != null) {
+						drawQuadWithVertices(i, j, decorationFilePath, decorationScaling);
+					}
 				}
 			}
 		}
 	}
 	
-	private String getTextureFilePath(GameMap gameMap, int x, int y) {
-		MapTile[][] mapTiles = gameMap.getMapTiles();
+	private boolean isValidMapTile(MapTile[][] mapTiles, int x, int y) {
 		if(x>=0 && y>=0) {
 			if(mapTiles.length > x) {
 				if(mapTiles[0].length > y) {
-					return mapTiles[x][y].getTextureFilePath();
+					return true;
 				}
 			}
 		}
-		return null;
+		return false;
 	}
-
+	
 	public void setMapSizeInTiles(int mapSizeInTiles) {
 		this.mapSizeInTiles = mapSizeInTiles;
 	}

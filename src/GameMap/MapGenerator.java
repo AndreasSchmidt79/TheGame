@@ -4,25 +4,76 @@ import java.util.Random;
 
 public class MapGenerator {
 	
-	private static final int PROBABILITY_GRASS_TILE = 65;
-	private static final int PROBABILITY_2_NEIGHBOURS = 90;
-	private static final int PROBABILITY_1_NEIGHBOUR = 35;
-	private static int NUMBER_OF_TILES = 3;
+	private static final int PROBABILITY_GRASS_TILE = 80;
+	private static final int PROBABILITY_2_NEIGHBOURS = 10;
+	private static final int PROBABILITY_1_NEIGHBOUR = 10;
+	private static int NUMBER_OF_TILES = MapTileMapping.textureFilePathMap.size();
 	
 	public MapGenerator() {
 	
 	}
 	
+	public GameMap getGameMapWithDecoration() {
+		int dimensions = 60;
+		int[][] gameMap = generateSimpleMap(dimensions);
+		int[][] decorationMap = generateDecorations(dimensions);
+			
+		MapTile[][] mapTiles = new MapTile[dimensions][dimensions];
+		for(int i = 0; i < dimensions; i++){
+			for(int j = 0; j < dimensions; j++){
+				mapTiles[i][j] = new MapTile(gameMap[i][j], decorationMap[i][j]);
+			}
+			System.out.println(" ");
+		}
+		return new GameMap(dimensions, gameMap, mapTiles);
+	}
+	
+	private int[][] generateSimpleMap(int dimensions){
+		int[][] gameMap = new int[dimensions][dimensions];
+		Random rand = new Random();
+		for(int i = 0; i < dimensions; i++) {
+			for(int j = 0; j < dimensions; j++) {
+				if(i < 5 || i > dimensions - 6 || j < 5 || j > dimensions - 6) {
+					gameMap[i][j] = MapTileMapping.MAPTILE_WATER_2;
+				}
+				else {
+					gameMap[i][j] = MapTileMapping.MAPTILE_GRASS_1;
+				}
+			}
+		}
+		return gameMap;
+	}
+	
+	private int[][] generateDecorations(int dimensions){
+		int[][] decorations = new int[dimensions][dimensions];
+		Random rand = new Random();		
+		for(int i = 0; i < dimensions; i++) {
+			for(int j = 0; j < dimensions; j++) {
+				if(i < 5 || i > dimensions - 6 || j < 5 || j > dimensions - 6) {
+					decorations[i][j] = DecorationMapping.NO_DECORATION;
+				}
+				else {
+					int setDecoProbability = rand.nextInt(100);
+					if(setDecoProbability < 5) {						
+						decorations[i][j] = rand.nextInt(DecorationMapping.textureFilePathMap.size());
+					}
+					else {
+						decorations[i][j] = DecorationMapping.NO_DECORATION;
+					}
+				}
+			}
+		}
+		return decorations;
+	}
+	
 	public GameMap getGameMap() {
-		
-		
 		int[][] gameMap = generateMap();		
 		int dimensions = 60;	
 		MapTile[][] mapTiles = new MapTile[dimensions][dimensions];
 		for(int i = 0; i < dimensions; i++){
 			for(int j = 0; j < dimensions; j++){
 				System.out.print(gameMap[i][j] + " ");
-				mapTiles[i][j] = new MapTile(gameMap[i][j]);
+				mapTiles[i][j] = new MapTile(gameMap[i][j], 0);
 			}
 			System.out.println(" ");
 		}
@@ -40,7 +91,7 @@ public class MapGenerator {
 		for(int i = 0; i < dimensionsy; i++) {
 			for(int j = 0; j < dimensionsx; j++) {
 				if(i == 0 || i == dimensionsx - 1 || j == 0 || j == dimensionsx - 1) {
-					gameMap[i][j] = MapTile.MAPTILE_WATER;
+					gameMap[i][j] = MapTileMapping.MAPTILE_WATER_1;
 				}
 				else {
 					setGameMapToTileBasedOnNeighbours(i, j, gameMap, rand);
@@ -52,7 +103,7 @@ public class MapGenerator {
 	
 	private void setGameMapToGrassOrRandomTile(int i, int j, int[][] map, int probabilityGrass, Random rand) {
 		if(rand.nextInt(100) < probabilityGrass){
-			map[i][j] = MapTile.MAPTILE_GRASS;
+			map[i][j] = MapTileMapping.MAPTILE_GRASS_1;
 		}	
 		else {
 			setTileToRandomTile(i, j, map, rand);
@@ -72,7 +123,6 @@ public class MapGenerator {
 			setTileToRandomTile(i, j, map, rand);
 		}
 	}
-	
 	
 	private int getNeighbour(int i, int j, int[][] map) {
 		if(map.length > i && map[i].length > j) {
