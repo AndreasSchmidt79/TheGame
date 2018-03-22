@@ -9,9 +9,11 @@ import Player.Player;
 public class Drawing {
 	
 	private int mapSizeInTiles;
+	private float aspectRatio;
 	
-	public Drawing(){
-		
+	public Drawing(int mapSizeInTiles, float aspectRation){
+		this.mapSizeInTiles = mapSizeInTiles;
+		this.aspectRatio = aspectRation;
 	}
 	
 	public void drawPlayer(Player player){
@@ -33,13 +35,13 @@ public class Drawing {
 		
 		float[] vertices = new float[]{
 
-				-0.5f*tileSize*scaling.getScaleX() + posX*tileSize, 0.5f*tileSize*scaling.getScaleY() + posY*tileSize,
-				0.5f*tileSize*scaling.getScaleX() + posX*tileSize, 0.5f*tileSize*scaling.getScaleY() + posY*tileSize,
-				0.5f*tileSize*scaling.getScaleX() + posX*tileSize, -0.5f*tileSize*scaling.getScaleY() + posY*tileSize,
+				(-0.5f*tileSize*scaling.getScaleX() + posX*tileSize)/aspectRatio, 0.5f*tileSize*scaling.getScaleY() + posY*tileSize,
+				(0.5f*tileSize*scaling.getScaleX() + posX*tileSize)/aspectRatio, 0.5f*tileSize*scaling.getScaleY() + posY*tileSize,
+				(0.5f*tileSize*scaling.getScaleX() + posX*tileSize)/aspectRatio, -0.5f*tileSize*scaling.getScaleY() + posY*tileSize,
 				
-				0.5f*tileSize*scaling.getScaleX() + posX*tileSize, -0.5f*tileSize*scaling.getScaleY() + posY*tileSize,
-				-0.5f*tileSize*scaling.getScaleX() + posX*tileSize, -0.5f*tileSize*scaling.getScaleY() + posY*tileSize,
-				-0.5f*tileSize*scaling.getScaleX() + posX*tileSize, 0.5f*tileSize*scaling.getScaleY() + posY*tileSize,
+				(0.5f*tileSize*scaling.getScaleX() + posX*tileSize)/aspectRatio, -0.5f*tileSize*scaling.getScaleY() + posY*tileSize,
+				(-0.5f*tileSize*scaling.getScaleX() + posX*tileSize)/aspectRatio, -0.5f*tileSize*scaling.getScaleY() + posY*tileSize,
+				(-0.5f*tileSize*scaling.getScaleX() + posX*tileSize)/aspectRatio, 0.5f*tileSize*scaling.getScaleY() + posY*tileSize,
 		};
 		
 		float[] texture = new float[] {

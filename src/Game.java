@@ -8,6 +8,7 @@ import Player.Player;
 
 
 public class Game {
+	private float aspectRatio;
 	private static int MAP_SIZE_IN_TILES = 11;
 	private GameMap gameMap = null;
 	private MapTile[][] mapTiles = null;
@@ -16,14 +17,15 @@ public class Game {
 	private long window;
 	
 	
-	public Game(long window) {
-		initGame(window);
+	public Game(long window, float aspectRatio) {
+		initGame(window, aspectRatio);
 	}
 	
-	private void initGame(long window){
+	private void initGame(long window, float aspectRatio){
 		this.window = window;
-		drawing = new Drawing();
-		drawing.setMapSizeInTiles(MAP_SIZE_IN_TILES);
+		this.aspectRatio = aspectRatio;
+		drawing = new Drawing(MAP_SIZE_IN_TILES, aspectRatio);
+		//drawing.setMapSizeInTiles(MAP_SIZE_IN_TILES);
 		MapGenerator mapGenerator = new MapGenerator();
 		gameMap = mapGenerator.getGameMapWithDecoration();				
 		mapTiles = gameMap.getMapTiles();
