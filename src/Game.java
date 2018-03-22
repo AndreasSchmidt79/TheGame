@@ -25,7 +25,6 @@ public class Game {
 		this.window = window;
 		this.aspectRatio = aspectRatio;
 		drawing = new Drawing(MAP_SIZE_IN_TILES, aspectRatio);
-		//drawing.setMapSizeInTiles(MAP_SIZE_IN_TILES);
 		MapGenerator mapGenerator = new MapGenerator();
 		gameMap = mapGenerator.getGameMapWithDecoration();				
 		mapTiles = gameMap.getMapTiles();
