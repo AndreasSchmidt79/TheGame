@@ -52,10 +52,16 @@ public class MapGenerator {
 				if(i < 5 || i > dimensions - 6 || j < 5 || j > dimensions - 6) {
 					decorations[i][j] = DecorationMapping.NO_DECORATION;
 				}
+				else if(i==(int)dimensions/2) {
+					decorations[i][j] = DecorationMapping.DECORATION_PATH;
+				}
 				else {
 					int setDecoProbability = rand.nextInt(100);
-					if(setDecoProbability < 5) {						
-						decorations[i][j] = rand.nextInt(DecorationMapping.textureFilePathMap.size());
+					if(setDecoProbability < 5) {		
+						int decorationTile = rand.nextInt(DecorationMapping.textureFilePathMap.size());
+						if(decorationTile != DecorationMapping.DECORATION_PATH) {
+							decorations[i][j] = decorationTile;
+						}
 					}
 					else {
 						decorations[i][j] = DecorationMapping.NO_DECORATION;

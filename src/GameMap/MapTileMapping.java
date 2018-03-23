@@ -14,6 +14,7 @@ public class MapTileMapping {
 	public static final int MAPTILE_SOIL_1 = 7;
 	public static final int MAPTILE_ROAD_1 = 8;
 	
+	
     public static final HashMap<Integer, String> textureFilePathMap;
     public static final HashMap<Integer, Boolean> isPassableMap;
     

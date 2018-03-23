@@ -18,6 +18,7 @@ public class DecorationMapping {
 	public static final int DECORATION_DEER = 10;
 	public static final int DECORATION_TREE1 = 11;
 	public static final int DECORATION_TREE2 = 12;
+	public static final int DECORATION_PATH = 13;
 	
 	
     public static final HashMap<Integer, String> textureFilePathMap;
@@ -38,6 +39,7 @@ public class DecorationMapping {
     	textureFilePathMap.put(DECORATION_DEER, "./res/decoration/deer.png");
     	textureFilePathMap.put(DECORATION_TREE1, "./res/decoration/tree1.png");
     	textureFilePathMap.put(DECORATION_TREE2, "./res/decoration/tree2.png");
+    	textureFilePathMap.put(DECORATION_PATH, "./res/decoration/path.png");
     	
     	
     	scalingMap = new HashMap<Integer, Scaling>();
