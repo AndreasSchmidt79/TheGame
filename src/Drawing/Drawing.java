@@ -19,30 +19,26 @@ public class Drawing {
 	
 	public void drawPlayer(Player player){
 		boolean inversX = player.getDirection().equals("left"); 
-		drawQuadWithVertices(0, 0, "./res/human.png", inversX);
+		drawIteminMapTileRaster(0, 0, "./res/human.png", inversX);
 		
 		for(EquippableItem item: player.inventory.getEquipment()){
-			drawQuadWithVertices(0, 0, item.getTextureFilePathCharacter(), inversX);
+			drawIteminMapTileRaster(0, 0, item.getTextureFilePathCharacter(), inversX);
 		}
-		
-		//drawQuadWithVertices(0, 0, "./res/LeatherArmor.png", inversX);
-		//drawQuadWithVertices(0, 0, "./res/ShortSword.png", inversX);
-		//drawQuadWithVertices(0, 0, "./res/SteelHelm.png", inversX);
 	}
 	
-	public void drawQuadWithVertices(int posX, int posY, String filePath){
-		drawQuadWithVertices(posX, posY, filePath, new Scaling(1,1), false);
+	public void drawIteminMapTileRaster(int posX, int posY, String filePath){
+		drawIteminMapTileRaster(posX, posY, filePath, new Scaling(1,1), false);
 	}
 	
-	public void drawQuadWithVertices(int posX, int posY, String filePath, boolean textureInversX){
-		drawQuadWithVertices(posX, posY, filePath, new Scaling(1,1), textureInversX);
+	public void drawIteminMapTileRaster(int posX, int posY, String filePath, boolean textureInversX){
+		drawIteminMapTileRaster(posX, posY, filePath, new Scaling(1,1), textureInversX);
 	}
 	
-	public void drawQuadWithVertices(int posX, int posY, String filePath,  Scaling scaling){
-		drawQuadWithVertices(posX, posY, filePath, scaling, false);
+	public void drawIteminMapTileRaster(int posX, int posY, String filePath,  Scaling scaling){
+		drawIteminMapTileRaster(posX, posY, filePath, scaling, false);
 	}
 	
-	public void drawQuadWithVertices(int posX, int posY, String filePath, Scaling scaling, boolean textureInversX){
+	public void drawIteminMapTileRaster(int posX, int posY, String filePath, Scaling scaling, boolean textureInversX){
 		
 		float tileSize = 2.0f/(float)mapSizeInTiles;
 		
@@ -54,34 +50,25 @@ public class Drawing {
 				
 				(0.5f*tileSize*scaling.getScaleX() + posX*tileSize)/aspectRatio, -0.5f*tileSize*scaling.getScaleY() + posY*tileSize,
 				(-0.5f*tileSize*scaling.getScaleX() + posX*tileSize)/aspectRatio, -0.5f*tileSize*scaling.getScaleY() + posY*tileSize,
-				(-0.5f*tileSize*scaling.getScaleX() + posX*tileSize)/aspectRatio, 0.5f*tileSize*scaling.getScaleY() + posY*tileSize,
+				(-0.5f*tileSize*scaling.getScaleX() + posX*tileSize)/aspectRatio, 0.5f*tileSize*scaling.getScaleY() + posY*tileSize
 		};
 		
-		float[] texture = new float[] {
-			0,0,
-			1,0,
-			1,1,			
-			1,1,
-			0,1,
-			0,0
-		};	
+		float[] texture = new float[] { 0,0,1,0,1,1,1,1,0,1,0,0 };	
+		if(textureInversX) { texture = new float[] { 1,0,0,0,0,1,0,1,1,1,1,0}; }
 		
-		if(textureInversX) {
-			texture = new float[] {
-					1,0,
-					0,0,
-					0,1,			
-					0,1,
-					1,1,
-					1,0
-				};	
-		}
-		
+		renderVertices(filePath, vertices, texture);
+	}
+	
+	public void drawQuadWithVertices(String filePath){
+		float[] vertices = new float[]{ -1,1,1,1,1,-1,1,-1,-1,-1,-1,1 };
+		float[] texture = new float[] { 0,0,1,0,1,1,1,1,0,1,0,0 };	
+		renderVertices(filePath, vertices, texture);
+	}
+
+	private void renderVertices(String filePath, float[] vertices, float[] texture) {
 		Model model = new Model(vertices, texture);		
-		
 		Texture tex = new Texture(filePath);
 		tex.bind();
-		
 		model.render();
 	}
 	
@@ -94,7 +81,7 @@ public class Drawing {
 					MapTile currentMapTile = mapTiles[player.getPosX() + i][player.getPosY() + j];
 					String textureFilePath = currentMapTile.getTextureFilePath();
 					if(!textureFilePath.isEmpty()) {
-						drawQuadWithVertices(i, j, textureFilePath);
+						drawIteminMapTileRaster(i, j, textureFilePath);
 					}
 					
 				}
@@ -108,7 +95,7 @@ public class Drawing {
 					String decorationFilePath = currentMapTile.getDecorationFilePath();
 					Scaling decorationScaling = currentMapTile.getDecorationScaling();
 					if(!decorationFilePath.isEmpty() && decorationScaling != null) {
-						drawQuadWithVertices(i, j, decorationFilePath, decorationScaling);
+						drawIteminMapTileRaster(i, j, decorationFilePath, decorationScaling);
 					}
 				}
 			}
@@ -129,5 +116,29 @@ public class Drawing {
 	public void setMapSizeInTiles(int mapSizeInTiles) {
 		this.mapSizeInTiles = mapSizeInTiles;
 	}	
+	
+	public void drawBackground(String filePath) {
+		int duplicateBackgroundCount = 6;
+		for(int i = (int) (-1*Math.floor((double)duplicateBackgroundCount)); i < (int) Math.round((double)duplicateBackgroundCount); i++){
+			for(int j = (int) (-1*Math.floor((double)duplicateBackgroundCount)); j < (int) Math.round((double)duplicateBackgroundCount); j++){		
+				drawBackgroundPart(i,j,filePath, duplicateBackgroundCount);						
+			}			
+		}
+	}
+	
+	public void drawBackgroundPart(int posX, int posY, String filePath, int duplicateBackgroundCount){
+		float tileSize = 2.0f/(float)duplicateBackgroundCount;
+		float[] vertices = new float[]{
+				(-0.5f*tileSize + posX*tileSize)/aspectRatio, 0.5f*tileSize + posY*tileSize,
+				(0.5f*tileSize + posX*tileSize)/aspectRatio, 0.5f*tileSize + posY*tileSize,
+				(0.5f*tileSize + posX*tileSize)/aspectRatio, -0.5f*tileSize + posY*tileSize,
+				
+				(0.5f*tileSize + posX*tileSize)/aspectRatio, -0.5f*tileSize + posY*tileSize,
+				(-0.5f*tileSize + posX*tileSize)/aspectRatio, -0.5f*tileSize + posY*tileSize,
+				(-0.5f*tileSize + posX*tileSize)/aspectRatio, 0.5f*tileSize + posY*tileSize
+		};
+		float[] texture = new float[] { 0,0,1,0,1,1,1,1,0,1,0,0 };	
+		renderVertices(filePath, vertices, texture);
+	}
 
 }

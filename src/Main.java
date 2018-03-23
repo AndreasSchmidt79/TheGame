@@ -37,9 +37,8 @@ public class Main {
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		
-		
-		Game theGame = new Game(window, aspectRatio);
 		glClear(GL_COLOR_BUFFER_BIT);
+		Game theGame = new Game(window, aspectRatio);
 		theGame.updateAll();
 		glfwSwapBuffers(window);
 		

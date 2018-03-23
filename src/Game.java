@@ -33,12 +33,15 @@ public class Game {
 		gameMap = mapGenerator.getGameMapWithDecoration();				
 		mapTiles = gameMap.getMapTiles();
 		player = new Player(8,8);
-		player.inventory.addEquipment(new Sword("ganz gutes Schwert", new DamageRange(1, 2)));
+		
 		player.inventory.addEquipment(new SteelHelmet("hammer Helm", 2));
 		player.inventory.addEquipment(new LeatherArmour("Lederrüstung", 4));
+		player.inventory.addEquipment(new Sword("ganz gutes Schwert", new DamageRange(1, 2)));
+		
 	}
 
 	public void updateAll() {
+		drawing.drawBackground("./res/UI/bricks.png");
 		drawing.drawMap(gameMap, player, MAP_SIZE_IN_TILES);
 		drawing.drawPlayer(player);			
 	}
