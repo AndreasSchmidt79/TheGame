@@ -17,19 +17,26 @@ public class Drawing {
 	}
 	
 	public void drawPlayer(Player player){
-		String image_suffix = player.getDirection().equals("left") ? "_l" : ""; 
-		drawQuadWithVertices(0, 0, "./res/human" + image_suffix + ".png");
-		drawQuadWithVertices(0, 0, "./res/LeatherArmor" + image_suffix + ".png");
-		drawQuadWithVertices(0, 0, "./res/ShortSword" + image_suffix + ".png");
-		drawQuadWithVertices(0, 0, "./res/SteelHelm" + image_suffix + ".png");
+		boolean inversX = player.getDirection().equals("left"); 
+		drawQuadWithVertices(0, 0, "./res/human.png", inversX);
+		drawQuadWithVertices(0, 0, "./res/LeatherArmor.png", inversX);
+		drawQuadWithVertices(0, 0, "./res/ShortSword.png", inversX);
+		drawQuadWithVertices(0, 0, "./res/SteelHelm.png", inversX);
 	}
 	
 	public void drawQuadWithVertices(int posX, int posY, String filePath){
-		drawQuadWithVertices(posX, posY, filePath, new Scaling(1,1));
+		drawQuadWithVertices(posX, posY, filePath, new Scaling(1,1), false);
 	}
 	
+	public void drawQuadWithVertices(int posX, int posY, String filePath, boolean textureInversX){
+		drawQuadWithVertices(posX, posY, filePath, new Scaling(1,1), textureInversX);
+	}
 	
-	public void drawQuadWithVertices(int posX, int posY, String filePath, Scaling scaling){
+	public void drawQuadWithVertices(int posX, int posY, String filePath,  Scaling scaling){
+		drawQuadWithVertices(posX, posY, filePath, scaling, false);
+	}
+	
+	public void drawQuadWithVertices(int posX, int posY, String filePath, Scaling scaling, boolean textureInversX){
 		
 		float tileSize = 2.0f/(float)mapSizeInTiles;
 		
@@ -51,7 +58,18 @@ public class Drawing {
 			1,1,
 			0,1,
 			0,0
-		};		
+		};	
+		
+		if(textureInversX) {
+			texture = new float[] {
+					1,0,
+					0,0,
+					0,1,			
+					0,1,
+					1,1,
+					1,0
+				};	
+		}
 		
 		Model model = new Model(vertices, texture);		
 		
@@ -104,7 +122,6 @@ public class Drawing {
 	
 	public void setMapSizeInTiles(int mapSizeInTiles) {
 		this.mapSizeInTiles = mapSizeInTiles;
-	}
-	
+	}	
 
 }
