@@ -40,14 +40,14 @@ public class MapTileMapping {
     	isPassableMap.put(MAPTILE_ROAD_1, true);
     }
 	
-    public String getTextureFilePath(int type) {
+    public static String getTextureFilePath(int type) {
     	if(textureFilePathMap.containsKey(type)) {
     		return textureFilePathMap.get(type);
 		} 
 		return "";		
     }
     
-    public Boolean IsPassable(int type) {
+    public static Boolean IsPassable(int type) {
     	if(isPassableMap.containsKey(type)) {
 			return isPassableMap.get(type);
 		} 

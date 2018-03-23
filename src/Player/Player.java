@@ -1,9 +1,15 @@
 package Player;
 
+import java.util.ArrayList;
+
+import inventory.Inventory;
+
 public class Player {
-	int posX;
-	int posY;
-	String direction = "right";
+	private int level = 1;
+	private int posX;
+	private int posY;
+	private String direction = "right";
+	public Inventory inventory = new Inventory();
 	
 	public Player(int posX, int posY) {		
 		this.posX = posX;

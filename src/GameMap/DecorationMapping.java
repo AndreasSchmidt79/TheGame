@@ -57,14 +57,14 @@ public class DecorationMapping {
     	
     }
 	
-	public String getDecorationFilePath(int type) {
+	public static String getDecorationFilePath(int type) {
     	if(textureFilePathMap.containsKey(type)) {
     		return textureFilePathMap.get(type);
 		} 
 		return "";		
     }
     
-    public Scaling getDecorationScaling(int type) {
+    public static Scaling getDecorationScaling(int type) {
     	if(scalingMap.containsKey(type)) {
     		return scalingMap.get(type);
 		} 

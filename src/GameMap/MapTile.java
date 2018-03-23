@@ -5,16 +5,14 @@ public class MapTile {
 	private String textureFilePath;
 	boolean isPassable;
 	private String decorationFilePath;
-	MapTileMapping mapTileMapping = new MapTileMapping();
-	DecorationMapping decorationMapping = new DecorationMapping();
 	Scaling decorationScaling;
 	
 	
 	public MapTile(int type, int decorationType){
-		textureFilePath = mapTileMapping.getTextureFilePath(type);
-		isPassable = mapTileMapping.IsPassable(type);
-		decorationFilePath = decorationMapping.getDecorationFilePath(decorationType);
-		decorationScaling = decorationMapping.getDecorationScaling(decorationType);
+		textureFilePath = MapTileMapping.getTextureFilePath(type);
+		isPassable = MapTileMapping.IsPassable(type);
+		decorationFilePath = DecorationMapping.getDecorationFilePath(decorationType);
+		decorationScaling = DecorationMapping.getDecorationScaling(decorationType);
 	}
 
 	public boolean isPassable() {

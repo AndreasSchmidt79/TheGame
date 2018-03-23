@@ -5,6 +5,10 @@ import static org.lwjgl.opengl.GL11.glClear;
 import Drawing.Drawing;
 import GameMap.*;
 import Player.Player;
+import inventory.Weapon.DamageRange;
+import inventory.Weapon.Sword;
+import inventory.armour.LeatherArmour;
+import inventory.armour.SteelHelmet;
 
 
 public class Game {
@@ -28,7 +32,10 @@ public class Game {
 		MapGenerator mapGenerator = new MapGenerator();
 		gameMap = mapGenerator.getGameMapWithDecoration();				
 		mapTiles = gameMap.getMapTiles();
-		player = new Player(8,8);	
+		player = new Player(8,8);
+		player.inventory.addEquipment(new Sword("ganz gutes Schwert", new DamageRange(1, 2)));
+		player.inventory.addEquipment(new SteelHelmet("hammer Helm", 2));
+		player.inventory.addEquipment(new LeatherArmour("Lederrüstung", 4));
 	}
 
 	public void updateAll() {

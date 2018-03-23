@@ -7,7 +7,7 @@ import org.lwjgl.opengl.GL;
 public class Main {
 	
 	private static int SCREEN_WIDTH = 1400;
-	private static int SCREEN_HEIGHT = 788;
+	private static int SCREEN_HEIGHT = (int) SCREEN_WIDTH * 9/16;
 	
 	public static void main(String[] args) {
 		showWindow();

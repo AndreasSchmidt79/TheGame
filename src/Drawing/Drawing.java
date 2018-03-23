@@ -4,6 +4,7 @@ import GameMap.GameMap;
 import GameMap.MapTile;
 import GameMap.Scaling;
 import Player.Player;
+import inventory.EquippableItem;
 
 
 public class Drawing {
@@ -19,9 +20,14 @@ public class Drawing {
 	public void drawPlayer(Player player){
 		boolean inversX = player.getDirection().equals("left"); 
 		drawQuadWithVertices(0, 0, "./res/human.png", inversX);
-		drawQuadWithVertices(0, 0, "./res/LeatherArmor.png", inversX);
-		drawQuadWithVertices(0, 0, "./res/ShortSword.png", inversX);
-		drawQuadWithVertices(0, 0, "./res/SteelHelm.png", inversX);
+		
+		for(EquippableItem item: player.inventory.getEquipment()){
+			drawQuadWithVertices(0, 0, item.getTextureFilePathCharacter(), inversX);
+		}
+		
+		//drawQuadWithVertices(0, 0, "./res/LeatherArmor.png", inversX);
+		//drawQuadWithVertices(0, 0, "./res/ShortSword.png", inversX);
+		//drawQuadWithVertices(0, 0, "./res/SteelHelm.png", inversX);
 	}
 	
 	public void drawQuadWithVertices(int posX, int posY, String filePath){
