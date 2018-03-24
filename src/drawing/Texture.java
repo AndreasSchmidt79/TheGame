@@ -1,4 +1,4 @@
-package Drawing;
+package drawing;
 import static org.lwjgl.opengl.GL11.*;
 import java.awt.image.BufferedImage;
 import java.io.File;

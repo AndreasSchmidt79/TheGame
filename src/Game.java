@@ -2,18 +2,17 @@ import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.glClear;
 
-import Drawing.Drawing;
-import GameMap.*;
-import Player.Player;
+import drawing.Drawing;
+import gameMap.*;
 import inventory.Weapon.DamageRange;
 import inventory.Weapon.Sword;
 import inventory.armour.LeatherArmour;
 import inventory.armour.SteelHelmet;
+import player.Player;
 
 
 public class Game {
-	private float aspectRatio;
-	private static int MAP_SIZE_IN_TILES = 11;
+	private static int MAP_SIZE_IN_TILES = 13; // needs to be odd, so player can be in the middle
 	private GameMap gameMap = null;
 	private MapTile[][] mapTiles = null;
 	private Player player;
@@ -27,7 +26,6 @@ public class Game {
 	
 	private void initGame(long window, float aspectRatio){
 		this.window = window;
-		this.aspectRatio = aspectRatio;
 		drawing = new Drawing(MAP_SIZE_IN_TILES, aspectRatio);
 		MapGenerator mapGenerator = new MapGenerator();
 		gameMap = mapGenerator.getGameMapWithDecoration();				
@@ -41,8 +39,8 @@ public class Game {
 	}
 
 	public void updateAll() {
-		drawing.drawBackground("./res/UI/bricks.png");
-		drawing.drawMap(gameMap, player, MAP_SIZE_IN_TILES);
+		drawing.drawBackground();
+		drawing.drawMap(gameMap, player);
 		drawing.drawPlayer(player);			
 	}
 	

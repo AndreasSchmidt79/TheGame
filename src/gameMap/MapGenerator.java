@@ -1,4 +1,4 @@
-package GameMap;
+package gameMap;
 
 import java.util.Random;
 
@@ -33,8 +33,16 @@ public class MapGenerator {
 		Random rand = new Random();
 		for(int i = 0; i < dimensions; i++) {
 			for(int j = 0; j < dimensions; j++) {
-				if(i < 5 || i > dimensions - 6 || j < 5 || j > dimensions - 6) {
-					gameMap[i][j] = MapTileMapping.MAPTILE_WATER_2;
+				if(i < 6 || i > dimensions - 7 || j < 6 || j > dimensions - 7) {
+					if(i==0) {
+						gameMap[i][j] = MapTileMapping.MAPTILE_WATER_1;
+					}
+					else if( i==1) {
+						gameMap[i][j] = MapTileMapping.MAPTILE_WATER_3;
+					}
+					else {
+						gameMap[i][j] = MapTileMapping.MAPTILE_WATER_2;
+					}
 				}
 				else {
 					gameMap[i][j] = MapTileMapping.MAPTILE_GRASS_1;
@@ -49,7 +57,7 @@ public class MapGenerator {
 		Random rand = new Random();		
 		for(int i = 0; i < dimensions; i++) {
 			for(int j = 0; j < dimensions; j++) {
-				if(i < 5 || i > dimensions - 6 || j < 5 || j > dimensions - 6) {
+				if(i < 6 || i > dimensions - 7 || j < 6 || j > dimensions - 7) {
 					decorations[i][j] = DecorationMapping.NO_DECORATION;
 				}
 				else if(i==(int)dimensions/2) {
