@@ -13,6 +13,7 @@ public class MapTileMapping {
 	public static final int MAPTILE_SAND_1 = 6;
 	public static final int MAPTILE_SOIL_1 = 7;
 	public static final int MAPTILE_ROAD_1 = 8;
+	public static final int MAPTILE_ROAD_2 = 9;
 	
 	
     public static final HashMap<Integer, String> textureFilePathMap;
@@ -29,6 +30,7 @@ public class MapTileMapping {
     	textureFilePathMap.put(MAPTILE_SAND_1, "./res/MapTiles/sand1.png");
     	textureFilePathMap.put(MAPTILE_SOIL_1, "./res/MapTiles/soil1.png");
     	textureFilePathMap.put(MAPTILE_ROAD_1, "./res/MapTiles/road1.png");
+    	textureFilePathMap.put(MAPTILE_ROAD_2, "./res/MapTiles/bricks.png");
     	
     	
     	isPassableMap = new HashMap<Integer, Boolean>();
@@ -38,6 +40,7 @@ public class MapTileMapping {
     	isPassableMap.put(MAPTILE_SAND_1, true);
     	isPassableMap.put(MAPTILE_SOIL_1, true);
     	isPassableMap.put(MAPTILE_ROAD_1, true);
+    	isPassableMap.put(MAPTILE_ROAD_2, true);
     }
 	
     public static String getTextureFilePath(int type) {

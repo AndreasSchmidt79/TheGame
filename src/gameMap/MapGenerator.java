@@ -43,6 +43,10 @@ public class MapGenerator {
 					else {
 						gameMap[i][j] = MapTileMapping.MAPTILE_WATER_2;
 					}
+					
+				}
+				else if(i==(int)dimensions/2) {
+					gameMap[i][j] = MapTileMapping.MAPTILE_ROAD_2;
 				}
 				else {
 					gameMap[i][j] = MapTileMapping.MAPTILE_GRASS_1;
@@ -59,9 +63,6 @@ public class MapGenerator {
 			for(int j = 0; j < dimensions; j++) {
 				if(i < 6 || i > dimensions - 7 || j < 6 || j > dimensions - 7) {
 					decorations[i][j] = DecorationMapping.NO_DECORATION;
-				}
-				else if(i==(int)dimensions/2) {
-					decorations[i][j] = DecorationMapping.DECORATION_PATH;
 				}
 				else {
 					int setDecoProbability = rand.nextInt(100);
