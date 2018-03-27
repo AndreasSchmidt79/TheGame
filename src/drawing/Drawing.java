@@ -48,7 +48,6 @@ public class Drawing {
 	public void drawItemInMapTileRaster(int posX, int posY, String filePath, Scaling scaling, boolean textureInversX){
 		
 		float tileSize = MAP_PADDING/(float)mapSizeInTiles;
-		//float tileSize = 1/(float)mapSizeInTiles;
 		
 		float x_fac = tileSize*scaling.getScaleX();
 		float y_fac = tileSize*scaling.getScaleY();
@@ -68,19 +67,13 @@ public class Drawing {
 				(-1*x_fac + x_pos)/aspectRatio - x_offset, y_fac + y_pos
 		};
 		
-		float[] texture = new float[] { 0,0,1,0,1,1,1,1,0,1,0,0 };	
-		if(textureInversX) { texture = new float[] { 1,0,0,0,0,1,0,1,1,1,1,0}; }
+		float[] texture = getDefaultTexture();	
+		if(textureInversX) { texture = getInversXTexture(); }
 		
-		renderVertices(filePath, vertices, texture);
+		render(filePath, vertices, texture);
 	}
 	
-	public void drawQuadWithVertices(String filePath){
-		float[] vertices = new float[]{ -1,1,1,1,1,-1,1,-1,-1,-1,-1,1 };
-		float[] texture = new float[] { 0,0,1,0,1,1,1,1,0,1,0,0 };	
-		renderVertices(filePath, vertices, texture);
-	}
-
-	private void renderVertices(String filePath, float[] vertices, float[] texture) {
+	private void render(String filePath, float[] vertices, float[] texture) {
 		Model model = new Model(vertices, texture);		
 		Texture tex = new Texture(filePath);
 		tex.bind();
@@ -115,18 +108,13 @@ public class Drawing {
 			}
 		}
 		drawMapFrame();
+		
 	}
 	
 	private void drawMapFrame() {
-		
-		float x = MAP_PADDING/aspectRatio;
-		float y = MAP_PADDING;
-		
-		float x_offset = (2-(2/aspectRatio))/2;
-		
-		float[] vertices = new float[]{ -1*x-x_offset,1*y,1*x-x_offset,1*y,1*x-x_offset,-1*y,1*x-x_offset,-1*y,-1*x-x_offset,-1*y,-1*x-x_offset,1*y };
-		float[] texture = new float[] { 0,0,1,0,1,1,1,1,0,1,0,0 };	
-		renderVertices(MAPFRAME_FILEPATH, vertices, texture);
+		int padding = Math.round(screenHeight - Math.round(screenHeight*MAP_PADDING))/2;
+		int frameWidth = Math.round(screenHeight-padding*2);
+		drawRectangle(new Position(padding, padding), frameWidth, frameWidth, MAPFRAME_FILEPATH);
 	}
 	
 	private boolean isValidMapTile(MapTile[][] mapTiles, int x, int y) {
@@ -145,28 +133,51 @@ public class Drawing {
 	}	
 	
 	public void drawBackground() {
-		drawQuadWithVertices(BACKGROUND_FILEPATH);
+		drawCenteredRectangle(screenWidth, screenHeight, BACKGROUND_FILEPATH);
 	}
 	
 	public void drawRectangle(Position pos, int width, int height, String filePath){
-		
-		float posX = -1 + pos.getX()/(float)screenWidth;
-		float posY = 1 - pos.getY()/(float)screenHeight;
+		float posX = - 1 + (float)pos.getX()*2/(float)screenWidth;
+		float posY = 1 - (float)pos.getY()*2/(float)screenHeight;
 		float facX = (float)width/(float)screenWidth;
 		float facY = (float)height/(float)screenHeight;
 		
-		float[] vertices = new float[]{ 
-				0 + posX, 		 -1 * facY + posY,
-				1 * facX + posX, -1 * facY + posY,
-				1 * facX + posX, 0 + posY,
-				
-				1 * facX + posX, 0 + posY,
-				0 + posX, 		 0 + posY,
-				0 + posX, 		 -1 * facY + posY };
-		
-		float[] texture = new float[] { 0,0,1,0,1,1,1,1,0,1,0,0 };	
+		float[] vertices = getVertices(posX, posY, facX, facY);
+		float[] texture = getDefaultTexture();	
+		render(filePath, vertices, texture);
+	}
 	
-		renderVertices(filePath, vertices, texture);
+	public void drawCenteredRectangle(int width, int height, String filePath){
+
+		float posX = -(float)width/(float)screenWidth;
+		float posY = (float)height/(float)screenHeight;
+		float facX = (float)width/(float)screenWidth;
+		float facY = (float)height/(float)screenHeight;
+		
+		float[] vertices = getVertices(posX, posY, facX, facY);
+		float[] texture = getDefaultTexture();	
+		render(filePath, vertices, texture);
+	}
+
+	private float[] getDefaultTexture() {
+		return new float[] { 0,0,1,0,1,1,1,1,0,1,0,0 };
+	}
+
+	private float[] getInversXTexture() {
+		return new float[] { 1,0,0,0,0,1,0,1,1,1,1,0};
+	}
+
+
+	private float[] getVertices(float posX, float posY, float facX, float facY) {
+		float[] vertices = new float[]{ 
+			    0 * facX + posX,  0 * facY + posY,
+				2 * facX + posX,  0 * facY + posY,
+				2 * facX + posX, -2 * facY + posY,
+				
+				2 * facX + posX, -2 * facY + posY,
+			    0 * facX + posX, -2 * facY + posY,
+			    0 * facX + posX,  0 * facY + posY };
+		return vertices;
 	}	
 
 }

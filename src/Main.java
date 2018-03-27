@@ -49,13 +49,6 @@ public class Main {
 			glfwPollEvents();
 			userInteractions.update(window);
 
-			
-			// { REMOVE
-			/*glClear(GL_COLOR_BUFFER_BIT);
-			Drawing drawing = new Drawing(SCREEN_WIDTH, SCREEN_HEIGHT, 13,aspectRatio);
-			drawing.drawRectangle(new Position(100,100), 100, 100, "./res/MapTiles/sand1.png");
-			glfwSwapBuffers(window);*/
-			// REMOVE }
 		}
 		
 		glfwTerminate();
