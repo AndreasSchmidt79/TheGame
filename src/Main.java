@@ -3,6 +3,11 @@ import static org.lwjgl.opengl.GL11.*;
 
 import org.lwjgl.opengl.GL;
 
+import drawing.Drawing;
+import drawing.Model;
+import drawing.Position;
+import drawing.Texture;
+
 
 public class Main {
 	
@@ -28,7 +33,6 @@ public class Main {
 		}
 		
 		glfwShowWindow(window);
-		
 		glfwMakeContextCurrent(window);
 		
 		GL.createCapabilities();
@@ -37,32 +41,21 @@ public class Main {
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		
-		glClear(GL_COLOR_BUFFER_BIT);
-		Game theGame = new Game(window, aspectRatio);
+		Game theGame = new Game(SCREEN_WIDTH, SCREEN_HEIGHT, window, aspectRatio);
+		UserInteractions userInteractions = new UserInteractions(theGame);
 		theGame.updateAll();
-		glfwSwapBuffers(window);
-		
+
 		while(glfwWindowShouldClose(window) != true ){
-			
 			glfwPollEvents();
+			userInteractions.update(window);
+
 			
-			if(glfwGetKey(window, GLFW_KEY_A) == GL_TRUE || glfwGetKey(window, GLFW_KEY_LEFT) == GL_TRUE){
-				theGame.update("left");
-			}
-			if(glfwGetKey(window, GLFW_KEY_D) == GL_TRUE || glfwGetKey(window, GLFW_KEY_RIGHT) == GL_TRUE){
-				theGame.update("right");
-			}
-			if(glfwGetKey(window, GLFW_KEY_S) == GL_TRUE || glfwGetKey(window, GLFW_KEY_DOWN) == GL_TRUE){
-				theGame.update("down");
-			}
-			if(glfwGetKey(window, GLFW_KEY_W) == GL_TRUE || glfwGetKey(window, GLFW_KEY_UP) == GL_TRUE){
-				theGame.update("up");
-			}
-			
-			if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GL_TRUE) {
-				glfwTerminate();
-			}			
-			
+			// { REMOVE
+			/*glClear(GL_COLOR_BUFFER_BIT);
+			Drawing drawing = new Drawing(SCREEN_WIDTH, SCREEN_HEIGHT, 13,aspectRatio);
+			drawing.drawRectangle(new Position(100,100), 100, 100, "./res/MapTiles/sand1.png");
+			glfwSwapBuffers(window);*/
+			// REMOVE }
 		}
 		
 		glfwTerminate();

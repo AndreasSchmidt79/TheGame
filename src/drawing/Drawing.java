@@ -6,17 +6,20 @@ import gameMap.Scaling;
 import inventory.EquippableItem;
 import player.Player;
 
-
 public class Drawing {
 	
+	private int screenWidth;
+	private int screenHeight;
 	private static String BACKGROUND_FILEPATH = "./res/UI/bricks_bg.png";
 	private static String MAPFRAME_FILEPATH = "./res/UI/frame.png";
 	private static float MAP_PADDING = 0.95f;
 	
-	private int mapSizeInTiles;
+	private int mapSizeInTiles; 
 	private float aspectRatio;
 	
-	public Drawing(int mapSizeInTiles, float aspectRation){
+	public Drawing(int screenWidth, int screenHeight, int mapSizeInTiles, float aspectRation){
+		this.screenWidth = screenWidth;
+		this.screenHeight = screenHeight;
 		this.mapSizeInTiles = mapSizeInTiles;
 		this.aspectRatio = aspectRation;
 	}
@@ -144,5 +147,26 @@ public class Drawing {
 	public void drawBackground() {
 		drawQuadWithVertices(BACKGROUND_FILEPATH);
 	}
+	
+	public void drawRectangle(Position pos, int width, int height, String filePath){
+		
+		float posX = -1 + pos.getX()/(float)screenWidth;
+		float posY = 1 - pos.getY()/(float)screenHeight;
+		float facX = (float)width/(float)screenWidth;
+		float facY = (float)height/(float)screenHeight;
+		
+		float[] vertices = new float[]{ 
+				0 + posX, 		 -1 * facY + posY,
+				1 * facX + posX, -1 * facY + posY,
+				1 * facX + posX, 0 + posY,
+				
+				1 * facX + posX, 0 + posY,
+				0 + posX, 		 0 + posY,
+				0 + posX, 		 -1 * facY + posY };
+		
+		float[] texture = new float[] { 0,0,1,0,1,1,1,1,0,1,0,0 };	
+	
+		renderVertices(filePath, vertices, texture);
+	}	
 
 }

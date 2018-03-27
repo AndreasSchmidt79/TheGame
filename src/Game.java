@@ -20,35 +20,35 @@ public class Game {
 	private long window;
 	
 	
-	public Game(long window, float aspectRatio) {
-		initGame(window, aspectRatio);
-	}
-	
-	private void initGame(long window, float aspectRatio){
+	public Game(int width, int height, long window, float aspectRatio) {
 		this.window = window;
-		drawing = new Drawing(MAP_SIZE_IN_TILES, aspectRatio);
+		drawing = new Drawing(width, height, MAP_SIZE_IN_TILES, aspectRatio);
 		MapGenerator mapGenerator = new MapGenerator();
-		gameMap = mapGenerator.getGameMapWithDecoration();				
+		gameMap = mapGenerator.getRandomGameMap();				
 		mapTiles = gameMap.getMapTiles();
 		player = new Player(8,8);
 		
 		player.inventory.addEquipment(new SteelHelmet("hammer Helm", 2));
 		player.inventory.addEquipment(new LeatherArmour("Lederrüstung", 4));
 		player.inventory.addEquipment(new Sword("ganz gutes Schwert", new DamageRange(1, 2)));
-		
-	}
 
+	}
+	
 	public void updateAll() {
+		glClear(GL_COLOR_BUFFER_BIT);
+		
 		drawing.drawBackground();
 		drawing.drawMap(gameMap, player);
-		drawing.drawPlayer(player);			
+		drawing.drawPlayer(player);
+		
+		glfwSwapBuffers(window);
 	}
 	
 	public void setPlayerDirection(String direction){
 		this.player.setDirection(direction);
 	}
 	
-	public void update(String direction){
+	public void updatePlayerMovement(String direction){
 		if(direction == "left"){
 			setPlayerDirection("left");
 			if(mapTiles[player.getPosX()-1][player.getPosY()].isPassable()){
@@ -71,10 +71,8 @@ public class Game {
 				player.setPosY(player.getPosY()-1);
 			}
 		}
-		glClear(GL_COLOR_BUFFER_BIT);
-		updateAll();
-		glfwSwapBuffers(window);
 		
+		updateAll();
 	}
 	
 	
