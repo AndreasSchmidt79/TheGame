@@ -12,6 +12,7 @@ public class Drawing {
 	private int screenHeight;
 	private static String BACKGROUND_FILEPATH = "./res/UI/bricks_bg.png";
 	private static String MAPFRAME_FILEPATH = "./res/UI/frame.png";
+	private static String LIGHTING_FILEPATH = "./res/lighting1.png";
 	private static float MAP_PADDING = 0.95f;
 	
 	private int mapSizeInTiles; 
@@ -107,6 +108,7 @@ public class Drawing {
 				}
 			}
 		}
+		drawLightRadius();
 		drawMapFrame();
 		
 	}
@@ -135,6 +137,13 @@ public class Drawing {
 	public void drawBackground() {
 		drawCenteredRectangle(screenWidth, screenHeight, BACKGROUND_FILEPATH);
 	}
+
+	public void drawLightRadius() {
+		int padding = Math.round(screenHeight - Math.round(screenHeight*MAP_PADDING))/2;
+		int frameWidth = Math.round(screenHeight-padding*2);
+		drawRectangle(new Position(padding, padding), frameWidth, frameWidth, LIGHTING_FILEPATH);		
+	}
+	
 	
 	public void drawRectangle(Position pos, int width, int height, String filePath){
 		float posX = - 1 + (float)pos.getX()*2/(float)screenWidth;

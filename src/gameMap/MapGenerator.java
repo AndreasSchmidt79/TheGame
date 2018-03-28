@@ -63,7 +63,7 @@ public class MapGenerator {
 					int setDecoProbability = rand.nextInt(100);
 					if(setDecoProbability < 5) {		
 						int decorationTile = rand.nextInt(DecorationMapping.textureFilePathMap.size());
-						if(decorationTile != DecorationMapping.DECORATION_PATH) {
+						if(decorationTile <= DecorationMapping.DECORATION_PATH) {
 							decorations[i][j] = decorationTile;
 						}
 					}
@@ -73,6 +73,32 @@ public class MapGenerator {
 				}
 			}
 		}
+		decorations[10][10] = DecorationMapping.DECORATION_MOUNTAIN_B_L;
+		decorations[11][10] = DecorationMapping.DECORATION_MOUNTAIN_B;
+		decorations[12][10] = DecorationMapping.DECORATION_MOUNTAIN_B;
+		decorations[13][10] = DecorationMapping.DECORATION_CAVE_ENTRANCE;
+		decorations[14][10] = DecorationMapping.DECORATION_MOUNTAIN_B;
+		decorations[15][10] = DecorationMapping.DECORATION_MOUNTAIN_B;
+		decorations[16][10] = DecorationMapping.DECORATION_MOUNTAIN_B;
+		decorations[17][10] = DecorationMapping.DECORATION_MOUNTAIN_B_R;
+		
+		decorations[10][11] = DecorationMapping.DECORATION_MOUNTAIN_L;
+		decorations[11][11] = DecorationMapping.DECORATION_MOUNTAIN_C;
+		decorations[12][11] = DecorationMapping.DECORATION_MOUNTAIN_C;
+		decorations[13][11] = DecorationMapping.DECORATION_MOUNTAIN_C;
+		decorations[14][11] = DecorationMapping.DECORATION_MOUNTAIN_C;
+		decorations[15][11] = DecorationMapping.DECORATION_MOUNTAIN_C;
+		decorations[16][11] = DecorationMapping.DECORATION_MOUNTAIN_C;
+		decorations[17][11] = DecorationMapping.DECORATION_MOUNTAIN_R;
+		
+		decorations[10][12] = DecorationMapping.DECORATION_MOUNTAIN_T_L;
+		decorations[11][12] = DecorationMapping.DECORATION_MOUNTAIN_T;
+		decorations[12][12] = DecorationMapping.DECORATION_MOUNTAIN_T;
+		decorations[13][12] = DecorationMapping.DECORATION_MOUNTAIN_T;
+		decorations[14][12] = DecorationMapping.DECORATION_MOUNTAIN_T;
+		decorations[15][12] = DecorationMapping.DECORATION_MOUNTAIN_T;
+		decorations[16][12] = DecorationMapping.DECORATION_MOUNTAIN_T;
+		decorations[17][12] = DecorationMapping.DECORATION_MOUNTAIN_T_R;
 		return decorations;
 	}		
 	
