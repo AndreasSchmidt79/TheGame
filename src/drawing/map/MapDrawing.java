@@ -2,7 +2,6 @@ package drawing.map;
 
 import drawing.Drawing;
 import drawing.Position;
-import drawing.Texture;
 import gameMap.GameMap;
 import gameMap.MapTile;
 import gameMap.Scaling;
@@ -15,12 +14,10 @@ public class MapDrawing extends Drawing{
 	private static final String MAPFRAME_FILEPATH = "./res/UI/frame.png";
 	private static final String LIGHTING_FILEPATH = "./res/lighting1.png";
 	private static final int MAP_PADDING = 25;	
-	private GameMap gameMap;
 	private MapTile[][] mapTiles = null;
 
 	public MapDrawing(int screenWidth, int screenHeight, int mapSizeInTiles, GameMap gameMap) {
 		super(screenWidth, screenHeight, mapSizeInTiles);
-		this.gameMap = gameMap;
 		this.mapTiles = gameMap.getMapTiles();
 	}
 	

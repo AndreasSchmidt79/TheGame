@@ -1,23 +1,6 @@
 package drawing;
 
-import org.lwjgl.opengl.GL11;
-
-import drawing.text.GlyphData;
-import drawing.text.GlyphDataReader;
-import drawing.text.TextDrawing;
-
-import static org.lwjgl.opengl.ARBTextureRectangle.GL_TEXTURE_RECTANGLE_ARB;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
-import static org.lwjgl.opengl.GL11.glBindTexture;
-import static org.lwjgl.opengl.GL11.glGenTextures;
-
-import java.util.HashMap;
-
-import gameMap.GameMap;
-import gameMap.MapTile;
 import gameMap.Scaling;
-import inventory.EquippableItem;
-import player.Player;
 
 public class Drawing {
 	
