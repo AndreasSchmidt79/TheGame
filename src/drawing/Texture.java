@@ -28,7 +28,7 @@ public class Texture {
 			
 			ByteBuffer pixels = BufferUtils.createByteBuffer(width * height * 4);
 			
-			for(int i = 0; i<width; i++) {
+			for(int i = 0; i < width; i++) {
 				for(int j = 0; j < height; j++){
 					int pixel = pixels_raw[i* width + j];
 					pixels.put((byte)((pixel >> 16 ) & 0xff)); // RED

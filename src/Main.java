@@ -1,18 +1,15 @@
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
+import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.opengl.GL;
-
-import drawing.Drawing;
-import drawing.Model;
-import drawing.Position;
-import drawing.Texture;
-
 
 public class Main {
 	
 	private static int SCREEN_WIDTH = 1400;	
 	private static int SCREEN_HEIGHT = (int) SCREEN_WIDTH * 9/16;
+	private static boolean IS_FULLSCREEN =  false;
+	private static GLFWCursorPosCallback cursorPos;
 	
 	public static void main(String[] args) {
 		showWindow();
@@ -23,9 +20,8 @@ public class Main {
 			throw new IllegalStateException("Failed to initalize glfw");			
 		}
 		
-		//FullScreen
-		//long window = glfwCreateWindow(SCREEN_WIDTH,SCREEN_HEIGHT, "My Game", glfwGetPrimaryMonitor(), 0); 
-		long window = glfwCreateWindow(SCREEN_WIDTH,SCREEN_HEIGHT, "My Game", 0, 0);
+		long window = glfwCreateWindow(SCREEN_WIDTH,SCREEN_HEIGHT, "My Game", IS_FULLSCREEN ? glfwGetPrimaryMonitor() : 0, 0);
+		
 		float aspectRatio = (float)SCREEN_WIDTH/(float)SCREEN_HEIGHT;
 		
 		if(window == 0) {
@@ -43,15 +39,31 @@ public class Main {
 		
 		Game theGame = new Game(SCREEN_WIDTH, SCREEN_HEIGHT, window, aspectRatio);
 		UserInteractions userInteractions = new UserInteractions(theGame);
+		
+		cursorPos = new CursorPos();
+		glfwSetCursorPosCallback(window, cursorPos);
+		
 		theGame.updateAll();
+		int fps = 0;
+		int frames = 0;
+		double startTime = System.currentTimeMillis();
 
 		while(glfwWindowShouldClose(window) != true ){
+			
 			glfwPollEvents();
 			userInteractions.update(window);
-
+			theGame.updateAll();
+			frames ++;
+			double endTime = System.currentTimeMillis();
+			if(endTime - startTime >= 1000) {
+				fps = frames;
+				frames = 0;
+				startTime = endTime;
+				theGame.setFps(fps);
+			}
 		}
 		
 		glfwTerminate();
-	}
+	}	
 		
 }

@@ -11,33 +11,44 @@ import static org.lwjgl.glfw.GLFW.glfwGetKey;
 import static org.lwjgl.glfw.GLFW.glfwTerminate;
 import static org.lwjgl.opengl.GL11.GL_TRUE;
 
+import org.lwjgl.glfw.GLFWCursorPosCallback;
+
+import javafx.scene.input.MouseButton;
+
 public class UserInteractions {
 	
 	Game game;
+	private GLFWCursorPosCallback cursorPos;
 
 	public UserInteractions(Game game) {
 		this.game = game;
 	}
 	
 	public void update(long window) {
-		if(glfwGetKey(window, GLFW_KEY_A) == GL_TRUE || glfwGetKey(window, GLFW_KEY_LEFT) == GL_TRUE){
-			game.updatePlayerMovement("left");
+		
+		if(game.currentGameState == game.GAME_STATE_MAINMENU) {
+			
+			
+		} else if(game.currentGameState == game.GAME_STATE_MAP) {
+			if(glfwGetKey(window, GLFW_KEY_A) == GL_TRUE || glfwGetKey(window, GLFW_KEY_LEFT) == GL_TRUE){
+				game.updatePlayerMovement("left");
+			}
+			if(glfwGetKey(window, GLFW_KEY_D) == GL_TRUE || glfwGetKey(window, GLFW_KEY_RIGHT) == GL_TRUE){
+				game.updatePlayerMovement("right");
+			}
+			if(glfwGetKey(window, GLFW_KEY_S) == GL_TRUE || glfwGetKey(window, GLFW_KEY_DOWN) == GL_TRUE){
+				game.updatePlayerMovement("down");
+			}
+			if(glfwGetKey(window, GLFW_KEY_W) == GL_TRUE || glfwGetKey(window, GLFW_KEY_UP) == GL_TRUE){
+				game.updatePlayerMovement("up");
+			}
 		}
-		if(glfwGetKey(window, GLFW_KEY_D) == GL_TRUE || glfwGetKey(window, GLFW_KEY_RIGHT) == GL_TRUE){
-			game.updatePlayerMovement("right");
-		}
-		if(glfwGetKey(window, GLFW_KEY_S) == GL_TRUE || glfwGetKey(window, GLFW_KEY_DOWN) == GL_TRUE){
-			game.updatePlayerMovement("down");
-		}
-		if(glfwGetKey(window, GLFW_KEY_W) == GL_TRUE || glfwGetKey(window, GLFW_KEY_UP) == GL_TRUE){
-			game.updatePlayerMovement("up");
-		}
+		
 		
 		if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GL_TRUE) {
 			glfwTerminate();
 		}			
 	}
-	
 	
 
 }

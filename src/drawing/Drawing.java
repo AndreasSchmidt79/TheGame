@@ -1,5 +1,18 @@
 package drawing;
 
+import org.lwjgl.opengl.GL11;
+
+import drawing.text.GlyphData;
+import drawing.text.GlyphDataReader;
+import drawing.text.TextDrawing;
+
+import static org.lwjgl.opengl.ARBTextureRectangle.GL_TEXTURE_RECTANGLE_ARB;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.glBindTexture;
+import static org.lwjgl.opengl.GL11.glGenTextures;
+
+import java.util.HashMap;
+
 import gameMap.GameMap;
 import gameMap.MapTile;
 import gameMap.Scaling;
@@ -8,21 +21,22 @@ import player.Player;
 
 public class Drawing {
 	
-	private int screenWidth;
-	private int screenHeight;
+	protected int screenWidth;
+	protected int screenHeight;
 	private static String BACKGROUND_FILEPATH = "./res/UI/bricks_bg.png";
 	private static String MAPFRAME_FILEPATH = "./res/UI/frame.png";
 	private static String LIGHTING_FILEPATH = "./res/lighting1.png";
 	private static float MAP_PADDING = 0.95f;
-	
+
 	private int mapSizeInTiles; 
 	private float aspectRatio;
+	protected TextureCache textureCache = new TextureCache();
 	
 	public Drawing(int screenWidth, int screenHeight, int mapSizeInTiles, float aspectRation){
 		this.screenWidth = screenWidth;
 		this.screenHeight = screenHeight;
 		this.mapSizeInTiles = mapSizeInTiles;
-		this.aspectRatio = aspectRation;
+		this.aspectRatio = aspectRation;		
 	}
 	
 	public void drawPlayer(Player player){
@@ -74,9 +88,12 @@ public class Drawing {
 		render(filePath, vertices, texture);
 	}
 	
-	private void render(String filePath, float[] vertices, float[] texture) {
-		Model model = new Model(vertices, texture);		
-		Texture tex = new Texture(filePath);
+	protected void render(String filePath, float[] vertices, float[] textureCoords) {
+		render(textureCache.getTexture(filePath),  vertices,  textureCoords);
+	}
+	
+	protected void render(Texture tex, float[] vertices, float[] textureCoords) {
+		Model model = new Model(vertices, textureCoords);		
 		tex.bind();
 		model.render();
 	}
@@ -153,7 +170,18 @@ public class Drawing {
 		
 		float[] vertices = getVertices(posX, posY, facX, facY);
 		float[] texture = getDefaultTexture();	
-		render(filePath, vertices, texture);
+		render(filePath, vertices, texture);		
+	}
+	
+	public void drawRectangle(Position pos, int width, int height, Texture tex){
+		float posX = - 1 + (float)pos.getX()*2/(float)screenWidth;
+		float posY = 1 - (float)pos.getY()*2/(float)screenHeight;
+		float facX = (float)width/(float)screenWidth;
+		float facY = (float)height/(float)screenHeight;
+		
+		float[] vertices = getVertices(posX, posY, facX, facY);
+		float[] texture = getDefaultTexture();	
+		render(tex, vertices, texture);
 	}
 	
 	public void drawCenteredRectangle(int width, int height, String filePath){
@@ -176,8 +204,7 @@ public class Drawing {
 		return new float[] { 1,0,0,0,0,1,0,1,1,1,1,0};
 	}
 
-
-	private float[] getVertices(float posX, float posY, float facX, float facY) {
+	protected float[] getVertices(float posX, float posY, float facX, float facY) {
 		float[] vertices = new float[]{ 
 			    0 * facX + posX,  0 * facY + posY,
 				2 * facX + posX,  0 * facY + posY,
@@ -188,5 +215,7 @@ public class Drawing {
 			    0 * facX + posX,  0 * facY + posY };
 		return vertices;
 	}	
+	
+
 
 }
