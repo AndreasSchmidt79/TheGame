@@ -74,8 +74,8 @@ public class DecorationMapping {
     	scalingMap.put(DECORATION_PEBBLE2, new Scaling(0.25f,0.25f));
     	scalingMap.put(DECORATION_LILYPAD1, new Scaling(0.3f,0.3f));
     	scalingMap.put(DECORATION_LILYPAD2, new Scaling(0.3f,0.3f));
-    	scalingMap.put(DECORATION_TREE1, new Scaling(1.5f,1.5f));
-    	scalingMap.put(DECORATION_TREE2, new Scaling(1.5f,1.5f));
+    	scalingMap.put(DECORATION_TREE1, new Scaling(1.0f,1.5f));
+    	scalingMap.put(DECORATION_TREE2, new Scaling(1.0f,1.5f));
     	
     }
 	

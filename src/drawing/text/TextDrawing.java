@@ -6,8 +6,6 @@ import java.util.HashMap;
 import drawing.Button;
 import drawing.Drawing;
 import drawing.Position;
-import drawing.Texture;
-import drawing.TextureCache;
 
 public class TextDrawing extends Drawing {
 	
@@ -22,8 +20,8 @@ public class TextDrawing extends Drawing {
 	
 	private ArrayList<Button> activeButtons = new ArrayList<Button>();
 
-	public TextDrawing(int screenWidth, int screenHeight, int mapSizeInTiles, float aspectRation) {
-		super(screenWidth, screenHeight, mapSizeInTiles, aspectRation);
+	public TextDrawing(int screenWidth, int screenHeight, int mapSizeInTiles) {
+		super(screenWidth, screenHeight, mapSizeInTiles);
 		glyphDataReader	= new GlyphDataReader("./res/font/font.fnt");
 		this.glyphs = glyphDataReader.glyphs;
 	}

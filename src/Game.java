@@ -2,13 +2,8 @@ import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.glClear;
 
-import org.lwjgl.opengl.GL11;
-
 import drawing.Drawing;
-import drawing.Position;
-import drawing.Texture;
-import drawing.text.GlyphData;
-import drawing.text.GlyphDataReader;
+import drawing.map.MapDrawing;
 import drawing.text.TextDrawing;
 import gameMap.*;
 import inventory.Weapon.DamageRange;
@@ -24,7 +19,8 @@ public class Game {
 	private MapTile[][] mapTiles = null;
 	private Player player;
 	private Drawing drawing;
-	public TextDrawing textDrawing;
+	private TextDrawing textDrawing;
+	private MapDrawing mapDrawing;
 	private long window;
 	
 	public int GAME_STATE_MAINMENU = 1; 
@@ -35,12 +31,14 @@ public class Game {
 	private int fps = 0;
 	
 	
-	public Game(int width, int height, long window, float aspectRatio) {
+	public Game(int width, int height, long window) {
 		this.window = window;
-		drawing = new Drawing(width, height, MAP_SIZE_IN_TILES, aspectRatio);
-		textDrawing = new TextDrawing(width, height, MAP_SIZE_IN_TILES, aspectRatio);
 		MapGenerator mapGenerator = new MapGenerator();
-		gameMap = mapGenerator.getRandomGameMap();				
+		gameMap = mapGenerator.getRandomGameMap();
+		drawing = new Drawing(width, height, MAP_SIZE_IN_TILES);
+		textDrawing = new TextDrawing(width, height, MAP_SIZE_IN_TILES);
+		mapDrawing = new MapDrawing(width, height, MAP_SIZE_IN_TILES, gameMap);
+						
 		mapTiles = gameMap.getMapTiles();
 		player = new Player(8,8);
 		
@@ -55,8 +53,8 @@ public class Game {
 		drawing.drawBackground();
 		
 		if(currentGameState == GAME_STATE_MAP) {
-			drawing.drawMap(gameMap, player);
-			drawing.drawPlayer(player);
+			mapDrawing.drawMap(player);
+			mapDrawing.drawPlayer(player);
 		}
 		else if(currentGameState == GAME_STATE_MAINMENU) {
 			textDrawing.drawMainMenu();
@@ -85,13 +83,13 @@ public class Game {
 			}
 		}
 		if(direction == "up"){
-			if(mapTiles[player.getPosX()][player.getPosY()+1].isPassable()){
-				player.setPosY(player.getPosY()+1);
+			if(mapTiles[player.getPosX()][player.getPosY()-1].isPassable()){
+				player.setPosY(player.getPosY()-1);
 			}
 		}
 		if(direction == "down"){
-			if(mapTiles[player.getPosX()][player.getPosY()-1].isPassable()){
-				player.setPosY(player.getPosY()-1);
+			if(mapTiles[player.getPosX()][player.getPosY()+1].isPassable()){
+				player.setPosY(player.getPosY()+1);
 			}
 		}
 	}

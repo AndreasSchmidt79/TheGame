@@ -22,8 +22,6 @@ public class Main {
 		
 		long window = glfwCreateWindow(SCREEN_WIDTH,SCREEN_HEIGHT, "My Game", IS_FULLSCREEN ? glfwGetPrimaryMonitor() : 0, 0);
 		
-		float aspectRatio = (float)SCREEN_WIDTH/(float)SCREEN_HEIGHT;
-		
 		if(window == 0) {
 			throw new IllegalStateException("Failed to create Window");
 		}
@@ -37,7 +35,7 @@ public class Main {
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		
-		Game theGame = new Game(SCREEN_WIDTH, SCREEN_HEIGHT, window, aspectRatio);
+		Game theGame = new Game(SCREEN_WIDTH, SCREEN_HEIGHT, window);
 		UserInteractions userInteractions = new UserInteractions(theGame);
 		
 		cursorPos = new CursorPos();

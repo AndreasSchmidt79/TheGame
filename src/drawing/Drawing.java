@@ -24,68 +24,14 @@ public class Drawing {
 	protected int screenWidth;
 	protected int screenHeight;
 	private static String BACKGROUND_FILEPATH = "./res/UI/bricks_bg.png";
-	private static String MAPFRAME_FILEPATH = "./res/UI/frame.png";
-	private static String LIGHTING_FILEPATH = "./res/lighting1.png";
-	private static float MAP_PADDING = 0.95f;
 
-	private int mapSizeInTiles; 
-	private float aspectRatio;
+	protected int mapSizeInTiles; 
 	protected TextureCache textureCache = new TextureCache();
 	
-	public Drawing(int screenWidth, int screenHeight, int mapSizeInTiles, float aspectRation){
+	public Drawing(int screenWidth, int screenHeight, int mapSizeInTiles){
 		this.screenWidth = screenWidth;
 		this.screenHeight = screenHeight;
 		this.mapSizeInTiles = mapSizeInTiles;
-		this.aspectRatio = aspectRation;		
-	}
-	
-	public void drawPlayer(Player player){
-		boolean inversX = player.getDirection().equals("left"); 
-		drawItemInMapTileRaster(0, 0, "./res/human.png", inversX);
-		
-		for(EquippableItem item: player.inventory.getEquipment()){
-			drawItemInMapTileRaster(0, 0, item.getTextureFilePathCharacter(), inversX);
-		}
-	}
-	
-	public void drawItemInMapTileRaster(int posX, int posY, String filePath){
-		drawItemInMapTileRaster(posX, posY, filePath, new Scaling(1,1), false);
-	}
-	
-	public void drawItemInMapTileRaster(int posX, int posY, String filePath, boolean textureInversX){
-		drawItemInMapTileRaster(posX, posY, filePath, new Scaling(1,1), textureInversX);
-	}
-	
-	public void drawItemInMapTileRaster(int posX, int posY, String filePath,  Scaling scaling){
-		drawItemInMapTileRaster(posX, posY, filePath, scaling, false);
-	}
-	
-	public void drawItemInMapTileRaster(int posX, int posY, String filePath, Scaling scaling, boolean textureInversX){
-		
-		float tileSize = MAP_PADDING/(float)mapSizeInTiles;
-		
-		float x_fac = tileSize*scaling.getScaleX();
-		float y_fac = tileSize*scaling.getScaleY();
-		
-		float x_offset = (2-(2/aspectRatio))/2;
-		
-		float x_pos = 2*posX*tileSize;
-		float y_pos = 2*posY*tileSize;
-		
-		float[] vertices = new float[]{
-				(-1*x_fac + x_pos)/aspectRatio - x_offset, y_fac + y_pos,
-				(x_fac + x_pos)/aspectRatio - x_offset, y_fac + y_pos,
-				(x_fac + x_pos)/aspectRatio - x_offset, -1*y_fac + y_pos,
-				
-				(x_fac + x_pos)/aspectRatio - x_offset, -1*y_fac + y_pos,
-				(-1*x_fac + x_pos)/aspectRatio - x_offset, -1*y_fac + y_pos,
-				(-1*x_fac + x_pos)/aspectRatio - x_offset, y_fac + y_pos
-		};
-		
-		float[] texture = getDefaultTexture();	
-		if(textureInversX) { texture = getInversXTexture(); }
-		
-		render(filePath, vertices, texture);
 	}
 	
 	protected void render(String filePath, float[] vertices, float[] textureCoords) {
@@ -98,110 +44,39 @@ public class Drawing {
 		model.render();
 	}
 	
-	public void drawMap(GameMap gameMap, Player player){
-		
-		MapTile[][] mapTiles = gameMap.getMapTiles();
-		for(int i = (int) (-1*Math.floor((double)mapSizeInTiles/2)); i < (int) Math.round((double)mapSizeInTiles/2); i++){
-			for(int j = (int) (-1*Math.floor((double)mapSizeInTiles/2)); j < (int) Math.round((double)mapSizeInTiles/2); j++){
-				if(isValidMapTile(mapTiles, player.getPosX() + i, player.getPosY() + j)) {
-					MapTile currentMapTile = mapTiles[player.getPosX() + i][player.getPosY() + j];
-					String textureFilePath = currentMapTile.getTextureFilePath();
-					if(!textureFilePath.isEmpty()) {
-						drawItemInMapTileRaster(i, j, textureFilePath);
-					}
-				}
-			}
-		}
-		
-		for(int i = (int) (-1*Math.floor((double)mapSizeInTiles/2)); i < (int) Math.round((double)mapSizeInTiles/2); i++){
-			for(int j = (int) (-1*Math.floor((double)mapSizeInTiles/2)); j < (int) Math.round((double)mapSizeInTiles/2); j++){
-				if(isValidMapTile(mapTiles, player.getPosX() + i, player.getPosY() + j)) {
-					MapTile currentMapTile = mapTiles[player.getPosX() + i][player.getPosY() + j];
-					String decorationFilePath = currentMapTile.getDecorationFilePath();
-					Scaling decorationScaling = currentMapTile.getDecorationScaling();
-					if(!decorationFilePath.isEmpty() && decorationScaling != null) {
-						drawItemInMapTileRaster(i, j, decorationFilePath, decorationScaling);
-					}
-				}
-			}
-		}
-		drawLightRadius();
-		drawMapFrame();
-		
-	}
-	
-	private void drawMapFrame() {
-		int padding = Math.round(screenHeight - Math.round(screenHeight*MAP_PADDING))/2;
-		int frameWidth = Math.round(screenHeight-padding*2);
-		drawRectangle(new Position(padding, padding), frameWidth, frameWidth, MAPFRAME_FILEPATH);
-	}
-	
-	private boolean isValidMapTile(MapTile[][] mapTiles, int x, int y) {
-		if(x>=0 && y>=0) {
-			if(mapTiles.length > x) {
-				if(mapTiles[0].length > y) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-	
-	public void setMapSizeInTiles(int mapSizeInTiles) {
-		this.mapSizeInTiles = mapSizeInTiles;
-	}	
-	
 	public void drawBackground() {
-		drawCenteredRectangle(screenWidth, screenHeight, BACKGROUND_FILEPATH);
+		drawRectangle(new Position(0,0),screenWidth, screenHeight, textureCache.getTexture(BACKGROUND_FILEPATH));
+	}
+	
+	protected void drawRectangle(Position pos, int width, int height, Texture tex){
+		drawRectangle(pos, width, height, tex, false, new Scaling(1,1));
+	}
+	
+	protected void drawRectangle(Position pos, int width, int height, Texture tex, boolean inversX){
+		drawRectangle(pos, width, height, tex, inversX, new Scaling(1,1));
+	}
+	
+	protected void drawRectangle(Position pos, int width, int height, Texture tex, Scaling scaling){
+		drawRectangle(pos, width, height, tex, false, scaling);
 	}
 
-	public void drawLightRadius() {
-		int padding = Math.round(screenHeight - Math.round(screenHeight*MAP_PADDING))/2;
-		int frameWidth = Math.round(screenHeight-padding*2);
-		drawRectangle(new Position(padding, padding), frameWidth, frameWidth, LIGHTING_FILEPATH);		
-	}
-	
-	
-	public void drawRectangle(Position pos, int width, int height, String filePath){
+	protected void drawRectangle(Position pos, int width, int height, Texture tex, boolean inversX, Scaling scaling){
 		float posX = - 1 + (float)pos.getX()*2/(float)screenWidth;
 		float posY = 1 - (float)pos.getY()*2/(float)screenHeight;
 		float facX = (float)width/(float)screenWidth;
 		float facY = (float)height/(float)screenHeight;
 		
-		float[] vertices = getVertices(posX, posY, facX, facY);
-		float[] texture = getDefaultTexture();	
-		render(filePath, vertices, texture);		
-	}
-	
-	public void drawRectangle(Position pos, int width, int height, Texture tex){
-		float posX = - 1 + (float)pos.getX()*2/(float)screenWidth;
-		float posY = 1 - (float)pos.getY()*2/(float)screenHeight;
-		float facX = (float)width/(float)screenWidth;
-		float facY = (float)height/(float)screenHeight;
-		
-		float[] vertices = getVertices(posX, posY, facX, facY);
-		float[] texture = getDefaultTexture();	
+		float[] vertices = getVertices(posX, posY, facX*scaling.getScaleX(), facY*scaling.getScaleY());
+		float[] texture = inversX ? getInversXTexture() : getDefaultTexture();	
 		render(tex, vertices, texture);
 	}
 	
-	public void drawCenteredRectangle(int width, int height, String filePath){
-
-		float posX = -(float)width/(float)screenWidth;
-		float posY = (float)height/(float)screenHeight;
-		float facX = (float)width/(float)screenWidth;
-		float facY = (float)height/(float)screenHeight;
-		
-		float[] vertices = getVertices(posX, posY, facX, facY);
-		float[] texture = getDefaultTexture();	
-		render(filePath, vertices, texture);
-	}
-
-	private float[] getDefaultTexture() {
+	protected float[] getDefaultTexture() {
 		return new float[] { 0,0,1,0,1,1,1,1,0,1,0,0 };
 	}
 
-	private float[] getInversXTexture() {
-		return new float[] { 1,0,0,0,0,1,0,1,1,1,1,0};
+	protected float[] getInversXTexture() {		
+		return new float[] { 1,0,0,0,0,1,0,1,1,1,1,0 };
 	}
 
 	protected float[] getVertices(float posX, float posY, float facX, float facY) {
@@ -215,7 +90,5 @@ public class Drawing {
 			    0 * facX + posX,  0 * facY + posY };
 		return vertices;
 	}	
-	
-
 
 }
