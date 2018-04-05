@@ -82,7 +82,6 @@ public class MapDrawing extends Drawing{
 		}
 		drawLightRadius();
 		drawMapFrame();
-		
 	}
 	
 	public void drawItemInMapTileRaster(Position pos, String filePath){

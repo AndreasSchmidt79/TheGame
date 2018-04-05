@@ -7,18 +7,15 @@ import static org.lwjgl.glfw.GLFW.GLFW_KEY_RIGHT;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_S;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_UP;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_W;
-import static org.lwjgl.glfw.GLFW.glfwGetKey;
+import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 import static org.lwjgl.glfw.GLFW.glfwTerminate;
-import static org.lwjgl.opengl.GL11.GL_TRUE;
 
-import org.lwjgl.glfw.GLFWCursorPosCallback;
+import java.util.ArrayList;
+import drawing.Button;
 
-import javafx.scene.input.MouseButton;
 
-public class UserInteractions {
-	
+public class UserInteractions{
 	Game game;
-	private GLFWCursorPosCallback cursorPos;
 
 	public UserInteractions(Game game) {
 		this.game = game;
@@ -26,29 +23,53 @@ public class UserInteractions {
 	
 	public void update(long window) {
 		
+		ArrayList<Button> buttons = game.getActiveButtons();
+		
 		if(game.currentGameState == game.GAME_STATE_MAINMENU) {
+			if(InputHandler.keyReleased(GLFW_KEY_ESCAPE)) {
+				game.setCurrentGameState(game.GAME_STATE_MAP);
+			}
 			
+			if(InputHandler.mouseButtonReleased(GLFW_MOUSE_BUTTON_LEFT)) {
+				for(Button button: buttons){
+					if(button.positionIsInButtonRange(InputHandler.getMousePosition())) {
+						switch(button.getAction()) {
+							case Button.CONTINUE:
+								game.setCurrentGameState(game.GAME_STATE_MAP);
+								break;
+							case Button.NEW_GAME:
+								game.startNewGame();
+								game.setCurrentGameState(game.GAME_STATE_MAP);
+								break;
+							case Button.EXIT:
+								glfwTerminate();
+								break;
+						}
+					}
+				}
+			}
 			
 		} else if(game.currentGameState == game.GAME_STATE_MAP) {
-			if(glfwGetKey(window, GLFW_KEY_A) == GL_TRUE || glfwGetKey(window, GLFW_KEY_LEFT) == GL_TRUE){
+			if(InputHandler.keyReleased(GLFW_KEY_A) || InputHandler.keyReleased(GLFW_KEY_LEFT)){
 				game.updatePlayerMovement("left");
 			}
-			if(glfwGetKey(window, GLFW_KEY_D) == GL_TRUE || glfwGetKey(window, GLFW_KEY_RIGHT) == GL_TRUE){
+			if(InputHandler.keyReleased(GLFW_KEY_D) || InputHandler.keyReleased(GLFW_KEY_RIGHT)){
 				game.updatePlayerMovement("right");
 			}
-			if(glfwGetKey(window, GLFW_KEY_S) == GL_TRUE || glfwGetKey(window, GLFW_KEY_DOWN) == GL_TRUE){
+			if(InputHandler.keyReleased(GLFW_KEY_S) || InputHandler.keyReleased(GLFW_KEY_DOWN)){
 				game.updatePlayerMovement("down");
 			}
-			if(glfwGetKey(window, GLFW_KEY_W) == GL_TRUE || glfwGetKey(window, GLFW_KEY_UP) == GL_TRUE){
+			if(InputHandler.keyReleased(GLFW_KEY_W) || InputHandler.keyReleased(GLFW_KEY_UP)){
 				game.updatePlayerMovement("up");
 			}
+			if(InputHandler.keyReleased(GLFW_KEY_ESCAPE)) {
+				game.setCurrentGameState(game.GAME_STATE_MAINMENU);
+			}
+		} else if(game.currentGameState == game.GAME_STATE_COMBAT) {
+			//TBD
 		}
-		
-		
-		if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GL_TRUE) {
-			glfwTerminate();
-		}			
+
+					
 	}
-	
 
 }

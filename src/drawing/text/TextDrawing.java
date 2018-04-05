@@ -78,15 +78,22 @@ public class TextDrawing extends Drawing {
 		drawString(new Position(Math.round(button.getPos().getX() + (button.getWidth()*55/300)), Math.round(button.getPos().getY() + fontsize*50)), string, fontsize);
 	}
 	
-	public void drawMainMenu() {
+	public void drawMainMenu(boolean newGameStarted) {
 		int buttonWidth= 300;
 		int buttonHeight= 94;
 		int posX = screenWidth/2 - buttonWidth/2;
-		int posY = 150;
-		Button newGameButton = new Button(new Position(posX,posY), buttonWidth, buttonHeight);
-		Button ExitButton = new Button(new Position(posX,posY + buttonHeight + 20), buttonWidth, buttonHeight);
+		int posY = newGameStarted ? 150 : 50;
+		
+		Button newGameButton = new Button(Button.NEW_GAME, new Position(posX,posY + buttonHeight + 20), buttonWidth, buttonHeight);
+		Button ExitButton = new Button(Button.EXIT, new Position(posX,posY + 2*(buttonHeight + 20)), buttonWidth, buttonHeight);
 		activeButtons.add(newGameButton);
 		activeButtons.add(ExitButton);
+		
+		if(newGameStarted) {
+			Button continueButton = new Button(Button.CONTINUE, new Position(posX,posY), buttonWidth, buttonHeight);
+			activeButtons.add(continueButton);
+			drawButtonWithText(continueButton, "Continue", 0.5f);
+		}
 		drawButtonWithText(newGameButton, "New Game", 0.5f);
 		drawButtonWithText(ExitButton, "Exit", 0.5f);
 	}

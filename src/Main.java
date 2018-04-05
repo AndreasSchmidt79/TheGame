@@ -2,14 +2,14 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
 import org.lwjgl.glfw.GLFWCursorPosCallback;
+import org.lwjgl.glfw.GLFWMouseButtonCallback;
 import org.lwjgl.opengl.GL;
 
 public class Main {
 	
-	private static int SCREEN_WIDTH = 1400;	
-	private static int SCREEN_HEIGHT = (int) SCREEN_WIDTH * 9/16;
+	public static int SCREEN_WIDTH = 1400;	
+	public static int SCREEN_HEIGHT = (int) SCREEN_WIDTH * 9/16;
 	private static boolean IS_FULLSCREEN =  false;
-	private static GLFWCursorPosCallback cursorPos;
 	
 	public static void main(String[] args) {
 		showWindow();
@@ -36,10 +36,14 @@ public class Main {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		
 		Game theGame = new Game(SCREEN_WIDTH, SCREEN_HEIGHT, window);
-		UserInteractions userInteractions = new UserInteractions(theGame);
 		
-		cursorPos = new CursorPos();
-		glfwSetCursorPosCallback(window, cursorPos);
+		InputHandler.init(window);
+		
+		glfwSetMouseButtonCallback(window, InputHandler.mouse);
+		glfwSetKeyCallback(window, InputHandler.keyboard);
+		glfwSetCursorPosCallback(window, InputHandler.cursor);
+		
+		UserInteractions userInteractions = new UserInteractions(theGame);
 		
 		theGame.updateAll();
 		int fps = 0;
@@ -48,6 +52,7 @@ public class Main {
 
 		while(glfwWindowShouldClose(window) != true ){
 			
+			InputHandler.update();
 			glfwPollEvents();
 			userInteractions.update(window);
 			theGame.updateAll();

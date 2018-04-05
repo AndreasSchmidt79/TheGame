@@ -2,7 +2,11 @@ import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.glClear;
 
+import java.util.ArrayList;
+
+import drawing.Button;
 import drawing.Drawing;
+import drawing.Position;
 import drawing.map.MapDrawing;
 import drawing.text.TextDrawing;
 import gameMap.*;
@@ -22,29 +26,36 @@ public class Game {
 	private TextDrawing textDrawing;
 	private MapDrawing mapDrawing;
 	private long window;
+	private MapGenerator mapGenerator;
 	
 	public int GAME_STATE_MAINMENU = 1; 
 	public int GAME_STATE_MAP = 2;
 	public int GAME_STATE_COMBAT = 3;
-	
 	public int currentGameState = GAME_STATE_MAP;
-	private int fps = 0;
 	
+	private int fps = 0;
+	private boolean newGameStarted = false;
 	
 	public Game(int width, int height, long window) {
 		this.window = window;
-		MapGenerator mapGenerator = new MapGenerator();
-		gameMap = mapGenerator.getRandomGameMap();
+		mapGenerator = new MapGenerator();
 		drawing = new Drawing(width, height, MAP_SIZE_IN_TILES);
 		textDrawing = new TextDrawing(width, height, MAP_SIZE_IN_TILES);
-		mapDrawing = new MapDrawing(width, height, MAP_SIZE_IN_TILES, gameMap);
-						
+		currentGameState = GAME_STATE_MAINMENU;
+	}
+	
+	public void startNewGame() {
+		gameMap = mapGenerator.getRandomGameMap();
+		
 		mapTiles = gameMap.getMapTiles();
+		mapDrawing = new MapDrawing(Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT, MAP_SIZE_IN_TILES, gameMap);
 		player = new Player(8,8);
 		
 		player.inventory.addEquipment(new SteelHelmet("hammer Helm", 2));
 		player.inventory.addEquipment(new LeatherArmour("Lederrüstung", 4));
-		player.inventory.addEquipment(new Sword("ganz gutes Schwert", new DamageRange(1, 2)));
+		player.inventory.addEquipment(new Sword("scharfes Schwert", new DamageRange(1, 2)));
+		
+		newGameStarted = true;
 	}
 	
 	public void updateAll() {
@@ -52,12 +63,12 @@ public class Game {
 		
 		drawing.drawBackground();
 		
-		if(currentGameState == GAME_STATE_MAP) {
+		if(currentGameState == GAME_STATE_MAP || newGameStarted) {
 			mapDrawing.drawMap(player);
 			mapDrawing.drawPlayer(player);
 		}
-		else if(currentGameState == GAME_STATE_MAINMENU) {
-			textDrawing.drawMainMenu();
+		if(currentGameState == GAME_STATE_MAINMENU) {
+			textDrawing.drawMainMenu(newGameStarted);
 		}
 		
 		textDrawing.drawFPS(fps);
@@ -97,6 +108,26 @@ public class Game {
 	public void  setFps(int fps) {
 		this.fps = fps;
 	}
+
+	public int getCurrentGameState() {
+		return currentGameState;
+	}
+
+	public void setCurrentGameState(int currentGameState) {
+		clearActiveButtons();
+		this.currentGameState = currentGameState;
+	}
 	
+	public ArrayList<Button> getActiveButtons() {
+		return textDrawing.getActiveButtons();
+	}
+	
+	public void clearActiveButtons() {
+		textDrawing.clearActiveButtons();
+	}
+	
+	public void triggerMousePos(Position pos) {
+		
+	}
 	
 }
