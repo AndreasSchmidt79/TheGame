@@ -32,6 +32,7 @@ public class Game {
 	public int GAME_STATE_MAP = 2;
 	public int GAME_STATE_COMBAT = 3;
 	public int currentGameState = GAME_STATE_MAP;
+	private String infoText = "";
 	
 	private int fps = 0;
 	private boolean newGameStarted = false;
@@ -45,11 +46,12 @@ public class Game {
 	}
 	
 	public void startNewGame() {
-		gameMap = mapGenerator.getRandomGameMap();
+		//gameMap = mapGenerator.getRandomGameMap();
+		gameMap = mapGenerator.getRandomDungeonMap();
 		
 		mapTiles = gameMap.getMapTiles();
 		mapDrawing = new MapDrawing(Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT, MAP_SIZE_IN_TILES, gameMap);
-		player = new Player(8,8);
+		player = new Player(gameMap.getStartPosition());
 		
 		player.inventory.addEquipment(new SteelHelmet("hammer Helm", 2));
 		player.inventory.addEquipment(new LeatherArmour("Lederrüstung", 4));
@@ -66,6 +68,9 @@ public class Game {
 		if(currentGameState == GAME_STATE_MAP || newGameStarted) {
 			mapDrawing.drawMap(player);
 			mapDrawing.drawPlayer(player);
+			if(!infoText.isEmpty()) {
+				textDrawing.drawInfoText(infoText);
+			}
 		}
 		if(currentGameState == GAME_STATE_MAINMENU) {
 			textDrawing.drawMainMenu(newGameStarted);
@@ -83,25 +88,30 @@ public class Game {
 	public void updatePlayerMovement(String direction){
 		if(direction == "left"){
 			setPlayerDirection("left");
-			if(mapTiles[player.getPosX()-1][player.getPosY()].isPassable()){
-				player.setPosX(player.getPosX()-1);				
+			if(mapTiles[player.getPos().getX()-1][player.getPos().getY()].isPassable()){
+				player.setPosLeft();			
 			}
 		}
 		if(direction == "right"){
 			setPlayerDirection("right");
-			if(mapTiles[player.getPosX()+1][player.getPosY()].isPassable()){
-				player.setPosX(player.getPosX()+1);
+			if(mapTiles[player.getPos().getX()+1][player.getPos().getY()].isPassable()){
+				player.setPosRight();
 			}
 		}
 		if(direction == "up"){
-			if(mapTiles[player.getPosX()][player.getPosY()-1].isPassable()){
-				player.setPosY(player.getPosY()-1);
+			if(mapTiles[player.getPos().getX()][player.getPos().getY()-1].isPassable()){
+				player.setPosUp();
 			}
 		}
 		if(direction == "down"){
-			if(mapTiles[player.getPosX()][player.getPosY()+1].isPassable()){
-				player.setPosY(player.getPosY()+1);
+			if(mapTiles[player.getPos().getX()][player.getPos().getY()+1].isPassable()){
+				player.setPosDown();
 			}
+		}
+		if(mapTiles[player.getPos().getX()][player.getPos().getY()].getDecorationType() == DecorationMapping.DECORATION_CHEST_CLOSED) {
+			infoText = "You found a chest!";
+		}else {
+			infoText = "";
 		}
 	}
 	

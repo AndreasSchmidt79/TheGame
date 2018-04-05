@@ -2,6 +2,8 @@ package gameMap;
 
 import java.util.Random;
 
+import drawing.Position;
+
 public class MapGenerator {
 	
 	private static final int RANDOM_MAP_SIZE = 60;
@@ -14,14 +16,64 @@ public class MapGenerator {
 		int[][] gameMap = generateSimpleMap(RANDOM_MAP_SIZE);
 		int[][] decorationMap = generateDecorations(RANDOM_MAP_SIZE);
 			
-		MapTile[][] mapTiles = new MapTile[RANDOM_MAP_SIZE][RANDOM_MAP_SIZE];
-		for(int i = 0; i < RANDOM_MAP_SIZE; i++){
-			for(int j = 0; j < RANDOM_MAP_SIZE; j++){
+		MapTile[][] mapTiles = getMapTilesFromMapTypes(gameMap, decorationMap, RANDOM_MAP_SIZE);
+		return new GameMap(RANDOM_MAP_SIZE, gameMap, mapTiles, new Position(8, 8));
+	}
+
+	private MapTile[][] getMapTilesFromMapTypes(int[][] gameMap, int[][] decorationMap, int dimensions) {
+		MapTile[][] mapTiles = new MapTile[dimensions][dimensions];
+		for(int i = 0; i < dimensions; i++){
+			for(int j = 0; j < dimensions; j++){
 				mapTiles[i][j] = new MapTile(gameMap[i][j], decorationMap[i][j]);
 			}
-			System.out.println(" ");
 		}
-		return new GameMap(RANDOM_MAP_SIZE, gameMap, mapTiles);
+		return mapTiles;
+	}
+	
+	public GameMap getRandomDungeonMap() {
+		int[][] gameMap = generateDungeon(20);
+		int[][] decorationMap = generateDungeonDecorations(20);
+			
+		MapTile[][] mapTiles = getMapTilesFromMapTypes(gameMap, decorationMap, 20);
+		return new GameMap(RANDOM_MAP_SIZE, gameMap, mapTiles, new Position(10,14));
+	}
+	
+	private int[][] generateDungeon(int dimensions){
+		int[][] gameMap = new int[dimensions][dimensions];
+		for(int i = 0; i < dimensions; i++) {
+			for(int j = 0; j < dimensions; j++) {
+				if(i < 6 || i > dimensions - 7 || j < 6 || j > dimensions - 7) {
+					gameMap[i][j] = MapTileMapping.MAPTILE_DUNGEON_WALL;
+				}
+				else {
+					gameMap[i][j] = MapTileMapping.MAPTILE_DUNGEON_FLOOR;
+				}
+			}
+		}
+		gameMap[10][14] = MapTileMapping.MAPTILE_DUNGEON_DOOR_O;
+		return gameMap;
+	}
+	
+	private int[][] generateDungeonDecorations(int dimensions){
+		int[][] decorations = new int[dimensions][dimensions];
+		Random rand = new Random();		
+		for(int i = 0; i < dimensions; i++) {
+			for(int j = 0; j < dimensions; j++) {
+				if(i < 6 || i > dimensions - 7 || j < 6 || j > dimensions - 7) {
+					decorations[i][j] = DecorationMapping.NO_DECORATION;
+				}
+				else {
+					int setDecoProbability = rand.nextInt(100);
+					if(setDecoProbability < 2) {		
+						decorations[i][j] = DecorationMapping.DECORATION_CHEST_CLOSED;
+					}
+					else {
+						decorations[i][j] = DecorationMapping.NO_DECORATION;
+					}
+				}
+			}
+		}
+		return decorations;
 	}
 	
 	private int[][] generateSimpleMap(int dimensions){

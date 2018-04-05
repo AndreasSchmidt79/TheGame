@@ -15,6 +15,13 @@ public class MapTileMapping {
 	public static final int MAPTILE_ROAD_1 = 8;
 	public static final int MAPTILE_ROAD_2 = 9;
 	
+	public static final int MAPTILE_DUNGEON_WALL = 10;
+	public static final int MAPTILE_DUNGEON_FLOOR = 11;
+	public static final int MAPTILE_DUNGEON_DOOR_C = 12;
+	public static final int MAPTILE_DUNGEON_DOOR_O = 13;
+	public static final int MAPTILE_DUNGEON_DOOR_D = 14;
+	public static final int MAPTILE_DUNGEON_STAIRS_U = 15;
+	public static final int MAPTILE_DUNGEON_STAIRS_D = 16;
 	
     public static final HashMap<Integer, String> textureFilePathMap;
     public static final HashMap<Integer, Boolean> isPassableMap;
@@ -32,6 +39,14 @@ public class MapTileMapping {
     	textureFilePathMap.put(MAPTILE_ROAD_1, "./res/MapTiles/road1.png");
     	textureFilePathMap.put(MAPTILE_ROAD_2, "./res/MapTiles/bricks.png");
     	
+    	textureFilePathMap.put(MAPTILE_DUNGEON_WALL, "./res/MapTiles/dungeon_wall.png");
+    	textureFilePathMap.put(MAPTILE_DUNGEON_FLOOR, "./res/MapTiles/dungeon_floor.png");
+    	textureFilePathMap.put(MAPTILE_DUNGEON_DOOR_C, "./res/MapTiles/dungeon_door_closed.png");
+    	textureFilePathMap.put(MAPTILE_DUNGEON_DOOR_O, "./res/MapTiles/dungeon_door_opened.png");
+    	textureFilePathMap.put(MAPTILE_DUNGEON_DOOR_D, "./res/MapTiles/dungeon_door_destroyed.png");
+    	
+    	textureFilePathMap.put(MAPTILE_DUNGEON_STAIRS_U, "./res/MapTiles/dungeon_stairs_up.png");
+    	textureFilePathMap.put(MAPTILE_DUNGEON_STAIRS_D, "./res/MapTiles/dungeon_stairs_down.png");
     	
     	isPassableMap = new HashMap<Integer, Boolean>();
     	isPassableMap.put(MAPTILE_GRASS_1, true);        
@@ -41,6 +56,13 @@ public class MapTileMapping {
     	isPassableMap.put(MAPTILE_SOIL_1, true);
     	isPassableMap.put(MAPTILE_ROAD_1, true);
     	isPassableMap.put(MAPTILE_ROAD_2, true);
+    	
+    	isPassableMap.put(MAPTILE_DUNGEON_FLOOR, true);
+    	isPassableMap.put(MAPTILE_DUNGEON_DOOR_O, true);
+    	isPassableMap.put(MAPTILE_DUNGEON_DOOR_D, true);
+    	isPassableMap.put(MAPTILE_DUNGEON_STAIRS_U, true);
+    	isPassableMap.put(MAPTILE_DUNGEON_STAIRS_D, true);
+    	
     }
 	
     public static String getTextureFilePath(int type) {

@@ -1,35 +1,45 @@
 package player;
 
+import drawing.Position;
 import inventory.Inventory;
 
 public class Player {
 	private int level = 1;
-	private int posX;
-	private int posY;
+	private Position pos;
 	private String direction = "right";
 	public Inventory inventory = new Inventory();
 	
-	public Player(int posX, int posY) {		
-		this.posX = posX;
-		this.posY = posY;
+	public Player(Position pos) {		
+		this.pos = pos;
 	}
-	public int getPosX() {
-		return posX;
+	public Position getPos() {
+		return pos;
 	}
-	public void setPosX(int posX) {
-		this.posX = posX;
+	public void setPos(Position pos) {
+		this.pos = pos;
 	}
-	public int getPosY() {
-		return posY;
-	}
-	public void setPosY(int posY) {
-		this.posY = posY;
-	}
+
 	public String getDirection() {
 		return direction;
 	}
+	
 	public void setDirection(String direction) {
 		this.direction = direction;
 	}
 	
+	public void setPosLeft() {
+		this.pos = new Position(pos.getX()-1, pos.getY());
+	}
+	
+	public void setPosRight() {
+		this.pos = new Position(pos.getX()+1, pos.getY());
+	}
+	
+	public void setPosUp() {
+		this.pos = new Position(pos.getX(), pos.getY() - 1);
+	}
+	
+	public void setPosDown() {
+		this.pos = new Position(pos.getX(), pos.getY() + 1);
+	}
 }

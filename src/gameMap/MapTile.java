@@ -3,16 +3,20 @@ package gameMap;
 public class MapTile {
 	
 	private String textureFilePath;
-	boolean isPassable;
+	private boolean isPassable;
 	private String decorationFilePath;
-	Scaling decorationScaling;
+	private Scaling decorationScaling;
+	private int mapTileType;
+	private int decorationType;
 	
 	
 	public MapTile(int type, int decorationType){
-		textureFilePath = MapTileMapping.getTextureFilePath(type);
-		isPassable = MapTileMapping.IsPassable(type);
-		decorationFilePath = DecorationMapping.getDecorationFilePath(decorationType);
-		decorationScaling = DecorationMapping.getDecorationScaling(decorationType);
+		this.textureFilePath = MapTileMapping.getTextureFilePath(type);
+		this.isPassable = MapTileMapping.IsPassable(type);
+		this.decorationFilePath = DecorationMapping.getDecorationFilePath(decorationType);
+		this.decorationScaling = DecorationMapping.getDecorationScaling(decorationType);
+		this.mapTileType = type;
+		this.decorationType = decorationType;
 	}
 
 	public boolean isPassable() {
@@ -29,6 +33,14 @@ public class MapTile {
 
 	public Scaling getDecorationScaling() {
 		return decorationScaling;
+	}
+
+	public int getMapTileType() {
+		return mapTileType;
+	}
+
+	public int getDecorationType() {
+		return decorationType;
 	}
 	
 }

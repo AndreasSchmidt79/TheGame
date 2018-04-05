@@ -29,6 +29,8 @@ public class DecorationMapping {
 	public static final int DECORATION_MOUNTAIN_T = 21;
 	public static final int DECORATION_MOUNTAIN_T_L = 22;
 	public static final int DECORATION_MOUNTAIN_T_R = 23;
+	public static final int DECORATION_CHEST_OPEN = 24;
+	public static final int DECORATION_CHEST_CLOSED = 25;
 	
 	
 	
@@ -61,8 +63,8 @@ public class DecorationMapping {
     	textureFilePathMap.put(DECORATION_MOUNTAIN_T, "./res/decoration/mountain_t.png");
     	textureFilePathMap.put(DECORATION_MOUNTAIN_T_L, "./res/decoration/mountain_t_l.png");
     	textureFilePathMap.put(DECORATION_MOUNTAIN_T_R, "./res/decoration/mountain_t_r.png");
-    	
-    	
+    	textureFilePathMap.put(DECORATION_CHEST_OPEN, "./res/decoration/chest_opened.png");
+    	textureFilePathMap.put(DECORATION_CHEST_CLOSED, "./res/decoration/chest_closed.png");
     	
     	scalingMap = new HashMap<Integer, Scaling>();
     	scalingMap.put(DECORATION_STUMP, new Scaling(0.9f,0.9f));
@@ -76,7 +78,8 @@ public class DecorationMapping {
     	scalingMap.put(DECORATION_LILYPAD2, new Scaling(0.3f,0.3f));
     	scalingMap.put(DECORATION_TREE1, new Scaling(1.0f,1.5f));
     	scalingMap.put(DECORATION_TREE2, new Scaling(1.0f,1.5f));
-    	
+    	scalingMap.put(DECORATION_CHEST_OPEN, new Scaling(0.6f,0.6f));
+    	scalingMap.put(DECORATION_CHEST_CLOSED, new Scaling(0.6f,0.6f));
     }
 	
 	public static String getDecorationFilePath(int type) {

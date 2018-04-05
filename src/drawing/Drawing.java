@@ -6,7 +6,8 @@ public class Drawing {
 	
 	protected int screenWidth;
 	protected int screenHeight;
-	private static String BACKGROUND_FILEPATH = "./res/UI/bricks_bg.png";
+	private static final String BACKGROUND_FILEPATH = "./res/UI/bricks_bg.png";
+	public static final String MAPFRAME_FILEPATH = "./res/UI/frame.png";
 
 	protected int mapSizeInTiles; 
 	protected TextureCache textureCache = new TextureCache();

@@ -11,9 +11,13 @@ public class TextDrawing extends Drawing {
 	
 	private static final String FONT_WHITE_FILEPATH = "./res/font/font.png";
 	private static final String FONT_BLACK_FILEPATH = "./res/font/font_black.png";
+
+	private static final String FONT_GLYPHDATA_FILEPATH = "./res/font/font.fnt";
 	private static final String BUTTON_FILEPATH = "./res/UI/button.png";
 	private static final String BUTTON_HOVER_FILEPATH = "./res/UI/buttonHover.png";
 	private static final String BUTTON_CLICKED_FILEPATH = "./res/UI/buttonClicked.png";
+	
+	private static final String INFOPANEL_FILEPATH = "./res/UI/infopanel.png";
 	
 	private GlyphDataReader glyphDataReader;
 	private HashMap<String, GlyphData> glyphs; 
@@ -22,7 +26,7 @@ public class TextDrawing extends Drawing {
 
 	public TextDrawing(int screenWidth, int screenHeight, int mapSizeInTiles) {
 		super(screenWidth, screenHeight, mapSizeInTiles);
-		glyphDataReader	= new GlyphDataReader("./res/font/font.fnt");
+		glyphDataReader	= new GlyphDataReader(FONT_GLYPHDATA_FILEPATH);
 		this.glyphs = glyphDataReader.glyphs;
 	}
 	
@@ -108,6 +112,11 @@ public class TextDrawing extends Drawing {
 	
 	public void drawFPS(int fps) {
 		drawString(new Position(screenWidth-150, 10), "FPS: " + fps, 0.4f);
+	}
+	
+	public void drawInfoText(String string) {
+		drawRectangle(new Position(screenWidth-600,screenHeight-250), 450, 200, textureCache.getTexture(INFOPANEL_FILEPATH));  
+		drawString(new Position(screenWidth-550,screenHeight-180), string, 0.4f);
 	}
 
 }

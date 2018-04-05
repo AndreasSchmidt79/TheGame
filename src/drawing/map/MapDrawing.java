@@ -11,7 +11,6 @@ import player.Player;
 public class MapDrawing extends Drawing{
 	
 	private static final String HUMAN_FILEPATH = "./res/human.png";
-	private static final String MAPFRAME_FILEPATH = "./res/UI/frame.png";
 	private static final String LIGHTING_FILEPATH = "./res/lighting1.png";
 	private static final int MAP_PADDING = 25;	
 	private MapTile[][] mapTiles = null;
@@ -56,7 +55,7 @@ public class MapDrawing extends Drawing{
 		
 		for(int i = 0; i < mapSizeInTiles; i++){
 			for(int j = 0; j < mapSizeInTiles; j++){
-				Position mapTilePos = new Position(player.getPosX() + i - (mapSizeInTiles-1)/2, player.getPosY() + j - (mapSizeInTiles-1)/2);
+				Position mapTilePos = new Position(player.getPos().getX() + i - (mapSizeInTiles-1)/2, player.getPos().getY() + j - (mapSizeInTiles-1)/2);
 				if(isValidMapTile(mapTiles, mapTilePos.getX(), mapTilePos.getY())) {
 					MapTile currentMapTile = mapTiles[mapTilePos.getX()][mapTilePos.getY()];
 					String textureFilePath = currentMapTile.getTextureFilePath();
@@ -69,7 +68,7 @@ public class MapDrawing extends Drawing{
 		
 		for(int i = 0; i < mapSizeInTiles; i++){
 			for(int j = 0; j < mapSizeInTiles; j++){
-				Position mapTilePos = new Position(player.getPosX() + i - (mapSizeInTiles-1)/2, player.getPosY() + j - (mapSizeInTiles-1)/2);
+				Position mapTilePos = new Position(player.getPos().getX() + i - (mapSizeInTiles-1)/2, player.getPos().getY() + j - (mapSizeInTiles-1)/2);
 				if(isValidMapTile(mapTiles, mapTilePos.getX(), mapTilePos.getY())) {
 					MapTile currentMapTile = mapTiles[mapTilePos.getX()][mapTilePos.getY()];
 					String decorationFilePath = currentMapTile.getDecorationFilePath();
