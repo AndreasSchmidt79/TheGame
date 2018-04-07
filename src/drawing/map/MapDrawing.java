@@ -10,9 +10,6 @@ import player.Player;
 
 public class MapDrawing extends Drawing{
 	
-	private static final String HUMAN_FILEPATH = "./res/human.png";
-	private static final String LIGHTING_FILEPATH = "./res/lighting1.png";
-	private static final int MAP_PADDING = 25;	
 	private MapTile[][] mapTiles = null;
 
 	public MapDrawing(int screenWidth, int screenHeight, int mapSizeInTiles, GameMap gameMap) {

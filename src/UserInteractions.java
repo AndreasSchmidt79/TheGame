@@ -11,7 +11,8 @@ import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 import static org.lwjgl.glfw.GLFW.glfwTerminate;
 
 import java.util.ArrayList;
-import drawing.Button;
+
+import drawing.button.Button;
 
 
 public class UserInteractions{
@@ -30,16 +31,35 @@ public class UserInteractions{
 				game.setCurrentGameState(game.GAME_STATE_MAP);
 			}
 			
+			for(Button button: buttons){
+				if(button.positionIsInButtonRange(InputHandler.getMousePosition())) {
+					button.setButtonHover();;
+				}
+				else {
+					button.setButtonDefault();
+				}
+			}	
+			
+			if(InputHandler.mouseButtonDown(GLFW_MOUSE_BUTTON_LEFT)) {
+				for(Button button: buttons){
+					if(button.positionIsInButtonRange(InputHandler.getMousePosition())) {
+						button.setButtonClicked();
+					}
+				}	
+			}
+			
 			if(InputHandler.mouseButtonReleased(GLFW_MOUSE_BUTTON_LEFT)) {
 				for(Button button: buttons){
 					if(button.positionIsInButtonRange(InputHandler.getMousePosition())) {
 						switch(button.getAction()) {
 							case Button.CONTINUE:
 								game.setCurrentGameState(game.GAME_STATE_MAP);
+								button.setButtonDefault();
 								break;
 							case Button.NEW_GAME:
 								game.startNewGame();
 								game.setCurrentGameState(game.GAME_STATE_MAP);
+								button.setButtonDefault();
 								break;
 							case Button.EXIT:
 								glfwTerminate();

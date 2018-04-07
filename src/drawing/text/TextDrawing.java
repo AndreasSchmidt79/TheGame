@@ -3,26 +3,21 @@ package drawing.text;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import drawing.Button;
 import drawing.Drawing;
 import drawing.Position;
+import drawing.button.Button;
 
 public class TextDrawing extends Drawing {
 	
-	private static final String FONT_WHITE_FILEPATH = "./res/font/font.png";
-	private static final String FONT_BLACK_FILEPATH = "./res/font/font_black.png";
-
-	private static final String FONT_GLYPHDATA_FILEPATH = "./res/font/font.fnt";
-	private static final String BUTTON_FILEPATH = "./res/UI/button.png";
-	private static final String BUTTON_HOVER_FILEPATH = "./res/UI/buttonHover.png";
-	private static final String BUTTON_CLICKED_FILEPATH = "./res/UI/buttonClicked.png";
+	//private static final String FONT_WHITE_FILEPATH = "./res/font/sagas.png";
+	private static final String FONT_BLACK_FILEPATH = "./res/font/sagas_black.png";
+	private static final String FONT_GLYPHDATA_FILEPATH = "./res/font/sagas.fnt";
 	
-	private static final String INFOPANEL_FILEPATH = "./res/UI/infopanel.png";
+	private static final String BOX_FILEPATH = "./res/UI/box_3_1.png";
 	
 	private GlyphDataReader glyphDataReader;
 	private HashMap<String, GlyphData> glyphs; 
 	
-	private ArrayList<Button> activeButtons = new ArrayList<Button>();
 
 	public TextDrawing(int screenWidth, int screenHeight, int mapSizeInTiles) {
 		super(screenWidth, screenHeight, mapSizeInTiles);
@@ -41,10 +36,7 @@ public class TextDrawing extends Drawing {
 		float[] texture = getGlyphTexture(glyph);
 		float[] vertices = getVertices(posX, posY, glyphWidth*fontsize, glyphHeight*fontsize);
 
-		//startTime = System.currentTimeMillis();
 		render(textureCache.getTexture(FONT_BLACK_FILEPATH), vertices, texture);		
-		//endTime = System.currentTimeMillis();
-		//System.out.println("rendering took: " + (double)(endTime-startTime) + " miliseconds");
 	}
 	
 	private float[] getGlyphTexture(GlyphData glyph) {
@@ -66,10 +58,17 @@ public class TextDrawing extends Drawing {
 		};	
 	}
 	
-	public void drawString(Position pos, String string, float fontsize) {
+	public void drawString(Position pos, String string, float fontsize, int boxWidth, int textOffsetX, boolean centered) {
+		
+		if(centered) {
+			int length = Math.round(getTextLength(string) * fontsize);
+			pos.setX(pos.getX() + Math.round((boxWidth - length)/2));
+		} else {
+			pos.setX(pos.getX() + textOffsetX);
+		}
+		
 		for (int i = 0; i < string.length(); i++){
-		    char c = string.charAt(i);
-		    GlyphData glyph = glyphs.get(c + "");
+		    GlyphData glyph = glyphs.get(string.charAt(i) + "");
 		    if(glyph != null) {
 		    	drawChar(pos, glyph, fontsize);
 		    	pos.setX(pos.getX() + Math.round(glyph.xadvance * fontsize));
@@ -77,29 +76,54 @@ public class TextDrawing extends Drawing {
 		}
 	}
 	
-	public void drawButtonWithText(Button button, String string, float fontsize) {
-		drawRectangle(button.getPos(), button.getWidth(), button.getHeight(), textureCache.getTexture(BUTTON_FILEPATH));
-		drawString(new Position(Math.round(button.getPos().getX() + (button.getWidth()*55/300)), Math.round(button.getPos().getY() + fontsize*50)), string, fontsize);
+	private int getTextLength(String string) {
+		int textLength = 0;
+		for (int i = 0; i < string.length(); i++){
+		    GlyphData glyph = glyphs.get(string.charAt(i) + "");
+		    if(glyph != null) {
+		    	textLength += glyph.xadvance;
+		    }
+		}
+		return textLength;
+	}
+	
+	public void drawButtonWithText(Button button, float fontsize) {
+		drawRectangleFromSprite(button.getPos(), button.getWidth(), button.getHeight(), textureCache.getTexture(button.getSpriteFilePath()), button.getSpriteElement());
+		drawString(new Position(button.getPos().getX(), button.getPos().getY() + button.getButtonTextOffsetY()), 
+				button.getText(), 
+				fontsize,
+				button.getWidth(),
+				button.getButtonTextOffsetX(),
+				true
+			);
 	}
 	
 	public void drawMainMenu(boolean newGameStarted) {
-		int buttonWidth= 300;
-		int buttonHeight= 94;
-		int posX = screenWidth/2 - buttonWidth/2;
-		int posY = newGameStarted ? 150 : 50;
 		
-		Button newGameButton = new Button(Button.NEW_GAME, new Position(posX,posY + buttonHeight + 20), buttonWidth, buttonHeight);
-		Button ExitButton = new Button(Button.EXIT, new Position(posX,posY + 2*(buttonHeight + 20)), buttonWidth, buttonHeight);
-		activeButtons.add(newGameButton);
-		activeButtons.add(ExitButton);
+		if(activeButtons.isEmpty()) {
+			activeButtons = getButtons(newGameStarted);
+		}
+		
+		for(int i = 0; i < activeButtons.size(); i++) {
+			Button button = activeButtons.get(i);
+			int posX = screenWidth/2 - BUTTON_WIDTH/2;
+			button.setPos(new Position(posX, 150 + i*(BUTTON_HEIGHT + 20)));
+			drawButtonWithText(button, 0.6f);
+		}
+		
+	}
+	
+	private ArrayList<Button> getButtons(boolean newGameStarted) {
+		ArrayList<Button> buttons = new ArrayList<Button>();
 		
 		if(newGameStarted) {
-			Button continueButton = new Button(Button.CONTINUE, new Position(posX,posY), buttonWidth, buttonHeight);
-			activeButtons.add(continueButton);
-			drawButtonWithText(continueButton, "Continue", 0.5f);
+			buttons.add(new Button(Button.CONTINUE, new Position(0,0), BUTTON_WIDTH, BUTTON_HEIGHT, "Continue"));
 		}
-		drawButtonWithText(newGameButton, "New Game", 0.5f);
-		drawButtonWithText(ExitButton, "Exit", 0.5f);
+		
+		buttons.add(new Button(Button.NEW_GAME, new Position(0,0), BUTTON_WIDTH, BUTTON_HEIGHT, "New Game"));
+		buttons.add(new Button(Button.EXIT, new Position(0,0), BUTTON_WIDTH, BUTTON_HEIGHT, "Exit"));
+
+		return buttons;
 	}
 
 	public ArrayList<Button> getActiveButtons() {
@@ -111,12 +135,14 @@ public class TextDrawing extends Drawing {
 	}
 	
 	public void drawFPS(int fps) {
-		drawString(new Position(screenWidth-150, 10), "FPS: " + fps, 0.4f);
+		drawString(new Position(screenWidth-150, 10), "FPS: " + fps, 0.6f, 150, 0, false);
+	}
+	public void drawInfoBox() {
+		drawRectangle(new Position(screenHeight, screenHeight-225), screenWidth-screenHeight-MAP_PADDING, 200, textureCache.getTexture(BOX_FILEPATH));
 	}
 	
-	public void drawInfoText(String string) {
-		drawRectangle(new Position(screenWidth-600,screenHeight-250), 450, 200, textureCache.getTexture(INFOPANEL_FILEPATH));  
-		drawString(new Position(screenWidth-550,screenHeight-180), string, 0.4f);
+	public void drawInfoBoxText(String string) {
+		drawString(new Position(screenWidth-550,screenHeight-180), string, 0.6f, screenWidth-screenHeight-MAP_PADDING, 20, false);
 	}
 
 }

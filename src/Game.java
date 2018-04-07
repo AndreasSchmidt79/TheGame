@@ -4,9 +4,9 @@ import static org.lwjgl.opengl.GL11.glClear;
 
 import java.util.ArrayList;
 
-import drawing.Button;
 import drawing.Drawing;
 import drawing.Position;
+import drawing.button.Button;
 import drawing.map.MapDrawing;
 import drawing.text.TextDrawing;
 import gameMap.*;
@@ -16,8 +16,8 @@ import inventory.armour.LeatherArmour;
 import inventory.armour.SteelHelmet;
 import player.Player;
 
-
 public class Game {
+	public static final int MAP_PADDING = 25;
 	private static int MAP_SIZE_IN_TILES = 13; // needs to be odd, so player can be in the middle
 	private GameMap gameMap = null;
 	private MapTile[][] mapTiles = null;
@@ -68,16 +68,17 @@ public class Game {
 		if(currentGameState == GAME_STATE_MAP || newGameStarted) {
 			mapDrawing.drawMap(player);
 			mapDrawing.drawPlayer(player);
+			textDrawing.drawInfoBox();
 			if(!infoText.isEmpty()) {
-				textDrawing.drawInfoText(infoText);
+				textDrawing.drawInfoBoxText(infoText);
 			}
 		}
 		if(currentGameState == GAME_STATE_MAINMENU) {
+			drawing.drawSemiTransparentPane();
 			textDrawing.drawMainMenu(newGameStarted);
 		}
 		
 		textDrawing.drawFPS(fps);
-		
 		glfwSwapBuffers(window);
 	}
 	
