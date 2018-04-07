@@ -85,6 +85,7 @@ public class UserInteractions{
 			if(InputHandler.keyReleased(GLFW_KEY_ESCAPE)) {
 				game.setCurrentGameState(game.GAME_STATE_MAINMENU);
 			}
+			game.updateEvents();
 		} else if(game.currentGameState == game.GAME_STATE_COMBAT) {
 			//TBD
 		}

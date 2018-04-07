@@ -1,5 +1,7 @@
 package gameMap;
 
+import java.util.ArrayList;
+
 import drawing.Position;
 
 public class GameMap {
@@ -8,7 +10,7 @@ public class GameMap {
 	private int[][] mapTilesTypes;
 	private MapTile[][] mapTiles;
 	private Position startPosition;
-	
+	private ArrayList<MapPortal> mapPortals = new ArrayList<MapPortal>();
 	
 	public GameMap(int dimensions, int[][] mapTileTypes, MapTile[][] mapTiles, Position startPosition) {
 		this.dimensions = dimensions;		
@@ -31,6 +33,23 @@ public class GameMap {
 
 	public Position getStartPosition() {
 		return startPosition;
+	}
+	
+	public void addMapPortal(MapPortal mapPortal) {
+		this.mapPortals.add(mapPortal);
+	}
+
+	public ArrayList<MapPortal> getMapPortals() {
+		return mapPortals;
+	}
+	
+	public MapPortal getPortalAtPos(Position pos) {
+		for(MapPortal mapPortal: getMapPortals()) {
+			if(pos.getX() == mapPortal.getPortalPosition().getX() && pos.getY() == mapPortal.getPortalPosition().getY()) {
+				return mapPortal;
+			}
+		}
+		return null;
 	}
 
 }

@@ -19,8 +19,9 @@ import player.Player;
 public class Game {
 	public static final int MAP_PADDING = 25;
 	private static int MAP_SIZE_IN_TILES = 13; // needs to be odd, so player can be in the middle
-	private GameMap gameMap = null;
-	private MapTile[][] mapTiles = null;
+	private GameMap currentGameMap;
+	private ArrayList<GameMap> gameMaps = new ArrayList<GameMap>();
+	//private MapTile[][] mapTiles = null;
 	private Player player;
 	private Drawing drawing;
 	private TextDrawing textDrawing;
@@ -46,12 +47,9 @@ public class Game {
 	}
 	
 	public void startNewGame() {
-		//gameMap = mapGenerator.getRandomGameMap();
-		gameMap = mapGenerator.getRandomDungeonMap();
-		
-		mapTiles = gameMap.getMapTiles();
-		mapDrawing = new MapDrawing(Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT, MAP_SIZE_IN_TILES, gameMap);
-		player = new Player(gameMap.getStartPosition());
+		getGameMaps();
+		mapDrawing = new MapDrawing(Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT, MAP_SIZE_IN_TILES);
+		player = new Player(gameMaps.get(0).getStartPosition());
 		
 		player.inventory.addEquipment(new SteelHelmet("hammer Helm", 2));
 		player.inventory.addEquipment(new LeatherArmour("Lederrüstung", 4));
@@ -60,13 +58,24 @@ public class Game {
 		newGameStarted = true;
 	}
 	
+	private void getGameMaps() {
+		GameMap gameMap1 = mapGenerator.getRandomGameMap();
+		GameMap randomDungeon = mapGenerator.getRandomDungeonMap();
+		gameMap1.addMapPortal(new MapPortal(new Position(13,12),1,randomDungeon.getStartPosition()));
+		randomDungeon.addMapPortal(new MapPortal(new Position(10,5), 0, new Position(13,9)));
+		gameMaps.add(gameMap1);
+		gameMaps.add(randomDungeon);
+		
+		currentGameMap = gameMaps.get(0);
+	}
+	
 	public void updateAll() {
 		glClear(GL_COLOR_BUFFER_BIT);
 		
 		drawing.drawBackground();
 		
 		if(currentGameState == GAME_STATE_MAP || newGameStarted) {
-			mapDrawing.drawMap(player);
+			mapDrawing.drawMap(player, currentGameMap);
 			mapDrawing.drawPlayer(player);
 			textDrawing.drawInfoBox();
 			if(!infoText.isEmpty()) {
@@ -87,6 +96,7 @@ public class Game {
 	}
 	
 	public void updatePlayerMovement(String direction){
+		MapTile[][] mapTiles = currentGameMap.getMapTiles();
 		if(direction == "left"){
 			setPlayerDirection("left");
 			if(mapTiles[player.getPos().getX()-1][player.getPos().getY()].isPassable()){
@@ -109,9 +119,27 @@ public class Game {
 				player.setPosDown();
 			}
 		}
+	}
+	
+	public void updateEvents() {
+		MapTile[][] mapTiles = currentGameMap.getMapTiles();
+		updateEventChest(mapTiles);
+		updateEventMapPortal(mapTiles);
+	}
+	
+	private void updateEventMapPortal(MapTile[][] mapTiles) {
+		MapPortal mapPortal = currentGameMap.getPortalAtPos(player.getPos());
+		if(mapPortal != null) {
+			infoText = "You found a Dungeon";
+			currentGameMap = gameMaps.get(mapPortal.getTargetMapIndex());
+			player.setPos(mapPortal.getTargetPosition());
+		} 
+	}
+	
+	private void updateEventChest(MapTile[][] mapTiles) {
 		if(mapTiles[player.getPos().getX()][player.getPos().getY()].getDecorationType() == DecorationMapping.DECORATION_CHEST_CLOSED) {
 			infoText = "You found a chest!";
-		}else {
+		} else {
 			infoText = "";
 		}
 	}
@@ -135,10 +163,6 @@ public class Game {
 	
 	public void clearActiveButtons() {
 		textDrawing.clearActiveButtons();
-	}
-	
-	public void triggerMousePos(Position pos) {
-		
 	}
 	
 }

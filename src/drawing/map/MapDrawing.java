@@ -12,9 +12,8 @@ public class MapDrawing extends Drawing{
 	
 	private MapTile[][] mapTiles = null;
 
-	public MapDrawing(int screenWidth, int screenHeight, int mapSizeInTiles, GameMap gameMap) {
+	public MapDrawing(int screenWidth, int screenHeight, int mapSizeInTiles) {
 		super(screenWidth, screenHeight, mapSizeInTiles);
-		this.mapTiles = gameMap.getMapTiles();
 	}
 	
 	public void drawPlayer(Player player){
@@ -48,7 +47,8 @@ public class MapDrawing extends Drawing{
 		return false;
 	}
 	
-	public void drawMap(Player player){
+	public void drawMap(Player player, GameMap gameMap){
+		this.mapTiles = gameMap.getMapTiles();
 		
 		for(int i = 0; i < mapSizeInTiles; i++){
 			for(int j = 0; j < mapSizeInTiles; j++){
@@ -76,6 +76,7 @@ public class MapDrawing extends Drawing{
 				}
 			}
 		}
+		
 		drawLightRadius();
 		drawMapFrame();
 	}

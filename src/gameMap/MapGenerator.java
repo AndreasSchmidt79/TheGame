@@ -51,6 +51,7 @@ public class MapGenerator {
 			}
 		}
 		gameMap[10][14] = MapTileMapping.MAPTILE_DUNGEON_DOOR_O;
+		gameMap[10][5] = MapTileMapping.MAPTILE_DUNGEON_DOOR_O;
 		return gameMap;
 	}
 	
