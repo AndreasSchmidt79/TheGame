@@ -1,11 +1,16 @@
 package drawing.map;
 
+import java.util.ArrayList;
+
+import com.sun.javafx.geom.transform.GeneralTransform3D;
+
 import drawing.Drawing;
 import drawing.Position;
 import gameMap.GameMap;
 import gameMap.MapTile;
 import gameMap.Scaling;
 import inventory.EquippableItem;
+import mob.Mob;
 import player.Player;
 
 public class MapDrawing extends Drawing{
@@ -59,6 +64,9 @@ public class MapDrawing extends Drawing{
 					if(!textureFilePath.isEmpty()) {
 						drawItemInMapTileRaster(new Position(i, j), textureFilePath);
 					}
+					if(currentMapTile.getMob()!=null) {
+						drawMob(currentMapTile.getMob(), new Position(i, j));
+					}
 				}
 			}
 		}
@@ -79,6 +87,10 @@ public class MapDrawing extends Drawing{
 		
 		drawLightRadius();
 		drawMapFrame();
+	}
+	
+	private void drawMob(Mob mob, Position pos) {
+		drawItemInMapTileRaster(pos, mob.getFilePath());
 	}
 	
 	public void drawItemInMapTileRaster(Position pos, String filePath){

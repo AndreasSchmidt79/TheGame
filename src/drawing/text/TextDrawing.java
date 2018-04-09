@@ -142,7 +142,7 @@ public class TextDrawing extends Drawing {
 	}
 	
 	public void drawInfoBoxText(String string) {
-		drawString(new Position(screenHeight+20,screenHeight-200), string, 0.6f, screenWidth-screenHeight-MAP_PADDING, 20, false);
+		drawString(new Position(screenHeight+20,screenHeight-200), string, 0.4f, screenWidth-screenHeight-MAP_PADDING, 20, false);
 	}
 
 }

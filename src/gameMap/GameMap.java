@@ -3,6 +3,7 @@ package gameMap;
 import java.util.ArrayList;
 
 import drawing.Position;
+import mob.Mob;
 
 public class GameMap {
 	
@@ -11,6 +12,7 @@ public class GameMap {
 	private MapTile[][] mapTiles;
 	private Position startPosition;
 	private ArrayList<MapPortal> mapPortals = new ArrayList<MapPortal>();
+	private ArrayList<Mob> mobs = new ArrayList<Mob>();
 	
 	public GameMap(int dimensions, int[][] mapTileTypes, MapTile[][] mapTiles, Position startPosition) {
 		this.dimensions = dimensions;		
@@ -50,6 +52,20 @@ public class GameMap {
 			}
 		}
 		return null;
+	}
+
+	public ArrayList<Mob> getMobs() {
+		return mobs;
+	}
+	
+	public void addMob(Mob mob) {
+		this.mobs.add(mob);
+		this.mapTiles[mob.getPos().getX()][mob.getPos().getY()].setMob(mob);
+	}
+	
+	public void removeMob(Mob mob) {
+		this.mobs.remove(mob);
+		this.mapTiles[mob.getPos().getX()][mob.getPos().getY()].removeMob();
 	}
 
 }

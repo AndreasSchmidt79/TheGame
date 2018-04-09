@@ -14,6 +14,7 @@ import inventory.Weapon.DamageRange;
 import inventory.Weapon.Sword;
 import inventory.armour.LeatherArmour;
 import inventory.armour.SteelHelmet;
+import mob.Mob;
 import player.Player;
 
 public class Game {
@@ -122,15 +123,23 @@ public class Game {
 	}
 	
 	public void updateEvents() {
+		infoText = "";
 		MapTile[][] mapTiles = currentGameMap.getMapTiles();
+		updateEventMobEncounter(mapTiles);
 		updateEventChest(mapTiles);
 		updateEventMapPortal(mapTiles);
+	}
+	
+	private void updateEventMobEncounter(MapTile[][] mapTiles) {
+		Mob mob = mapTiles[player.getPos().getX()][player.getPos().getY()].getMob();
+		if(mob != null) {
+			infoText = "You encountered " + mob.getName();
+		}
 	}
 	
 	private void updateEventMapPortal(MapTile[][] mapTiles) {
 		MapPortal mapPortal = currentGameMap.getPortalAtPos(player.getPos());
 		if(mapPortal != null) {
-			infoText = "You found a Dungeon";
 			currentGameMap = gameMaps.get(mapPortal.getTargetMapIndex());
 			player.setPos(mapPortal.getTargetPosition());
 		} 
@@ -139,9 +148,7 @@ public class Game {
 	private void updateEventChest(MapTile[][] mapTiles) {
 		if(mapTiles[player.getPos().getX()][player.getPos().getY()].getDecorationType() == DecorationMapping.DECORATION_CHEST_CLOSED) {
 			infoText = "You found a chest!";
-		} else {
-			infoText = "";
-		}
+		} 
 	}
 	
 	public void  setFps(int fps) {

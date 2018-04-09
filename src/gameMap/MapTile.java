@@ -1,5 +1,7 @@
 package gameMap;
 
+import mob.Mob;
+
 public class MapTile {
 	
 	private String textureFilePath;
@@ -8,7 +10,7 @@ public class MapTile {
 	private Scaling decorationScaling;
 	private int mapTileType;
 	private int decorationType;
-	
+	private Mob mob = null;
 	
 	public MapTile(int type, int decorationType){
 		this.textureFilePath = MapTileMapping.getTextureFilePath(type);
@@ -41,6 +43,18 @@ public class MapTile {
 
 	public int getDecorationType() {
 		return decorationType;
+	}
+
+	public Mob getMob() {
+		return mob;
+	}
+
+	public void setMob(Mob mob) {
+		this.mob = mob;
+	}
+	
+	public void removeMob() {
+		this.mob = null;
 	}
 	
 }

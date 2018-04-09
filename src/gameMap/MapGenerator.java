@@ -3,6 +3,7 @@ package gameMap;
 import java.util.Random;
 
 import drawing.Position;
+import mob.Mob;
 
 public class MapGenerator {
 	
@@ -31,11 +32,17 @@ public class MapGenerator {
 	}
 	
 	public GameMap getRandomDungeonMap() {
-		int[][] gameMap = generateDungeon(20);
+		int[][] mapTileTypes = generateDungeon(20);
 		int[][] decorationMap = generateDungeonDecorations(20);
 			
-		MapTile[][] mapTiles = getMapTilesFromMapTypes(gameMap, decorationMap, 20);
-		return new GameMap(RANDOM_MAP_SIZE, gameMap, mapTiles, new Position(10,14));
+		MapTile[][] mapTiles = getMapTilesFromMapTypes(mapTileTypes, decorationMap, 20);
+		GameMap gameMap = new GameMap(RANDOM_MAP_SIZE, mapTileTypes, mapTiles, new Position(10,14));
+		Mob mobSpider = new Mob("a nasty spider", 10, 1, new Position(12,12), Mob.SPIDER_FILEPATH);
+		Mob mobSpider2 = new Mob("another nasty spider!", 10, 1, new Position(7,10), Mob.SPIDER_FILEPATH);
+		gameMap.addMob(mobSpider);
+		gameMap.addMob(mobSpider2);
+		
+		return gameMap;
 	}
 	
 	private int[][] generateDungeon(int dimensions){
