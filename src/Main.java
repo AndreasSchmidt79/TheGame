@@ -54,11 +54,12 @@ public class Main {
 			
 			InputHandler.update();
 			glfwPollEvents();
-			userInteractions.update(window);
+			userInteractions.update();
 			theGame.updateAll();
 			frames ++;
 			double endTime = System.currentTimeMillis();
 			if(endTime - startTime >= 1000) {
+				userInteractions.updateIntervalSecond();
 				fps = frames;
 				frames = 0;
 				startTime = endTime;

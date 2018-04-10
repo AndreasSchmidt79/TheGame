@@ -14,11 +14,23 @@ public class MapGenerator {
 	}
 	
 	public GameMap getRandomGameMap() {
-		int[][] gameMap = generateSimpleMap(RANDOM_MAP_SIZE);
+		int[][] mapTileTypes = generateSimpleMap(RANDOM_MAP_SIZE);
 		int[][] decorationMap = generateDecorations(RANDOM_MAP_SIZE);
 			
-		MapTile[][] mapTiles = getMapTilesFromMapTypes(gameMap, decorationMap, RANDOM_MAP_SIZE);
-		return new GameMap(RANDOM_MAP_SIZE, gameMap, mapTiles, new Position(8, 8));
+		MapTile[][] mapTiles = getMapTilesFromMapTypes(mapTileTypes, decorationMap, RANDOM_MAP_SIZE);
+		
+		GameMap gameMap = new GameMap(RANDOM_MAP_SIZE, mapTileTypes, mapTiles, new Position(8,8));
+		Mob mobGoblin = new Mob("weak goblin", 10, 1, new Position(10,10), Mob.GOBLIN_FILEPATH);
+		Mob mobGoblin2 = new Mob("small goblin", 10, 1, new Position(25,25), Mob.GOBLIN_FILEPATH);
+		Mob mobSkeleton = new Mob("skeleton", 10, 1, new Position(10,15), Mob.SKELETON_FILEPATH);
+		Mob mobSkeleton2 = new Mob("mage skeleton", 10, 1, new Position(10,25), Mob.SKELETON_FILEPATH);
+		gameMap.addMob(mobGoblin);
+		gameMap.addMob(mobGoblin2);
+		
+		gameMap.addMob(mobSkeleton);
+		gameMap.addMob(mobSkeleton2);
+		
+		return gameMap;
 	}
 
 	private MapTile[][] getMapTilesFromMapTypes(int[][] gameMap, int[][] decorationMap, int dimensions) {
@@ -37,8 +49,8 @@ public class MapGenerator {
 			
 		MapTile[][] mapTiles = getMapTilesFromMapTypes(mapTileTypes, decorationMap, 20);
 		GameMap gameMap = new GameMap(RANDOM_MAP_SIZE, mapTileTypes, mapTiles, new Position(10,14));
-		Mob mobSpider = new Mob("a nasty spider", 10, 1, new Position(12,12), Mob.SPIDER_FILEPATH);
-		Mob mobSpider2 = new Mob("another nasty spider!", 10, 1, new Position(7,10), Mob.SPIDER_FILEPATH);
+		Mob mobSpider = new Mob("nasty spider", 10, 1, new Position(12,12), Mob.SPIDER_FILEPATH);
+		Mob mobSpider2 = new Mob("mean spider!", 10, 1, new Position(7,10), Mob.SPIDER_FILEPATH);
 		gameMap.addMob(mobSpider);
 		gameMap.addMob(mobSpider2);
 		

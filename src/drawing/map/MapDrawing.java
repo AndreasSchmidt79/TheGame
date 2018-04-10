@@ -64,9 +64,6 @@ public class MapDrawing extends Drawing{
 					if(!textureFilePath.isEmpty()) {
 						drawItemInMapTileRaster(new Position(i, j), textureFilePath);
 					}
-					if(currentMapTile.getMob()!=null) {
-						drawMob(currentMapTile.getMob(), new Position(i, j));
-					}
 				}
 			}
 		}
@@ -80,6 +77,9 @@ public class MapDrawing extends Drawing{
 					Scaling decorationScaling = currentMapTile.getDecorationScaling();
 					if(!decorationFilePath.isEmpty() && decorationScaling != null) {
 						drawItemInMapTileRaster(new Position(i, j), decorationFilePath, decorationScaling);
+					}
+					if(currentMapTile.getMob()!=null) {
+						drawMob(currentMapTile.getMob(), new Position(i, j));
 					}
 				}
 			}

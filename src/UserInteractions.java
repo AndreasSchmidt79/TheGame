@@ -22,7 +22,7 @@ public class UserInteractions{
 		this.game = game;
 	}
 	
-	public void update(long window) {
+	public void update() {
 		
 		ArrayList<Button> buttons = game.getActiveButtons();
 		
@@ -91,6 +91,12 @@ public class UserInteractions{
 		}
 
 					
+	}
+	
+	public void updateIntervalSecond() {
+		if(game.currentGameState == game.GAME_STATE_MAP) {
+			game.updateIntervalSecond();
+		}
 	}
 
 }

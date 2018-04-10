@@ -32,6 +32,10 @@ public class GameMap {
 	public MapTile[][] getMapTiles() {
 		return mapTiles;
 	}
+	
+	public MapTile getMapTileAtPos(Position pos) {
+		return mapTiles[pos.getX()][pos.getY()];
+	}
 
 	public Position getStartPosition() {
 		return startPosition;

@@ -133,7 +133,7 @@ public class Game {
 	private void updateEventMobEncounter(MapTile[][] mapTiles) {
 		Mob mob = mapTiles[player.getPos().getX()][player.getPos().getY()].getMob();
 		if(mob != null) {
-			infoText = "You encountered " + mob.getName();
+			infoText = "You encountered a " + mob.getName();
 		}
 	}
 	
@@ -149,6 +149,15 @@ public class Game {
 		if(mapTiles[player.getPos().getX()][player.getPos().getY()].getDecorationType() == DecorationMapping.DECORATION_CHEST_CLOSED) {
 			infoText = "You found a chest!";
 		} 
+	}
+	
+	public void updateIntervalSecond() {
+		for(Mob mob : currentGameMap.getMobs()) {
+			currentGameMap.getMapTileAtPos(mob.getPos()).removeMob();
+			mob.moveRandom(currentGameMap);
+			currentGameMap.getMapTileAtPos(mob.getPos()).setMob(mob);
+		}
+		
 	}
 	
 	public void  setFps(int fps) {
