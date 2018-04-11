@@ -1,18 +1,13 @@
 import org.lwjgl.glfw.GLFWKeyCallback;
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
-
+import org.lwjgl.glfw.GLFWCursorPosCallback;
 import drawing.Position;
 
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
-
-import org.lwjgl.glfw.GLFWCursorPosCallback;
-import org.lwjgl.glfw.GLFWCursorPosCallbackI;
-
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 
 public final class InputHandler
 {
-    private static long window;
     private static final int KEYBOARD_SIZE = 512;
     private static final int MOUSE_SIZE = 16;
 
@@ -48,9 +43,7 @@ public final class InputHandler
 		}
     };
 
-    protected static void init(long window)
-    {
-        InputHandler.window = window;
+    protected static void init(long window) {
         resetKeyboard();
         resetMouse();
     }

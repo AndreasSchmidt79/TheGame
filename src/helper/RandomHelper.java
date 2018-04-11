@@ -25,4 +25,8 @@ public class RandomHelper {
 		}
 		return null;
 	}
+	
+	public static final float getRandomLightStrength() {
+		return rand.nextFloat()*0.05f;
+	}
 }

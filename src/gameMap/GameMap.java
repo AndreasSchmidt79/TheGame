@@ -11,8 +11,10 @@ public class GameMap {
 	private int[][] mapTilesTypes;
 	private MapTile[][] mapTiles;
 	private Position startPosition;
+	private float lightStrength = 0.65f; //should be between 0.65 (strongest) and 1
+	private boolean flicker = false;
 	private ArrayList<MapPortal> mapPortals = new ArrayList<MapPortal>();
-	private ArrayList<Mob> mobs = new ArrayList<Mob>();
+	private ArrayList<Mob> mobsToMove = new ArrayList<Mob>();
 	
 	public GameMap(int dimensions, int[][] mapTileTypes, MapTile[][] mapTiles, Position startPosition) {
 		this.dimensions = dimensions;		
@@ -58,18 +60,42 @@ public class GameMap {
 		return null;
 	}
 
-	public ArrayList<Mob> getMobs() {
-		return mobs;
+	public ArrayList<Mob> getMobsToMove() {
+		return mobsToMove;
+	}
+	
+	public void addMobToMobsToMoveList(Mob mob) {
+		if(!mobsToMove.contains(mob)) {
+			mobsToMove.add(mob);
+		}
+	}
+	
+	public void resetMobsToMove() {
+		mobsToMove = new ArrayList<Mob>();
 	}
 	
 	public void addMob(Mob mob) {
-		this.mobs.add(mob);
 		this.mapTiles[mob.getPos().getX()][mob.getPos().getY()].setMob(mob);
 	}
 	
 	public void removeMob(Mob mob) {
-		this.mobs.remove(mob);
 		this.mapTiles[mob.getPos().getX()][mob.getPos().getY()].removeMob();
+	}
+
+	public float getLightStrength() {
+		return lightStrength;
+	}
+
+	public void setLightStrength(float lightStrength) {
+		this.lightStrength = lightStrength;
+	}
+
+	public boolean isFlicker() {
+		return flicker;
+	}
+
+	public void setFlicker(boolean flicker) {
+		this.flicker = flicker;
 	}
 
 }

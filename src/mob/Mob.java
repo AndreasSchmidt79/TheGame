@@ -11,6 +11,7 @@ public class Mob {
 	public static final String SPIDER_FILEPATH = "./res/mobs/spider.png"; 
 	public static final String GOBLIN_FILEPATH = "./res/mobs/goblin.png";
 	public static final String SKELETON_FILEPATH = "./res/mobs/skeleton.png";
+	public static final String WIZARD_FILEPATH = "./res/mobs/wizard.png";
 	
 	private String name;
 	private int hitPoints;

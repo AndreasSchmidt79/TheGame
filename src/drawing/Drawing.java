@@ -3,7 +3,6 @@ package drawing;
 import java.util.ArrayList;
 
 import drawing.button.Button;
-import drawing.text.GlyphData;
 import gameMap.Scaling;
 
 public class Drawing {
@@ -17,7 +16,7 @@ public class Drawing {
 	protected static final String MAPFRAME_FILEPATH = "./res/UI/frame.png";
 	protected static final String TRANSPARENT_PANE_FILEPATH = "./res/UI/semi_transparent.png";
 	protected static final String HUMAN_FILEPATH = "./res/human.png";
-	protected static final String LIGHTING_FILEPATH = "./res/lighting1.png";
+	protected static final String LIGHTING_FILEPATH = "./res/lighting.png";
 	protected ArrayList<Button> activeButtons = new ArrayList<Button>();
 
 	protected int mapSizeInTiles; 
@@ -72,6 +71,10 @@ public class Drawing {
 		render(tex, vertices, texture);
 	}
 	
+	protected void drawRectangleZoomTexture(Position pos, int width, int height, Texture tex, float zoom){
+		render(tex, calculateVertices(pos, width, height, new Scaling(1,1)), getZoomTexture(zoom));
+	}
+	
 	private float[] calculateVertices(Position pos, int width, int height, Scaling scaling) {
 		float posX = - 1 + (float)pos.getX()*2/(float)screenWidth;
 		float posY = 1 - (float)pos.getY()*2/(float)screenHeight;
@@ -87,6 +90,10 @@ public class Drawing {
 	
 	protected float[] getDefaultTexture() {
 		return new float[] { 0,0,1,0,1,1,1,1,0,1,0,0 };
+	}
+	
+	protected float[] getZoomTexture(float z) {
+		return new float[] { 1-z,1-z,z,1-z,z,z,z,z,1-z,z,1-z,1-z };
 	}
 
 	protected float[] getInversXTexture() {		

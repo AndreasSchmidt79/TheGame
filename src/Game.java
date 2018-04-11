@@ -62,8 +62,8 @@ public class Game {
 	private void getGameMaps() {
 		GameMap gameMap1 = mapGenerator.getRandomGameMap();
 		GameMap randomDungeon = mapGenerator.getRandomDungeonMap();
-		gameMap1.addMapPortal(new MapPortal(new Position(13,12),1,randomDungeon.getStartPosition()));
-		randomDungeon.addMapPortal(new MapPortal(new Position(10,5), 0, new Position(13,9)));
+		gameMap1.addMapPortal(new MapPortal(new Position(13,12),1, randomDungeon.getStartPosition()));
+		randomDungeon.addMapPortal(new MapPortal(new Position(10,14), 0, new Position(13,13)));
 		gameMaps.add(gameMap1);
 		gameMaps.add(randomDungeon);
 		
@@ -152,12 +152,12 @@ public class Game {
 	}
 	
 	public void updateIntervalSecond() {
-		for(Mob mob : currentGameMap.getMobs()) {
+		for(Mob mob : currentGameMap.getMobsToMove()) {
 			currentGameMap.getMapTileAtPos(mob.getPos()).removeMob();
 			mob.moveRandom(currentGameMap);
 			currentGameMap.getMapTileAtPos(mob.getPos()).setMob(mob);
 		}
-		
+		currentGameMap.resetMobsToMove();
 	}
 	
 	public void  setFps(int fps) {

@@ -24,11 +24,14 @@ public class MapGenerator {
 		Mob mobGoblin2 = new Mob("small goblin", 10, 1, new Position(25,25), Mob.GOBLIN_FILEPATH);
 		Mob mobSkeleton = new Mob("skeleton", 10, 1, new Position(10,15), Mob.SKELETON_FILEPATH);
 		Mob mobSkeleton2 = new Mob("mage skeleton", 10, 1, new Position(10,25), Mob.SKELETON_FILEPATH);
+		
+		Mob mobWizard = new Mob("mighty wizard", 10, 1, new Position(9,9), Mob.WIZARD_FILEPATH);
 		gameMap.addMob(mobGoblin);
 		gameMap.addMob(mobGoblin2);
 		
 		gameMap.addMob(mobSkeleton);
 		gameMap.addMob(mobSkeleton2);
+		gameMap.addMob(mobWizard);
 		
 		return gameMap;
 	}
@@ -48,9 +51,13 @@ public class MapGenerator {
 		int[][] decorationMap = generateDungeonDecorations(20);
 			
 		MapTile[][] mapTiles = getMapTilesFromMapTypes(mapTileTypes, decorationMap, 20);
-		GameMap gameMap = new GameMap(RANDOM_MAP_SIZE, mapTileTypes, mapTiles, new Position(10,14));
+		GameMap gameMap = new GameMap(RANDOM_MAP_SIZE, mapTileTypes, mapTiles, new Position(10,13));
+		gameMap.setLightStrength(1);
+		gameMap.setFlicker(true);
+		
 		Mob mobSpider = new Mob("nasty spider", 10, 1, new Position(12,12), Mob.SPIDER_FILEPATH);
 		Mob mobSpider2 = new Mob("mean spider!", 10, 1, new Position(7,10), Mob.SPIDER_FILEPATH);
+		
 		gameMap.addMob(mobSpider);
 		gameMap.addMob(mobSpider2);
 		
@@ -70,7 +77,7 @@ public class MapGenerator {
 			}
 		}
 		gameMap[10][14] = MapTileMapping.MAPTILE_DUNGEON_DOOR_O;
-		gameMap[10][5] = MapTileMapping.MAPTILE_DUNGEON_DOOR_O;
+		//gameMap[10][5] = MapTileMapping.MAPTILE_DUNGEON_DOOR_O;
 		return gameMap;
 	}
 	
@@ -135,7 +142,7 @@ public class MapGenerator {
 					int setDecoProbability = rand.nextInt(100);
 					if(setDecoProbability < 5) {		
 						int decorationTile = rand.nextInt(DecorationMapping.textureFilePathMap.size());
-						if(decorationTile <= DecorationMapping.DECORATION_PATH) {
+						if(decorationTile <= DecorationMapping.DECORATION_TREE2) {
 							decorations[i][j] = decorationTile;
 						}
 					}

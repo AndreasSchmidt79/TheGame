@@ -9,6 +9,7 @@ import drawing.Position;
 import gameMap.GameMap;
 import gameMap.MapTile;
 import gameMap.Scaling;
+import helper.RandomHelper;
 import inventory.EquippableItem;
 import mob.Mob;
 import player.Player;
@@ -36,9 +37,12 @@ public class MapDrawing extends Drawing{
 		drawRectangle(new Position(MAP_PADDING, MAP_PADDING), length, length, textureCache.getTexture(MAPFRAME_FILEPATH));
 	}
 	
-	public void drawLightRadius() {
+	public void drawLightRadius(float lightStrength, boolean flicker) {
 		int length = Math.round(screenHeight-MAP_PADDING*2);
-		drawRectangle(new Position(MAP_PADDING, MAP_PADDING), length, length, textureCache.getTexture(LIGHTING_FILEPATH));		
+		if(flicker) {
+			lightStrength += RandomHelper.getRandomLightStrength();
+		}
+		drawRectangleZoomTexture(new Position(MAP_PADDING, MAP_PADDING), length, length, textureCache.getTexture(LIGHTING_FILEPATH), lightStrength);
 	}
 	
 	private boolean isValidMapTile(MapTile[][] mapTiles, int x, int y) {
@@ -80,12 +84,13 @@ public class MapDrawing extends Drawing{
 					}
 					if(currentMapTile.getMob()!=null) {
 						drawMob(currentMapTile.getMob(), new Position(i, j));
+						gameMap.addMobToMobsToMoveList(currentMapTile.getMob());
 					}
 				}
 			}
 		}
 		
-		drawLightRadius();
+		drawLightRadius(gameMap.getLightStrength(), gameMap.isFlicker());
 		drawMapFrame();
 	}
 	

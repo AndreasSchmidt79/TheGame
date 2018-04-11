@@ -18,19 +18,18 @@ public class DecorationMapping {
 	public static final int DECORATION_DEER = 10;
 	public static final int DECORATION_TREE1 = 11;
 	public static final int DECORATION_TREE2 = 12;
-	public static final int DECORATION_PATH = 13;
-	public static final int DECORATION_CAVE_ENTRANCE = 14;
-	public static final int DECORATION_MOUNTAIN_B_L = 15;
-	public static final int DECORATION_MOUNTAIN_B_R = 16;
-	public static final int DECORATION_MOUNTAIN_B = 17;
-	public static final int DECORATION_MOUNTAIN_L = 18;
-	public static final int DECORATION_MOUNTAIN_R = 19;
-	public static final int DECORATION_MOUNTAIN_C = 20;
-	public static final int DECORATION_MOUNTAIN_T = 21;
-	public static final int DECORATION_MOUNTAIN_T_L = 22;
-	public static final int DECORATION_MOUNTAIN_T_R = 23;
-	public static final int DECORATION_CHEST_OPEN = 24;
-	public static final int DECORATION_CHEST_CLOSED = 25;
+	public static final int DECORATION_CAVE_ENTRANCE = 13;
+	public static final int DECORATION_MOUNTAIN_B_L = 14;
+	public static final int DECORATION_MOUNTAIN_B_R = 15;
+	public static final int DECORATION_MOUNTAIN_B = 16;
+	public static final int DECORATION_MOUNTAIN_L = 17;
+	public static final int DECORATION_MOUNTAIN_R = 18;
+	public static final int DECORATION_MOUNTAIN_C = 19;
+	public static final int DECORATION_MOUNTAIN_T = 20;
+	public static final int DECORATION_MOUNTAIN_T_L = 21;
+	public static final int DECORATION_MOUNTAIN_T_R = 22;
+	public static final int DECORATION_CHEST_OPEN = 23;
+	public static final int DECORATION_CHEST_CLOSED = 24;
 	
 	
 	
@@ -52,7 +51,6 @@ public class DecorationMapping {
     	textureFilePathMap.put(DECORATION_DEER, "./res/decoration/deer.png");
     	textureFilePathMap.put(DECORATION_TREE1, "./res/decoration/tree1.png");
     	textureFilePathMap.put(DECORATION_TREE2, "./res/decoration/tree2.png");
-    	textureFilePathMap.put(DECORATION_PATH, "./res/decoration/path.png");
     	textureFilePathMap.put(DECORATION_CAVE_ENTRANCE, "./res/decoration/cave_entrance.png");
     	textureFilePathMap.put(DECORATION_MOUNTAIN_B_L, "./res/decoration/mountain_b_l.png");
     	textureFilePathMap.put(DECORATION_MOUNTAIN_B_R, "./res/decoration/mountain_b_r.png");
