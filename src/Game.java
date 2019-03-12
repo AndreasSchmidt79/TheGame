@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import drawing.Drawing;
 import drawing.Position;
 import drawing.button.Button;
+import drawing.inventory.InventoryDrawing;
 import drawing.map.MapDrawing;
 import drawing.text.TextDrawing;
 import gameMap.*;
@@ -26,6 +27,7 @@ public class Game {
 	private Player player;
 	private Drawing drawing;
 	private TextDrawing textDrawing;
+	private InventoryDrawing inventoryDrawing;
 	private MapDrawing mapDrawing;
 	private long window;
 	private MapGenerator mapGenerator;
@@ -44,6 +46,7 @@ public class Game {
 		mapGenerator = new MapGenerator();
 		drawing = new Drawing(width, height, MAP_SIZE_IN_TILES);
 		textDrawing = new TextDrawing(width, height, MAP_SIZE_IN_TILES);
+		inventoryDrawing = new InventoryDrawing(width, height, MAP_SIZE_IN_TILES);
 		currentGameState = GAME_STATE_MAINMENU;
 	}
 	
@@ -55,7 +58,8 @@ public class Game {
 		player.inventory.addEquipment(new SteelHelmet("hammer Helm", 2));
 		player.inventory.addEquipment(new LeatherArmour("Lederrüstung", 4));
 		player.inventory.addEquipment(new Sword("scharfes Schwert", new DamageRange(1, 2)));
-		
+		player.setHealth(60);
+	
 		newGameStarted = true;
 	}
 	
@@ -79,6 +83,8 @@ public class Game {
 			mapDrawing.drawMap(player, currentGameMap);
 			mapDrawing.drawPlayer(player);
 			textDrawing.drawInfoBox();
+			inventoryDrawing.drawInventory(player);
+			
 			if(!infoText.isEmpty()) {
 				textDrawing.drawInfoBoxText(infoText);
 			}
@@ -132,8 +138,8 @@ public class Game {
 	
 	private void updateEventMobEncounter(MapTile[][] mapTiles) {
 		Mob mob = mapTiles[player.getPos().getX()][player.getPos().getY()].getMob();
-		if(mob != null) {
-			infoText = "You encountered a " + mob.getName();
+		if(mob != null) {			
+			infoText = "You encountered a " + mob.getName();			
 		}
 	}
 	

@@ -29,5 +29,8 @@ public class Position {
 		return "x: " + this.x + ", y: " + this.y;
 	}
 	
+	public Position getNewPosWithOffset(int x, int y) {
+		return new Position(getX() + x, getY() + y);
+	}
 	
 }

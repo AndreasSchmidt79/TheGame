@@ -1,9 +1,5 @@
 package drawing.map;
 
-import java.util.ArrayList;
-
-import com.sun.javafx.geom.transform.GeneralTransform3D;
-
 import drawing.Drawing;
 import drawing.Position;
 import gameMap.GameMap;

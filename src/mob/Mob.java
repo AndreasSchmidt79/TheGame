@@ -4,6 +4,7 @@ import java.util.Random;
 
 import drawing.Position;
 import gameMap.GameMap;
+import helper.Direction;
 import helper.RandomHelper;
 
 public class Mob {
@@ -11,7 +12,9 @@ public class Mob {
 	public static final String SPIDER_FILEPATH = "./res/mobs/spider.png"; 
 	public static final String GOBLIN_FILEPATH = "./res/mobs/goblin.png";
 	public static final String SKELETON_FILEPATH = "./res/mobs/skeleton.png";
+	public static final String SKELETON2_FILEPATH = "./res/mobs/skeleton2.png";
 	public static final String WIZARD_FILEPATH = "./res/mobs/wizard.png";
+	public static final String BAT_FILEPATH = "./res/mobs/bat.png";
 	
 	private String name;
 	private int hitPoints;
@@ -59,7 +62,7 @@ public class Mob {
 	}
 	
 	public void moveRandom(GameMap gameMap) {
-		String direction = RandomHelper.getRandomDirection();
+		Direction direction = RandomHelper.getRandomDirection();
 		Position newPos = getNewPos(pos, direction);
 		if(isMovementValid(gameMap, newPos)) {
 			pos = newPos;
@@ -70,19 +73,19 @@ public class Mob {
 		return gameMap.getMapTileAtPos(pos).isPassable() && gameMap.getMapTileAtPos(pos).getMob() == null;
 	}
 	
-	private Position getNewPos(Position pos, String direction) {
+	private Position getNewPos(Position pos, Direction direction) {
 		Position newPos = new Position(pos.getX(), pos.getY());
 		switch(direction) {
-			case RandomHelper.DIR_LEFT:
+			case LEFT:
 				newPos.setX(pos.getX() - 1);
 				break;
-			case RandomHelper.DIR_RIGHT:
+			case RIGHT:
 				newPos.setX(pos.getX() + 1);
 				break;
-			case RandomHelper.DIR_TOP:
+			case TOP:
 				newPos.setY(pos.getY() - 1);
 				break;
-			case RandomHelper.DIR_DOWN:
+			case DOWN:
 				newPos.setY(pos.getY() + 1);
 				break;
 		}

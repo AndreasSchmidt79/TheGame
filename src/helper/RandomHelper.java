@@ -3,24 +3,19 @@ import java.util.Random;
 
 public class RandomHelper {
 
-	public static final String DIR_LEFT = "left";
-	public static final String DIR_TOP = "top";
-	public static final String DIR_RIGHT = "right";
-	public static final String DIR_DOWN = "down";
-	
 	private static final Random rand = new Random();
 	
-	public static final String getRandomDirection() {
+	public static final Direction getRandomDirection() {
 		int random4 = rand.nextInt(4);
 		switch(random4) {
 			case 0:
-				return DIR_LEFT;
+				return Direction.LEFT;
 			case 1:
-				return DIR_TOP;
+				return Direction.TOP;
 			case 2:
-				return DIR_RIGHT;
+				return Direction.RIGHT;
 			case 3:
-				return DIR_DOWN;
+				return Direction.DOWN;
 			
 		}
 		return null;

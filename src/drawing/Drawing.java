@@ -17,6 +17,12 @@ public class Drawing {
 	protected static final String TRANSPARENT_PANE_FILEPATH = "./res/UI/semi_transparent.png";
 	protected static final String HUMAN_FILEPATH = "./res/human.png";
 	protected static final String LIGHTING_FILEPATH = "./res/lighting.png";
+	protected static final String BOX_FILEPATH = "./res/UI/box_3_1.png";
+	protected static final String PAPER_FILEPATH = "./res/UI/paper_background.png";
+	protected static final String HEALTHBAR = "./res/UI/healthbar.png";	
+	protected static final String HEALTHBAR_BG = "./res/UI/healthbar_bg.png";
+	protected static final String INVENTORY = "./res/UI/inventory.png";	
+	
 	protected ArrayList<Button> activeButtons = new ArrayList<Button>();
 
 	protected int mapSizeInTiles; 

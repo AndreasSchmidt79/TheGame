@@ -8,6 +8,8 @@ public class Player {
 	private Position pos;
 	private String direction = "right";
 	public Inventory inventory = new Inventory();
+	private int health = 100;
+	private int maxHealth = 100;
 	
 	public Player(Position pos) {		
 		this.pos = pos;
@@ -25,6 +27,28 @@ public class Player {
 	
 	public void setDirection(String direction) {
 		this.direction = direction;
+	}
+	
+	
+	public int getLevel() {
+		return level;
+	}
+	
+	public int getHealth() {
+		return health;
+	}
+	
+	
+	public int getMaxHealth() {
+		return maxHealth;
+	}
+	
+	public void setMaxHealth(int maxHealth) {
+		this.maxHealth = maxHealth;
+	}
+	
+	public void setHealth(int health) {
+		this.health = health;
 	}
 	
 	public void setPosLeft() {

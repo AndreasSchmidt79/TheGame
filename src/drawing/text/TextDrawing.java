@@ -13,8 +13,6 @@ public class TextDrawing extends Drawing {
 	private static final String FONT_BLACK_FILEPATH = "./res/font/sagas_black.png";
 	private static final String FONT_GLYPHDATA_FILEPATH = "./res/font/sagas.fnt";
 	
-	private static final String BOX_FILEPATH = "./res/UI/box_3_1.png";
-	
 	private GlyphDataReader glyphDataReader;
 	private HashMap<String, GlyphData> glyphs; 
 	

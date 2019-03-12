@@ -22,10 +22,11 @@ public class MapGenerator {
 		GameMap gameMap = new GameMap(RANDOM_MAP_SIZE, mapTileTypes, mapTiles, new Position(8,8));
 		Mob mobGoblin = new Mob("weak goblin", 10, 1, new Position(10,10), Mob.GOBLIN_FILEPATH);
 		Mob mobGoblin2 = new Mob("small goblin", 10, 1, new Position(25,25), Mob.GOBLIN_FILEPATH);
-		Mob mobSkeleton = new Mob("skeleton", 10, 1, new Position(10,15), Mob.SKELETON_FILEPATH);
+		Mob mobSkeleton = new Mob("skeleton", 10, 1, new Position(10,15), Mob.SKELETON2_FILEPATH);
 		Mob mobSkeleton2 = new Mob("mage skeleton", 10, 1, new Position(10,25), Mob.SKELETON_FILEPATH);
 		
 		Mob mobWizard = new Mob("mighty wizard", 10, 1, new Position(9,9), Mob.WIZARD_FILEPATH);
+		
 		gameMap.addMob(mobGoblin);
 		gameMap.addMob(mobGoblin2);
 		
@@ -57,9 +58,11 @@ public class MapGenerator {
 		
 		Mob mobSpider = new Mob("nasty spider", 10, 1, new Position(12,12), Mob.SPIDER_FILEPATH);
 		Mob mobSpider2 = new Mob("mean spider!", 10, 1, new Position(7,10), Mob.SPIDER_FILEPATH);
+		Mob mobBat = new Mob("small bat", 10, 1, new Position(10,7), Mob.BAT_FILEPATH);
 		
 		gameMap.addMob(mobSpider);
 		gameMap.addMob(mobSpider2);
+		gameMap.addMob(mobBat);
 		
 		return gameMap;
 	}
