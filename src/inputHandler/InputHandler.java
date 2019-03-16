@@ -1,3 +1,5 @@
+package inputHandler;
+
 import org.lwjgl.glfw.GLFWKeyCallback;
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
 import org.lwjgl.glfw.GLFWCursorPosCallback;
@@ -23,32 +25,32 @@ public final class InputHandler
     private static Position mousePosition;
 
 
-    protected static GLFWKeyCallback keyboard = new GLFWKeyCallback() {
+    public static GLFWKeyCallback keyboard = new GLFWKeyCallback() {
         public void invoke(long window, int key, int scancode, int action, int mods) {
             activeKeys[key] = action != GLFW_RELEASE;
             keyStates[key] = action;
         }
     };
 
-    protected static GLFWMouseButtonCallback mouse = new GLFWMouseButtonCallback() {
+    public static GLFWMouseButtonCallback mouse = new GLFWMouseButtonCallback() {
         public void invoke(long window, int button, int action, int mods) {
             activeMouseButtons[button] = action != GLFW_RELEASE;
             mouseButtonStates[button] = action;
         }
     };
     
-    protected static GLFWCursorPosCallback cursor = new GLFWCursorPosCallback() {
+    public static GLFWCursorPosCallback cursor = new GLFWCursorPosCallback() {
 		public void invoke(long window, double x, double y) {
 			mousePosition = new Position((int)x,(int)y);
 		}
-    };
+        };
 
-    protected static void init(long window) {
+    public static void init(long window) {
         resetKeyboard();
         resetMouse();
     }
 
-    protected static void update() {
+    public static void update() {
         resetKeyboard();
         resetMouse();
     }

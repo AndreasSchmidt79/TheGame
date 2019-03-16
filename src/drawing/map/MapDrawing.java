@@ -2,6 +2,7 @@ package drawing.map;
 
 import drawing.Drawing;
 import drawing.Position;
+import drawing.TextureFilepath;
 import gameMap.GameMap;
 import gameMap.MapTile;
 import gameMap.Scaling;
@@ -19,9 +20,9 @@ public class MapDrawing extends Drawing{
 	}
 	
 	public void drawPlayer(Player player){
-		boolean inversX = player.getDirection().equals("left"); 
+		boolean inversX = player.getFaceDirection().equals("left");
 		Position playerPos = new Position((mapSizeInTiles-1)/2, (mapSizeInTiles-1)/2);
-		drawItemInMapTileRaster(playerPos, HUMAN_FILEPATH, inversX);
+		drawItemInMapTileRaster(playerPos, TextureFilepath.HUMAN.getFilepath(), inversX);
 		
 		for(EquippableItem item: player.inventory.getEquipment()){
 			drawItemInMapTileRaster(playerPos, item.getTextureFilePathCharacter(), inversX);
@@ -30,7 +31,7 @@ public class MapDrawing extends Drawing{
 	
 	private void drawMapFrame() {
 		int length = Math.round(screenHeight-MAP_PADDING*2);
-		drawRectangle(new Position(MAP_PADDING, MAP_PADDING), length, length, textureCache.getTexture(MAPFRAME_FILEPATH));
+		drawRectangle(new Position(MAP_PADDING, MAP_PADDING), length, length, textureCache.getTexture(TextureFilepath.PANEL_FRAME.getFilepath()));
 	}
 	
 	public void drawLightRadius(float lightStrength, boolean flicker) {
@@ -38,7 +39,7 @@ public class MapDrawing extends Drawing{
 		if(flicker) {
 			lightStrength += RandomHelper.getRandomLightStrength();
 		}
-		drawRectangleZoomTexture(new Position(MAP_PADDING, MAP_PADDING), length, length, textureCache.getTexture(LIGHTING_FILEPATH), lightStrength);
+		drawRectangleZoomTexture(new Position(MAP_PADDING, MAP_PADDING), length, length, textureCache.getTexture(TextureFilepath.LIGHTING.getFilepath()), lightStrength);
 	}
 	
 	private boolean isValidMapTile(MapTile[][] mapTiles, int x, int y) {
@@ -52,7 +53,7 @@ public class MapDrawing extends Drawing{
 		return false;
 	}
 	
-	public void drawMap(Player player, GameMap gameMap){
+	public void drawMapPanel(Player player, GameMap gameMap){
 		this.mapTiles = gameMap.getMapTiles();
 		
 		for(int i = 0; i < mapSizeInTiles; i++){

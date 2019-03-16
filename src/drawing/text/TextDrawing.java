@@ -5,7 +5,9 @@ import java.util.HashMap;
 
 import drawing.Drawing;
 import drawing.Position;
+import drawing.TextureFilepath;
 import drawing.button.Button;
+import drawing.button.ButtonAction;
 
 public class TextDrawing extends Drawing {
 	
@@ -86,7 +88,7 @@ public class TextDrawing extends Drawing {
 	}
 	
 	public void drawButtonWithText(Button button, float fontsize) {
-		drawRectangleFromSprite(button.getPos(), button.getWidth(), button.getHeight(), textureCache.getTexture(button.getSpriteFilePath()), button.getSpriteElement());
+		drawRectangleFromSprite(button.getPos(), button.getWidth(), button.getHeight(), textureCache.getTexture(TextureFilepath.BUTTON_SPRITE.getFilepath()), button.getSpriteElement());
 		drawString(new Position(button.getPos().getX(), button.getPos().getY() + button.getButtonTextOffsetY()), 
 				button.getText(), 
 				fontsize,
@@ -104,22 +106,22 @@ public class TextDrawing extends Drawing {
 		
 		for(int i = 0; i < activeButtons.size(); i++) {
 			Button button = activeButtons.get(i);
-			int posX = screenWidth/2 - BUTTON_WIDTH/2;
-			button.setPos(new Position(posX, 150 + i*(BUTTON_HEIGHT + 20)));
+			int posX = screenWidth/2 - MAIN_MENU_BUTTON_WIDTH /2;
+			button.setPos(new Position(posX, 150 + i*(MAIN_MENU_BUTTON_HEIGHT + 20)));
 			drawButtonWithText(button, 0.6f);
 		}
 		
 	}
 	
 	private ArrayList<Button> getButtons(boolean newGameStarted) {
-		ArrayList<Button> buttons = new ArrayList<Button>();
+		ArrayList<Button> buttons = new ArrayList<>();
 		
 		if(newGameStarted) {
-			buttons.add(new Button(Button.CONTINUE, new Position(0,0), BUTTON_WIDTH, BUTTON_HEIGHT, "Continue"));
+			buttons.add(new Button(ButtonAction.CONTINUE, new Position(0,0), MAIN_MENU_BUTTON_WIDTH, MAIN_MENU_BUTTON_HEIGHT, "Continue"));
 		}
 		
-		buttons.add(new Button(Button.NEW_GAME, new Position(0,0), BUTTON_WIDTH, BUTTON_HEIGHT, "New Game"));
-		buttons.add(new Button(Button.EXIT, new Position(0,0), BUTTON_WIDTH, BUTTON_HEIGHT, "Exit"));
+		buttons.add(new Button(ButtonAction.NEW_GAME, new Position(0,0), MAIN_MENU_BUTTON_WIDTH, MAIN_MENU_BUTTON_HEIGHT, "New game"));
+		buttons.add(new Button(ButtonAction.EXIT, new Position(0,0), MAIN_MENU_BUTTON_WIDTH, MAIN_MENU_BUTTON_HEIGHT, "Exit"));
 
 		return buttons;
 	}
@@ -129,17 +131,17 @@ public class TextDrawing extends Drawing {
 	}
 	
 	public void clearActiveButtons() {
-		activeButtons = new ArrayList<Button>();
+		activeButtons = new ArrayList<>();
 	}
 	
 	public void drawFPS(int fps) {
 		drawString(new Position(screenWidth-150, 10), "FPS: " + fps, 0.6f, 150, 0, false);
 	}
-	public void drawInfoBox() {
-		drawRectangle(new Position(screenHeight, screenHeight-225), screenWidth-screenHeight-MAP_PADDING, 200, textureCache.getTexture(BOX_FILEPATH));
+	public void drawInfoPanel() {
+		drawRectangle(new Position(screenHeight, screenHeight-225), screenWidth-screenHeight-MAP_PADDING, 200, textureCache.getTexture(TextureFilepath.TEXT_PANEL.getFilepath()));
 	}
 	
-	public void drawInfoBoxText(String string) {
+	public void drawInfoPanelText(String string) {
 		drawString(new Position(screenHeight+20,screenHeight-200), string, 0.4f, screenWidth-screenHeight-MAP_PADDING, 20, false);
 	}
 

@@ -5,14 +5,6 @@ import drawing.SpriteElement;
 
 public class Button {
 
-	public static final int NEW_GAME = 0;
-	public static final int CONTINUE = 1;
-	public static final int EXIT = 2;
-	
-	public static final String BUTTON_SPRITE = "./res/UI/button_sprite.png";
-	public static final String BUTTON_FILEPATH = "./res/UI/button_300_63.png";
-	public static final String BUTTON_HOVER_FILEPATH = "./res/UI/button_hover_300_63.png";
-	public static final String BUTTON_CLICKED_FILEPATH = "./res/UI/button_clicked_300_63.png";
 	private static final int SPRITEELEMENT_WIDTH = 300;
 	private static final int SPRITEELEMENT_HEIGHT = 63;
 	private static final int BUTTON_TEXT_OFFSET_X = 60;
@@ -23,14 +15,14 @@ public class Button {
 	public static final SpriteElement SPRITEELEMENT_HOVER = new SpriteElement(new Position(0,156), SPRITEELEMENT_WIDTH, SPRITEELEMENT_HEIGHT);;
 	public static final SpriteElement SPRITEELEMENT_INACTIVE = new SpriteElement(new Position(0,234), SPRITEELEMENT_WIDTH, SPRITEELEMENT_HEIGHT);;
 	
-	private int action;
+	private ButtonAction action;
 	private Position pos;
 	private int width;
 	private int height;
 	private String text;
 	private SpriteElement spriteElement;
 	
-	public Button(int action, Position pos, int width, int height, String text) {
+	public Button(ButtonAction action, Position pos, int width, int height, String text) {
 		this.action = action;
 		this.pos = pos;
 		this.width = width;
@@ -39,7 +31,7 @@ public class Button {
 		this.spriteElement = SPRITEELEMENT_DEFAULT;
 	}
 
-	public int getAction() {
+	public ButtonAction getAction() {
 		return action;
 	}
 
@@ -67,10 +59,6 @@ public class Button {
 			}
 		}
 		return false;
-	}
-
-	public String getSpriteFilePath() {
-		return BUTTON_SPRITE;
 	}
 
 	public String getText() {

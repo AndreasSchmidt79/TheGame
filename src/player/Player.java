@@ -5,28 +5,32 @@ import inventory.Inventory;
 
 public class Player {
 	private int level = 1;
-	private Position pos;
-	private String direction = "right";
+	private int ExperiencePoints = 0;
+	private String name = "Player 1";
 	public Inventory inventory = new Inventory();
 	private int health = 100;
 	private int maxHealth = 100;
-	
+	private Position pos;
+	private String faceDirection = "right";
+
 	public Player(Position pos) {		
 		this.pos = pos;
 	}
+
 	public Position getPos() {
 		return pos;
 	}
+
 	public void setPos(Position pos) {
 		this.pos = pos;
 	}
 
-	public String getDirection() {
-		return direction;
+	public String getFaceDirection() {
+		return faceDirection;
 	}
 	
-	public void setDirection(String direction) {
-		this.direction = direction;
+	public void setFaceDirection(String faceDirection) {
+		this.faceDirection = faceDirection;
 	}
 	
 	
@@ -65,5 +69,21 @@ public class Player {
 	
 	public void setPosDown() {
 		this.pos = new Position(pos.getX(), pos.getY() + 1);
+	}
+
+	public int getExperiencePoints() {
+		return ExperiencePoints;
+	}
+
+	public void setExperiencePoints(int experiencePoints) {
+		ExperiencePoints = experiencePoints;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

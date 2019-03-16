@@ -11,7 +11,7 @@ public class RandomHelper {
 			case 0:
 				return Direction.LEFT;
 			case 1:
-				return Direction.TOP;
+				return Direction.UP;
 			case 2:
 				return Direction.RIGHT;
 			case 3:

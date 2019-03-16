@@ -1,7 +1,5 @@
 package mob;
 
-import java.util.Random;
-
 import drawing.Position;
 import gameMap.GameMap;
 import helper.Direction;
@@ -82,7 +80,7 @@ public class Mob {
 			case RIGHT:
 				newPos.setX(pos.getX() + 1);
 				break;
-			case TOP:
+			case UP:
 				newPos.setY(pos.getY() - 1);
 				break;
 			case DOWN:

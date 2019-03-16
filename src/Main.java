@@ -1,9 +1,10 @@
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 
-import org.lwjgl.glfw.GLFWCursorPosCallback;
-import org.lwjgl.glfw.GLFWMouseButtonCallback;
+import game.Game;
+import inputHandler.InputHandler;
 import org.lwjgl.opengl.GL;
+import userInteractions.UserInteractions;
 
 public class Main {
 	
@@ -20,7 +21,7 @@ public class Main {
 			throw new IllegalStateException("Failed to initalize glfw");			
 		}
 		
-		long window = glfwCreateWindow(SCREEN_WIDTH,SCREEN_HEIGHT, "My Game", IS_FULLSCREEN ? glfwGetPrimaryMonitor() : 0, 0);
+		long window = glfwCreateWindow(SCREEN_WIDTH,SCREEN_HEIGHT, "My game", IS_FULLSCREEN ? glfwGetPrimaryMonitor() : 0, 0);
 		
 		if(window == 0) {
 			throw new IllegalStateException("Failed to create Window");
@@ -43,8 +44,6 @@ public class Main {
 		glfwSetKeyCallback(window, InputHandler.keyboard);
 		glfwSetCursorPosCallback(window, InputHandler.cursor);
 		
-		UserInteractions userInteractions = new UserInteractions(theGame);
-		
 		theGame.updateAll();
 		int fps = 0;
 		int frames = 0;
@@ -54,12 +53,11 @@ public class Main {
 			
 			InputHandler.update();
 			glfwPollEvents();
-			userInteractions.update();
 			theGame.updateAll();
 			frames ++;
 			double endTime = System.currentTimeMillis();
 			if(endTime - startTime >= 1000) {
-				userInteractions.updateIntervalSecond();
+				theGame.updateIntervalSecond();
 				fps = frames;
 				frames = 0;
 				startTime = endTime;

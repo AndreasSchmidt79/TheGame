@@ -8,22 +8,12 @@ import gameMap.Scaling;
 public class Drawing {
 	
 	protected static final int MAP_PADDING = 25;
-	protected static final int BUTTON_WIDTH = 400;
-	protected static final int BUTTON_HEIGHT = 80;
+	protected static final int MAIN_MENU_BUTTON_WIDTH = 400;
+	protected static final int MAIN_MENU_BUTTON_HEIGHT = 80;
 	protected int screenWidth;
 	protected int screenHeight;
-	protected static final String BACKGROUND_FILEPATH = "./res/UI/bricks_bg.png";
-	protected static final String MAPFRAME_FILEPATH = "./res/UI/frame.png";
-	protected static final String TRANSPARENT_PANE_FILEPATH = "./res/UI/semi_transparent.png";
-	protected static final String HUMAN_FILEPATH = "./res/human.png";
-	protected static final String LIGHTING_FILEPATH = "./res/lighting.png";
-	protected static final String BOX_FILEPATH = "./res/UI/box_3_1.png";
-	protected static final String PAPER_FILEPATH = "./res/UI/paper_background.png";
-	protected static final String HEALTHBAR = "./res/UI/healthbar.png";	
-	protected static final String HEALTHBAR_BG = "./res/UI/healthbar_bg.png";
-	protected static final String INVENTORY = "./res/UI/inventory.png";	
-	
-	protected ArrayList<Button> activeButtons = new ArrayList<Button>();
+
+	protected ArrayList<Button> activeButtons = new ArrayList<>();
 
 	protected int mapSizeInTiles; 
 	protected TextureCache textureCache = new TextureCache();
@@ -45,11 +35,11 @@ public class Drawing {
 	}
 	
 	public void drawBackground() {
-		drawRectangle(new Position(0,0),screenWidth, screenHeight, textureCache.getTexture(BACKGROUND_FILEPATH));
+		drawRectangle(new Position(0,0),screenWidth, screenHeight, textureCache.getTexture(TextureFilepath.BACKGROUND.getFilepath()));
 	}
 	
 	public void drawSemiTransparentPane() {
-		drawRectangle(new Position(0, 0), screenWidth, screenHeight, textureCache.getTexture(TRANSPARENT_PANE_FILEPATH));
+		drawRectangle(new Position(0, 0), screenWidth, screenHeight, textureCache.getTexture(TextureFilepath.TRANSPARENT_PANE.getFilepath()));
 	}
 	
 	protected void drawRectangle(Position pos, int width, int height, Texture tex){

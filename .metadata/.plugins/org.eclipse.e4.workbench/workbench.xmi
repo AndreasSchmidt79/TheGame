@@ -1728,7 +1728,7 @@
   <commands xmi:id="_Hd2SkSk3EeiRqM2haVjOng" elementId="org.eclipse.pde.ui.externalizeStrings" commandName="Externalize Strings in Plug-ins" description="Extract translatable strings from plug-in files" category="_HdtG5Ck3EeiRqM2haVjOng"/>
   <commands xmi:id="_Hd2Skik3EeiRqM2haVjOng" elementId="org.eclipse.ui.dialogs.openMessageDialog" commandName="Open Message Dialog" description="Open a Message Dialog" category="_HdtG2Sk3EeiRqM2haVjOng">
     <parameters xmi:id="_Hd2Skyk3EeiRqM2haVjOng" elementId="title" name="Title"/>
-    <parameters xmi:id="_Hd2SlCk3EeiRqM2haVjOng" elementId="message" name="Message"/>
+    <parameters xmi:id="_Hd2SlCk3EeiRqM2haVjOng" elementId="filepath" name="Message"/>
     <parameters xmi:id="_Hd2SlSk3EeiRqM2haVjOng" elementId="imageType" name="Image Type Constant" typeId="org.eclipse.ui.dialogs.Integer"/>
     <parameters xmi:id="_Hd2Slik3EeiRqM2haVjOng" elementId="defaultIndex" name="Default Button Index" typeId="org.eclipse.ui.dialogs.Integer"/>
     <parameters xmi:id="_Hd2Slyk3EeiRqM2haVjOng" elementId="buttonLabel0" name="First Button Label"/>
@@ -1914,7 +1914,7 @@
   <commands xmi:id="_Hd2TQik3EeiRqM2haVjOng" elementId="org.eclipse.egit.ui.RepositoriesViewRemoveRemote" commandName="Delete Remote" category="_HdtG2ik3EeiRqM2haVjOng"/>
   <commands xmi:id="_Hd2TQyk3EeiRqM2haVjOng" elementId="org.eclipse.ui.dialogs.openInputDialog" commandName="Open Input Dialog" description="Open an Input Dialog" category="_HdtG2Sk3EeiRqM2haVjOng">
     <parameters xmi:id="_Hd2TRCk3EeiRqM2haVjOng" elementId="title" name="Title"/>
-    <parameters xmi:id="_Hd2TRSk3EeiRqM2haVjOng" elementId="message" name="Message"/>
+    <parameters xmi:id="_Hd2TRSk3EeiRqM2haVjOng" elementId="filepath" name="Message"/>
     <parameters xmi:id="_Hd2TRik3EeiRqM2haVjOng" elementId="initialValue" name="Initial Value"/>
     <parameters xmi:id="_Hd2TRyk3EeiRqM2haVjOng" elementId="cancelReturns" name="Return Value on Cancel"/>
   </commands>
@@ -2105,7 +2105,7 @@
   <commands xmi:id="_s_ySXSllEeiuMYrLfvcRww" elementId="org.eclipse.mylyn.builds.ui.commands.OpenBuildElement" commandName="Open Build Element" category="_s_wdBCllEeiuMYrLfvcRww">
     <parameters xmi:id="_s_ySXillEeiuMYrLfvcRww" elementId="element" name="Element"/>
   </commands>
-  <commands xmi:id="_s_ySXyllEeiuMYrLfvcRww" elementId="org.eclipse.mylyn.team.ui.commands.CopyCommitMessage" commandName="Copy Commit Message for Task" description="Copies a commit message for the currently selected task to the clipboard." category="_s_wdByllEeiuMYrLfvcRww"/>
+  <commands xmi:id="_s_ySXyllEeiuMYrLfvcRww" elementId="org.eclipse.mylyn.team.ui.commands.CopyCommitMessage" commandName="Copy Commit Message for Task" description="Copies a commit filepath for the currently selected task to the clipboard." category="_s_wdByllEeiuMYrLfvcRww"/>
   <commands xmi:id="_s_ySYCllEeiuMYrLfvcRww" elementId="org.eclipse.eclemma.ui.relaunchSession" commandName="Relaunch Coverage Session" category="_s_wdCillEeiuMYrLfvcRww"/>
   <commands xmi:id="_s_ySYSllEeiuMYrLfvcRww" elementId="org.eclipse.wst.xml.ui.previousSibling" commandName="Previous Sibling" description="Go to Previous Sibling" category="_HdtG0yk3EeiRqM2haVjOng"/>
   <commands xmi:id="_s_ySYillEeiuMYrLfvcRww" elementId="org.eclipse.egit.ui.team.PullWithOptions" commandName="Pull..." category="_HdtG2ik3EeiRqM2haVjOng"/>
