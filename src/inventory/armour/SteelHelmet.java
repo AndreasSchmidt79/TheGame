@@ -1,11 +1,13 @@
 package inventory.armour;
 
+import drawing.TextureFilepath;
+
 public class SteelHelmet extends Armour{
 
 	public SteelHelmet(String name, int armourValue) {
 		super(name, armourValue);
-		this.textureFilePathCharacter = "./res/Items/armour/SteelHelmet.png";
-		this.textureFilePathInventory = "./res/UI/icons/SteelHelmetIcon.png";
+		this.textureFilePathEquipped = TextureFilepath.ITEM_STEEL_HELMET_EQUIP;
+		this.textureFilePathInventory = TextureFilepath.ITEM_STEEL_HELMET_INV;
 	}
 
 }

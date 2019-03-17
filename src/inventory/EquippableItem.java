@@ -1,16 +1,18 @@
 package inventory;
 
+import drawing.TextureFilepath;
+
 public class EquippableItem extends Item {
 	
 	protected EquipSlot equipSlot;
-	protected String textureFilePathCharacter;
+	protected TextureFilepath textureFilePathEquipped;
 
 	public EquippableItem(String name) {
 		super(name);	
 	}
 
-	public String getTextureFilePathCharacter() {
-		return textureFilePathCharacter;
+	public TextureFilepath getTextureFilePathEquipped() {
+		return textureFilePathEquipped;
 	}
 		
 }

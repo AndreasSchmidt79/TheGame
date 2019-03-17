@@ -3,29 +3,30 @@ package gameMap;
 import java.util.Random;
 
 import drawing.Position;
+import drawing.TextureFilepath;
 import mob.Mob;
 
 public class MapGenerator {
 	
-	private static final int RANDOM_MAP_SIZE = 60;
+	private static final int MAP_SIZE = 60;
 
 	public MapGenerator() {
 	
 	}
 	
 	public GameMap getRandomGameMap() {
-		int[][] mapTileTypes = generateSimpleMap(RANDOM_MAP_SIZE);
-		int[][] decorationMap = generateDecorations(RANDOM_MAP_SIZE);
+		int[][] mapTileTypes = generateSimpleMap(MAP_SIZE);
+		int[][] decorationMap = generateDecorations(MAP_SIZE);
 			
-		MapTile[][] mapTiles = getMapTilesFromMapTypes(mapTileTypes, decorationMap, RANDOM_MAP_SIZE);
+		MapTile[][] mapTiles = getMapTilesFromMapTypes(mapTileTypes, decorationMap, MAP_SIZE);
 		
-		GameMap gameMap = new GameMap(RANDOM_MAP_SIZE, mapTileTypes, mapTiles, new Position(8,8));
-		Mob mobGoblin = new Mob("weak goblin", 10, 1, new Position(10,10), Mob.GOBLIN_FILEPATH);
-		Mob mobGoblin2 = new Mob("small goblin", 10, 1, new Position(25,25), Mob.GOBLIN_FILEPATH);
-		Mob mobSkeleton = new Mob("skeleton", 10, 1, new Position(10,15), Mob.SKELETON2_FILEPATH);
-		Mob mobSkeleton2 = new Mob("mage skeleton", 10, 1, new Position(10,25), Mob.SKELETON_FILEPATH);
+		GameMap gameMap = new GameMap(MAP_SIZE, mapTileTypes, mapTiles, new Position(8,8));
+		Mob mobGoblin = new Mob("weak goblin", 10, 1, new Position(10,10), TextureFilepath.MOB_GOBLIN.getFilepath());
+		Mob mobGoblin2 = new Mob("small goblin", 10, 1, new Position(25,25), TextureFilepath.MOB_GOBLIN.getFilepath());
+		Mob mobSkeleton = new Mob("skeleton", 10, 1, new Position(10,15), TextureFilepath.MOB_SKELETON.getFilepath());
+		Mob mobSkeleton2 = new Mob("mage skeleton", 10, 1, new Position(10,25), TextureFilepath.MOB_SKELETON.getFilepath());
 		
-		Mob mobWizard = new Mob("mighty wizard", 10, 1, new Position(9,9), Mob.WIZARD_FILEPATH);
+		Mob mobWizard = new Mob("mighty wizard", 10, 1, new Position(9,9), TextureFilepath.MOB_WIZARD.getFilepath());
 		
 		gameMap.addMob(mobGoblin);
 		gameMap.addMob(mobGoblin2);
@@ -52,13 +53,13 @@ public class MapGenerator {
 		int[][] decorationMap = generateDungeonDecorations(20);
 			
 		MapTile[][] mapTiles = getMapTilesFromMapTypes(mapTileTypes, decorationMap, 20);
-		GameMap gameMap = new GameMap(RANDOM_MAP_SIZE, mapTileTypes, mapTiles, new Position(10,13));
+		GameMap gameMap = new GameMap(MAP_SIZE, mapTileTypes, mapTiles, new Position(10,13));
 		gameMap.setLightStrength(1);
 		gameMap.setFlicker(true);
 		
-		Mob mobSpider = new Mob("nasty spider", 10, 1, new Position(12,12), Mob.SPIDER_FILEPATH);
-		Mob mobSpider2 = new Mob("mean spider!", 10, 1, new Position(7,10), Mob.SPIDER_FILEPATH);
-		Mob mobBat = new Mob("small bat", 10, 1, new Position(10,7), Mob.BAT_FILEPATH);
+		Mob mobSpider = new Mob("nasty spider", 10, 1, new Position(12,12), TextureFilepath.MOB_SPIDER.getFilepath());
+		Mob mobSpider2 = new Mob("mean spider!", 10, 1, new Position(7,10), TextureFilepath.MOB_SPIDER.getFilepath());
+		Mob mobBat = new Mob("small bat", 10, 1, new Position(10,7), TextureFilepath.MOB_BAT.getFilepath());
 		
 		gameMap.addMob(mobSpider);
 		gameMap.addMob(mobSpider2);

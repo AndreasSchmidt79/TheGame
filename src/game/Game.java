@@ -1,21 +1,17 @@
 package game;
 
-import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
 import static org.lwjgl.glfw.GLFW.glfwTerminate;
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.glClear;
 
 import java.util.ArrayList;
 
 import drawing.DrawHandler;
-import drawing.Drawing;
+
 import drawing.Position;
+import drawing.TextureFilepath;
 import drawing.button.Button;
 import drawing.button.ButtonAction;
-import drawing.character.CharacterDrawing;
-import drawing.inventory.InventoryDrawing;
-import drawing.map.MapDrawing;
-import drawing.text.TextDrawing;
+
+import drawing.button.TextButton;
 import gameMap.*;
 import helper.Direction;
 import inventory.Weapon.DamageRange;
@@ -27,25 +23,14 @@ import player.Player;
 import userInteractions.UserInteractions;
 
 public class Game {
-	public static final int MAP_PADDING = 25;
 	private static int MAP_SIZE_IN_TILES = 13; // needs to be odd, so player can be in the middle
-	private int SCREEN_WIDTH;
-	private int SCREEN_HEIGHT;
+
 	private GameMap currentGameMap;
 	private ArrayList<GameMap> gameMaps = new ArrayList<>();
-	//private MapTile[][] mapTiles = null;
 	private Player player;
 
-
-	//TODO Replace all drawings with DrawHandler
 	private DrawHandler drawHandler;
-	private Drawing drawing;
-	private TextDrawing textDrawing;
-	private InventoryDrawing inventoryDrawing;
-	private MapDrawing mapDrawing;
-	private CharacterDrawing characterDrawing;
 
-	private long window;
 	private MapGenerator mapGenerator;
 
 	private UserInteractions userInteractions;
@@ -53,26 +38,19 @@ public class Game {
 	public GameState currentGameState;
 	public DisplayState currentDisplayState;
 	private String infoText = "";
+	private ArrayList<Button> activeButtons = new ArrayList<>();
 	
 	private int fps = 0;
 	private boolean newGameStarted = false;
 	
-	public Game(int width, int height, long window) {
-		this.window = window;
-		this.SCREEN_WIDTH = width;
-		this.SCREEN_HEIGHT = height;
+	public Game(long window) {
 		mapGenerator = new MapGenerator();
 
-		drawHandler = new DrawHandler(width, height, MAP_SIZE_IN_TILES);
-
-		drawing = new Drawing(this.SCREEN_WIDTH, this.SCREEN_HEIGHT, MAP_SIZE_IN_TILES);
-		mapDrawing = new MapDrawing(this.SCREEN_WIDTH, this.SCREEN_HEIGHT, MAP_SIZE_IN_TILES);
-		textDrawing = new TextDrawing(this.SCREEN_WIDTH, this.SCREEN_HEIGHT, MAP_SIZE_IN_TILES);
-		inventoryDrawing = new InventoryDrawing(this.SCREEN_WIDTH, this.SCREEN_HEIGHT, MAP_SIZE_IN_TILES);
-		characterDrawing = new CharacterDrawing(this.SCREEN_WIDTH, this.SCREEN_HEIGHT, MAP_SIZE_IN_TILES);
+		drawHandler = new DrawHandler(MAP_SIZE_IN_TILES, window);
 
 		currentGameState = GameState.MAINMENU;
 		userInteractions = new UserInteractions();
+		calculateActiveButtons();
 	}
 	
 	public void startNewGame() {
@@ -109,10 +87,13 @@ public class Game {
                 switch (buttonPressed) {
                     case CONTINUE:
                         setCurrentGameState(GameState.GAME);
+						calculateActiveButtons();
                         break;
                     case NEW_GAME:
                         startNewGame();
                         setCurrentGameState(GameState.GAME);
+                        setCurrentDisplayState(DisplayState.MAP);
+						calculateActiveButtons();
                         break;
                     case EXIT:
                         glfwTerminate();
@@ -130,39 +111,26 @@ public class Game {
             }
             if(userInteractions.isEscapeKeyPressed()){
                 setCurrentGameState(GameState.MAINMENU);
+				calculateActiveButtons();
             }
+			ButtonAction buttonPressed = userInteractions.getButtonPressed(getActiveButtons());
+			if(buttonPressed != null) {
+				switch (buttonPressed) {
+					case INVENTORY:
+						setCurrentDisplayState(DisplayState.INVENTORY);
+						calculateActiveButtons();
+						break;
+					case CLOSE_INVENTORY:
+						setCurrentDisplayState(DisplayState.MAP);
+						calculateActiveButtons();
+						break;
+					default:
+						break;
+				}
+			}
         }
 
-
-        //TODO START drawHandler.drawAll()
-		glClear(GL_COLOR_BUFFER_BIT);
-		
-		drawing.drawBackground();
-
-		if(newGameStarted){
-			if(currentDisplayState == DisplayState.MAP) {
-				mapDrawing.drawMapPanel(player, currentGameMap);
-				mapDrawing.drawPlayer(player);
-			}
-			if(currentDisplayState == DisplayState.INVENTORY) {
-				inventoryDrawing.drawInventory(player);
-			}
-
-			characterDrawing.drawCharacterPanel(player);
-			textDrawing.drawInfoPanel();
-
-			if(!infoText.isEmpty()) {
-				textDrawing.drawInfoPanelText(infoText);
-			}
-		}
-		if(currentGameState == GameState.MAINMENU) {
-			drawing.drawSemiTransparentPane();
-			textDrawing.drawMainMenu(newGameStarted);
-		}
-		
-		textDrawing.drawFPS(fps);
-		glfwSwapBuffers(window);
-        //TODO END drawHandler.getButtonPressed()
+        drawHandler.drawAll(player, currentGameMap, currentGameState, currentDisplayState, fps, activeButtons, infoText, newGameStarted);
 	}
 	
 	private void setPlayerDirection(String direction){
@@ -226,7 +194,7 @@ public class Game {
 	}
 
 	public void updateIntervalSecond() {
-		if(currentDisplayState == DisplayState.MAP) {
+		if(currentDisplayState == DisplayState.MAP && currentGameState == GameState.GAME) {
 			for (Mob mob : currentGameMap.getMobsToMove()) {
 				currentGameMap.getMapTileAtPos(mob.getPos()).removeMob();
 				mob.moveRandom(currentGameMap);
@@ -240,21 +208,48 @@ public class Game {
 		this.fps = fps;
 	}
 
-	public GameState getCurrentGameState() {
-		return currentGameState;
-	}
-
 	private void setCurrentGameState(GameState currentGameState) {
-		clearActiveButtons();
 		this.currentGameState = currentGameState;
 	}
-	
-	private ArrayList<Button> getActiveButtons() {
-		return textDrawing.getActiveButtons();
+
+	public void setCurrentDisplayState(DisplayState currentDisplayState) {
+		this.currentDisplayState = currentDisplayState;
 	}
-	
-	private void clearActiveButtons() {
-		textDrawing.clearActiveButtons();
+
+	public ArrayList<Button> getActiveButtons() {
+		return activeButtons;
 	}
-	
+
+	public void clearActiveButtons() {
+		activeButtons = new ArrayList<>();
+	}
+
+
+	private void calculateActiveButtons() {
+		ArrayList<Button> buttons = new ArrayList<>();
+		if (currentGameState == GameState.MAINMENU) {
+
+			if (newGameStarted) {
+				buttons.add(new TextButton(ButtonAction.CONTINUE, new Position(0, 0), Button.MAIN_MENU_BUTTON_WIDTH, Button.MAIN_MENU_BUTTON_HEIGHT, "Continue"));
+			}
+
+			buttons.add(new TextButton(ButtonAction.NEW_GAME, new Position(0, 0), Button.MAIN_MENU_BUTTON_WIDTH, Button.MAIN_MENU_BUTTON_HEIGHT, "New game"));
+			buttons.add(new TextButton(ButtonAction.EXIT, new Position(0, 0), Button.MAIN_MENU_BUTTON_WIDTH, Button.MAIN_MENU_BUTTON_HEIGHT, "Exit"));
+		}
+		else if(currentGameState == GameState.GAME){
+			if(currentDisplayState == DisplayState.MAP){
+				buttons.add(new Button(ButtonAction.INVENTORY, new Position(0, 0), 50, 50, TextureFilepath.UI_ICON_EQUIPMENT));
+			}
+			else if(currentDisplayState == DisplayState.INVENTORY){
+				//buttons.add(new Button(ButtonAction.CLOSE_INVENTORY, new Position(0, 0), 50, 50, TextureFilepath.UI_HEALTHBAR_BG));
+			}
+			else if (currentDisplayState == DisplayState.COMBAT){
+				//TBD
+			}
+		}
+
+		activeButtons = buttons;
+	}
+
+
 }

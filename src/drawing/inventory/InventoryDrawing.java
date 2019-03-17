@@ -1,26 +1,29 @@
 package drawing.inventory;
 
-import drawing.Drawing;
-import drawing.Position;
-import drawing.TextureFilepath;
+import drawing.*;
+import drawing.button.Button;
 import player.Player;
 
-public class InventoryDrawing extends Drawing {
+import java.util.ArrayList;
+
+public class InventoryDrawing {
+
+	private BaseDrawing baseDrawing;
 	
-	public InventoryDrawing(int screenWidth, int screenHeight, int mapSizeInTiles) {
-		super(screenWidth, screenHeight, mapSizeInTiles);
+	public InventoryDrawing(BaseDrawing baseDrawing) {
+		this.baseDrawing = baseDrawing;
 	}
 
 	
-	public void drawInventory(Player player) {
-		drawInventoryFrame();
-		drawRectangle(new Position(MAP_PADDING*2, MAP_PADDING*2), 480, 412, textureCache.getTexture(TextureFilepath.INVENTORY.getFilepath()));
+	public void drawInventory(Player player, ArrayList<Button> activeButtons, TextureCache textureCache) {
+		drawInventoryFrame(textureCache);
+		baseDrawing.drawRectangle(new Position(Screen.PADDING*2, Screen.PADDING*2), 480, 412, textureCache.getTexture(TextureFilepath.UI_INVENTORY.getFilepath()));
 	}
 
-	private void drawInventoryFrame() {
-		int length = Math.round(screenHeight-MAP_PADDING*2);
-		drawRectangle(new Position(MAP_PADDING, MAP_PADDING), length, length, textureCache.getTexture(TextureFilepath.PAPER_FILEPATH.getFilepath()));
-		drawRectangle(new Position(MAP_PADDING, MAP_PADDING), length, length, textureCache.getTexture(TextureFilepath.PANEL_FRAME.getFilepath()));
+	private void drawInventoryFrame(TextureCache textureCache) {
+		int length = Math.round(Screen.HEIGHT-Screen.PADDING*2);
+		baseDrawing.drawRectangle(new Position(Screen.PADDING, Screen.PADDING), length, length, textureCache.getTexture(TextureFilepath.UI_PAPER_FILEPATH.getFilepath()));
+		baseDrawing.drawRectangle(new Position(Screen.PADDING, Screen.PADDING), length, length, textureCache.getTexture(TextureFilepath.UI_PANEL_FRAME.getFilepath()));
 	}
 	
 }

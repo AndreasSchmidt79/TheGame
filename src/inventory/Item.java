@@ -1,9 +1,11 @@
 package inventory;
 
+import drawing.TextureFilepath;
+
 public class Item {
 	
 	protected String name;
-	protected String textureFilePathInventory;
+	protected TextureFilepath textureFilePathInventory;
 	
 	public Item(String name) {
 		this.name = name;
@@ -13,7 +15,7 @@ public class Item {
 		return name;
 	}
 
-	public String getTextureFilePathInventory() {
+	public TextureFilepath getTextureFilePathInventory() {
 		return textureFilePathInventory;
 	}
 		
