@@ -1,12 +1,13 @@
 package drawing.uiDrawing;
 
-import com.sun.deploy.util.StringUtils;
 import drawing.*;
-import drawing.button.Button;
+import drawing.button.AbstractButton;
 import drawing.text.TextDrawing;
-import gameMap.Scaling;
+import game.GameState;
+import helper.PixelRelative;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class UIDrawing {
 
@@ -36,8 +37,8 @@ public class UIDrawing {
         );
     }
 
-    public void drawButtonWithText(Button button, float fontsize, TextureCache textureCache) {
-        baseDrawing.drawRectangleFromSprite(button.getPos(), button.getWidth(), button.getHeight(), textureCache.getTexture(button.getSpriteFilePath().getFilepath()), button.getSpriteElement());
+    public void drawButtonWithText(AbstractButton button, float fontsize, TextureCache textureCache) {
+        baseDrawing.drawRectangleFromSprite(button.getPos(), button.getWidth(), button.getHeight(), textureCache.getTexture(button.getSpriteFilePath().getFilepath()), button.getCurrentDisplayState());
         textDrawing.drawText(new Position(button.getPos().getX(), button.getPos().getY() + button.getButtonTextOffsetY()),
                 button.getText(),
                 fontsize,
@@ -48,15 +49,27 @@ public class UIDrawing {
         );
     }
 
-    public void drawMainMenu(ArrayList<Button> activeButtons, TextureCache textureCache) {
+    public void drawMainMenu(TextureCache textureCache, GameState currentGameState, HashMap<String, AbstractButton> buttons) {
 
-        for (int i = 0; i < activeButtons.size(); i++) {
-            Button button = activeButtons.get(i);
-            int posX = Screen.WIDTH / 2 - Button.MAIN_MENU_BUTTON_WIDTH / 2;
-            button.setPos(new Position(posX, 150 + i * (Button.MAIN_MENU_BUTTON_HEIGHT + 20)));
+        int posX = Screen.WIDTH / 2 - AbstractButton.MAIN_MENU_BUTTON_WIDTH / 2;
+        int buttonDistance = AbstractButton.MAIN_MENU_BUTTON_HEIGHT + Screen.PADDING;
+
+
+        ArrayList<AbstractButton> mainMenuButtons = new ArrayList<>();
+
+        if (currentGameState.getDisplayState() != null) {
+            mainMenuButtons.add(buttons.get("continue"));
+        }
+        mainMenuButtons.add(buttons.get("newgame"));
+        mainMenuButtons.add(buttons.get("exit"));
+
+
+        for (int i = 0; i < mainMenuButtons.size(); i++) {
+            AbstractButton button = mainMenuButtons.get(i);
+            int posY = PixelRelative.getWidth(150, 1400) + i * buttonDistance;
+            button.setPos(new Position(posX, posY));
             drawButtonWithText(button, 0.6f, textureCache);
         }
-
     }
 
 }

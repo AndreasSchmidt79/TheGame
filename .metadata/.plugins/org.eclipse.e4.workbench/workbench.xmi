@@ -897,7 +897,7 @@
     <tags>categoryTag:Help</tags>
   </descriptors>
   <descriptors xmi:id="_Hf77dik3EeiRqM2haVjOng" elementId="org.eclipse.jdt.debug.ui.DisplayView" label="Display" iconURI="platform:/plugin/org.eclipse.jdt.debug.ui/icons/full/etool16/disp_sbook.png" tooltip="" category="Debug" closeable="true" contributionURI="bundleclass://org.eclipse.ui.workbench/org.eclipse.ui.internal.e4.compatibility.CompatibilityView">
-    <persistedState key="originalCompatibilityViewClass" value="org.eclipse.jdt.internal.debug.ui.display.DisplayView"/>
+    <persistedState key="originalCompatibilityViewClass" value="org.eclipse.jdt.internal.debug.ui.displayState.DisplayView"/>
     <persistedState key="originalCompatibilityViewBundle" value="org.eclipse.jdt.debug.ui"/>
     <tags>View</tags>
     <tags>categoryTag:Debug</tags>
@@ -1502,7 +1502,7 @@
   </commands>
   <commands xmi:id="_Hd2Rtyk3EeiRqM2haVjOng" elementId="org.eclipse.egit.ui.RepositoriesViewDelete" commandName="Delete Repository" category="_HdtG2ik3EeiRqM2haVjOng"/>
   <commands xmi:id="_Hd2RuCk3EeiRqM2haVjOng" elementId="org.eclipse.ui.file.closePart" commandName="Close Part" description="Close the active workbench part" category="_HdtG4yk3EeiRqM2haVjOng"/>
-  <commands xmi:id="_Hd2RuSk3EeiRqM2haVjOng" elementId="org.eclipse.ui.editors.revisions.id.toggle" commandName="Toggle Revision Id Display" description="Toggles the display of the revision id" category="_HdtG1ik3EeiRqM2haVjOng"/>
+  <commands xmi:id="_Hd2RuSk3EeiRqM2haVjOng" elementId="org.eclipse.ui.editors.revisions.id.toggle" commandName="Toggle Revision Id Display" description="Toggles the displayState of the revision id" category="_HdtG1ik3EeiRqM2haVjOng"/>
   <commands xmi:id="_Hd2Ruik3EeiRqM2haVjOng" elementId="org.eclipse.ui.project.cleanAction" commandName="Build Clean" description="Discard old built state" category="_HdtG0ik3EeiRqM2haVjOng"/>
   <commands xmi:id="_Hd2Ruyk3EeiRqM2haVjOng" elementId="org.eclipse.ui.edit.text.moveLineDown" commandName="Move Lines Down" description="Moves the selected lines down" category="_HdtG1ik3EeiRqM2haVjOng"/>
   <commands xmi:id="_Hd2RvCk3EeiRqM2haVjOng" elementId="org.eclipse.ui.navigate.back" commandName="Back" description="Navigate back" category="_HdtG3Sk3EeiRqM2haVjOng"/>
@@ -1537,7 +1537,7 @@
   <commands xmi:id="_Hd2R2Ck3EeiRqM2haVjOng" elementId="org.eclipse.ui.edit.text.goto.wordNext" commandName="Next Word" description="Go to the next word" category="_HdtG1ik3EeiRqM2haVjOng"/>
   <commands xmi:id="_Hd2R2Sk3EeiRqM2haVjOng" elementId="org.eclipse.ui.edit.text.cut.line" commandName="Cut Line" description="Cut a line of text" category="_HdtG1ik3EeiRqM2haVjOng"/>
   <commands xmi:id="_Hd2R2ik3EeiRqM2haVjOng" elementId="org.eclipse.ui.edit.text.folding.expand_all" commandName="Expand All" description="Expands all folded regions" category="_HdtG1ik3EeiRqM2haVjOng"/>
-  <commands xmi:id="_Hd2R2yk3EeiRqM2haVjOng" elementId="org.eclipse.quickdiff.toggle" commandName="Quick Diff Toggle" description="Toggles quick diff information display on the line number ruler" category="_HdtG0yk3EeiRqM2haVjOng"/>
+  <commands xmi:id="_Hd2R2yk3EeiRqM2haVjOng" elementId="org.eclipse.quickdiff.toggle" commandName="Quick Diff Toggle" description="Toggles quick diff information displayState on the line number ruler" category="_HdtG0yk3EeiRqM2haVjOng"/>
   <commands xmi:id="_Hd2R3Ck3EeiRqM2haVjOng" elementId="org.eclipse.ui.edit.text.deleteNext" commandName="Delete Next" description="Delete the next character" category="_HdtG1ik3EeiRqM2haVjOng"/>
   <commands xmi:id="_Hd2R3Sk3EeiRqM2haVjOng" elementId="org.eclipse.egit.ui.FetchGerritChange" commandName="Fetch From Gerrit" category="_HdtG2ik3EeiRqM2haVjOng"/>
   <commands xmi:id="_Hd2R3ik3EeiRqM2haVjOng" elementId="org.eclipse.jdt.ui.correction.encapsulateField.assist" commandName="Quick Assist - Create getter/setter for field" description="Invokes quick assist and selects 'Create getter/setter for field'" category="_HdtG3ik3EeiRqM2haVjOng"/>
@@ -1643,7 +1643,7 @@
   <commands xmi:id="_Hd2SPik3EeiRqM2haVjOng" elementId="org.eclipse.compare.compareWithOther" commandName="Compare With Other Resource" description="Compare resources, clipboard contents or editors" category="_HdtG4ik3EeiRqM2haVjOng"/>
   <commands xmi:id="_Hd2SPyk3EeiRqM2haVjOng" elementId="org.eclipse.jdt.ui.edit.text.java.add.javadoc.comment" commandName="Add Javadoc Comment" description="Add a Javadoc comment stub to the member element" category="_HdtG3ik3EeiRqM2haVjOng"/>
   <commands xmi:id="_Hd2SQCk3EeiRqM2haVjOng" elementId="org.eclipse.egit.ui.team.CreatePatch" commandName="Create Patch" category="_HdtG2ik3EeiRqM2haVjOng"/>
-  <commands xmi:id="_Hd2SQSk3EeiRqM2haVjOng" elementId="org.eclipse.ui.editors.revisions.author.toggle" commandName="Toggle Revision Author Display" description="Toggles the display of the revision author" category="_HdtG1ik3EeiRqM2haVjOng"/>
+  <commands xmi:id="_Hd2SQSk3EeiRqM2haVjOng" elementId="org.eclipse.ui.editors.revisions.author.toggle" commandName="Toggle Revision Author Display" description="Toggles the displayState of the revision author" category="_HdtG1ik3EeiRqM2haVjOng"/>
   <commands xmi:id="_Hd2SQik3EeiRqM2haVjOng" elementId="org.eclipse.ui.edit.text.goto.windowEnd" commandName="Window End" description="Go to the end of the window" category="_HdtG1ik3EeiRqM2haVjOng"/>
   <commands xmi:id="_Hd2SQyk3EeiRqM2haVjOng" elementId="org.eclipse.egit.ui.RebaseInteractiveCurrent" commandName="%RebaseInteractiveCurrentHandler.name" category="_HdtG5Ck3EeiRqM2haVjOng"/>
   <commands xmi:id="_Hd2SRCk3EeiRqM2haVjOng" elementId="org.eclipse.ui.perspectives.showPerspective" commandName="Show Perspective" description="Show a particular perspective" category="_HdtG2yk3EeiRqM2haVjOng">
@@ -1753,7 +1753,7 @@
   <commands xmi:id="_Hd2SqSk3EeiRqM2haVjOng" elementId="org.eclipse.ui.edit.text.select.lineStart" commandName="Select Line Start" description="Select to the beginning of the line of text" category="_HdtG1ik3EeiRqM2haVjOng"/>
   <commands xmi:id="_Hd2Sqik3EeiRqM2haVjOng" elementId="org.eclipse.egit.ui.commit.Reword" commandName="Reword Commit" category="_HdtG5Ck3EeiRqM2haVjOng"/>
   <commands xmi:id="_Hd2Sqyk3EeiRqM2haVjOng" elementId="org.eclipse.egit.ui.team.CompareWithPrevious" commandName="Compare with Previous Revision" category="_HdtG2ik3EeiRqM2haVjOng"/>
-  <commands xmi:id="_Hd2SrCk3EeiRqM2haVjOng" elementId="org.eclipse.ui.editors.lineNumberToggle" commandName="Show Line Numbers" description="Toggle display of line numbers" category="_HdtG1ik3EeiRqM2haVjOng"/>
+  <commands xmi:id="_Hd2SrCk3EeiRqM2haVjOng" elementId="org.eclipse.ui.editors.lineNumberToggle" commandName="Show Line Numbers" description="Toggle displayState of line numbers" category="_HdtG1ik3EeiRqM2haVjOng"/>
   <commands xmi:id="_Hd2SrSk3EeiRqM2haVjOng" elementId="org.eclipse.ui.edit.text.select.columnNext" commandName="Select Next Column" description="Select the next column" category="_HdtG1ik3EeiRqM2haVjOng"/>
   <commands xmi:id="_Hd2Srik3EeiRqM2haVjOng" elementId="org.eclipse.jdt.ui.edit.text.java.search.read.access.in.workspace" commandName="Read Access in Workspace" description="Search for read references to the selected element in the workspace" category="_HdtG1Ck3EeiRqM2haVjOng"/>
   <commands xmi:id="_Hd2Sryk3EeiRqM2haVjOng" elementId="org.eclipse.debug.ui.commands.TerminateAndRelaunch" commandName="Terminate and Relaunch" description="Terminate and Relaunch" category="_HdtG1yk3EeiRqM2haVjOng"/>
@@ -2115,7 +2115,7 @@
   <commands xmi:id="_s_ySZSllEeiuMYrLfvcRww" elementId="org.eclipse.mylyn.tasks.ui.command.markTaskUnread" commandName="Mark Task Unread" category="_s_wdByllEeiuMYrLfvcRww"/>
   <commands xmi:id="_s_ySZillEeiuMYrLfvcRww" elementId="org.eclipse.wst.sse.ui.structure.select.last" commandName="Restore Last Selection" description="Restore last selection" category="_HdtG0yk3EeiRqM2haVjOng"/>
   <commands xmi:id="_s_y5QCllEeiuMYrLfvcRww" elementId="org.eclipse.mylyn.builds.ui.command.NewTaskFromBuild" commandName="New Task From Build" category="_s_wdBCllEeiuMYrLfvcRww"/>
-  <commands xmi:id="_s_y5QSllEeiuMYrLfvcRww" elementId="org.eclipse.wst.xsd.ui.refactor.makeElementGlobal" commandName="Make Local Element &amp;Global" description="Promotes local element to global level and replaces its references" category="_HdtG0yk3EeiRqM2haVjOng"/>
+  <commands xmi:id="_s_y5QSllEeiuMYrLfvcRww" elementId="org.eclipse.wst.xsd.ui.refactor.makeElementGlobal" commandName="Make Local Element &amp;Global" description="Promotes local element to globalState level and replaces its references" category="_HdtG0yk3EeiRqM2haVjOng"/>
   <commands xmi:id="_s_y5QillEeiuMYrLfvcRww" elementId="org.eclipse.oomph.setup.editor.openEditorDropdown" commandName="Open Setup Editor" category="_s_wdBSllEeiuMYrLfvcRww"/>
   <commands xmi:id="_s_y5QyllEeiuMYrLfvcRww" elementId="org.eclipse.eclemma.ui.junitRAPShortcut.coverage" commandName="Coverage RAP JUnit Test" description="Coverage RAP JUnit Test" category="_HdtG1yk3EeiRqM2haVjOng"/>
   <commands xmi:id="_s_y5RCllEeiuMYrLfvcRww" elementId="org.eclipse.mylyn.tasks.ui.command.SynchronizeAll" commandName="Synchronize Changed" category="_s_wdByllEeiuMYrLfvcRww"/>
@@ -2154,7 +2154,7 @@
   <commands xmi:id="_s_y5YyllEeiuMYrLfvcRww" elementId="org.eclipse.eclemma.ui.testNgSuiteShortcut.coverage" commandName="Coverage TestNG Suite" description="Coverage TestNG Suite" category="_HdtG1yk3EeiRqM2haVjOng"/>
   <commands xmi:id="_s_y5ZCllEeiuMYrLfvcRww" elementId="org.eclipse.wst.xml.ui.reload.dependencies" commandName="Reload Dependencies" description="Reload Dependencies" category="_HdtG5Ck3EeiRqM2haVjOng"/>
   <commands xmi:id="_s_y5ZSllEeiuMYrLfvcRww" elementId="org.eclipse.wst.sse.ui.generate.xml" commandName="&amp;XML File..." category="_HdtG5Ck3EeiRqM2haVjOng"/>
-  <commands xmi:id="_s_y5ZillEeiuMYrLfvcRww" elementId="org.eclipse.wst.xsd.ui.refactor.makeTypeGlobal" commandName="Make &amp;Anonymous Type Global" description="Promotes anonymous type to global level and replaces its references" category="_HdtG0yk3EeiRqM2haVjOng"/>
+  <commands xmi:id="_s_y5ZillEeiuMYrLfvcRww" elementId="org.eclipse.wst.xsd.ui.refactor.makeTypeGlobal" commandName="Make &amp;Anonymous Type Global" description="Promotes anonymous type to globalState level and replaces its references" category="_HdtG0yk3EeiRqM2haVjOng"/>
   <commands xmi:id="_s_y5ZyllEeiuMYrLfvcRww" elementId="org.eclipse.wst.sse.ui.format.active.elements" commandName="Format Active Elements" description="Format active elements" category="_HdtG0yk3EeiRqM2haVjOng"/>
   <commands xmi:id="_s_y5aCllEeiuMYrLfvcRww" elementId="org.eclipse.mylyn.tasks.ui.command.task.clearOutgoing" commandName="Clear Outgoing Changes" category="_s_wdByllEeiuMYrLfvcRww"/>
   <commands xmi:id="_s_y5aSllEeiuMYrLfvcRww" elementId="org.eclipse.epp.mpc.ui.command.showFavorites" commandName="Eclipse Marketplace Favorites" description="Open Marketplace Favorites" category="_HdtG5Ck3EeiRqM2haVjOng"/>

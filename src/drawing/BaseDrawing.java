@@ -1,16 +1,10 @@
 package drawing;
 
-import drawing.button.Button;
 import gameMap.Scaling;
-
-import java.util.ArrayList;
 
 public class BaseDrawing {
 
-    protected ArrayList<Button> activeButtons = new ArrayList<>();
-
     protected int mapSizeInTiles;
-    protected TextureCache textureCache = new TextureCache();
 
     public BaseDrawing(int mapSizeInTiles) {
         this.mapSizeInTiles = mapSizeInTiles;

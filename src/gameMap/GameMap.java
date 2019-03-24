@@ -15,7 +15,10 @@ public class GameMap {
 	private boolean flicker = false;
 	private ArrayList<MapPortal> mapPortals = new ArrayList<MapPortal>();
 	private ArrayList<Mob> mobsToMove = new ArrayList<Mob>();
-	
+
+	public GameMap() {
+	}
+
 	public GameMap(int dimensions, int[][] mapTileTypes, MapTile[][] mapTiles, Position startPosition) {
 		this.dimensions = dimensions;		
 		this.mapTilesTypes = mapTileTypes;
@@ -71,7 +74,7 @@ public class GameMap {
 	}
 	
 	public void resetMobsToMove() {
-		mobsToMove = new ArrayList<Mob>();
+		mobsToMove = new ArrayList<>();
 	}
 	
 	public void addMob(Mob mob) {

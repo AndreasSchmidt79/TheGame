@@ -1,6 +1,6 @@
 package drawing;
 
-import drawing.button.Button;
+import drawing.button.AbstractButton;
 import drawing.character.CharacterDrawing;
 import drawing.inventory.InventoryDrawing;
 import drawing.map.MapDrawing;
@@ -8,10 +8,12 @@ import drawing.text.TextDrawing;
 import drawing.uiDrawing.UIDrawing;
 import game.DisplayState;
 import game.GameState;
+import game.GlobalState;
 import gameMap.GameMap;
 import player.Player;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static org.lwjgl.glfw.GLFW.glfwSwapBuffers;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
@@ -48,36 +50,32 @@ public class DrawHandler {
             Player player,
             GameMap currentGameMap,
             GameState currentGameState,
-            DisplayState currentDisplayState,
             int fps,
-            ArrayList<Button> activeButtons,
             String infoText,
-            boolean newGameStarted
-    ) {
+            HashMap<String, AbstractButton> buttons) {
 
         glClear(GL_COLOR_BUFFER_BIT);
 
         uiDrawing.drawBackground(textureCache);
 
-        if(newGameStarted){
-            if(currentDisplayState == DisplayState.MAP) {
+        if (currentGameState.getDisplayState() != null) {
+            if (currentGameState.getDisplayState().equals(DisplayState.MAP)) {
                 mapDrawing.drawMapPanel(player, currentGameMap, textureCache);
                 mapDrawing.drawPlayer(player, textureCache);
-            }
-            else if(currentDisplayState == DisplayState.INVENTORY) {
-                inventoryDrawing.drawInventory(player, activeButtons, textureCache);
+            } else if (currentGameState.getDisplayState().equals(DisplayState.INVENTORY)) {
+                inventoryDrawing.drawInventory(textureCache, player, buttons);
             }
 
-            characterDrawing.drawCharacterPanel(player, activeButtons, textureCache);
+            characterDrawing.drawCharacterPanel(textureCache, player, buttons);
             uiDrawing.drawInfoPanel(textureCache);
 
-            if(!infoText.isEmpty()) {
+            if (!infoText.isEmpty()) {
                 textDrawing.drawInfoPanelText(infoText, textureCache);
             }
         }
-        if(currentGameState == GameState.MAINMENU) {
+        if (currentGameState.getGlobalState() == GlobalState.MAINMENU) {
             uiDrawing.drawSemiTransparentPane(textureCache);
-            uiDrawing.drawMainMenu(activeButtons, textureCache);
+            uiDrawing.drawMainMenu(textureCache, currentGameState, buttons);
         }
 
         textDrawing.drawFPS(fps, textureCache);

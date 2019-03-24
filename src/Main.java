@@ -8,8 +8,6 @@ import org.lwjgl.opengl.GL;
 
 public class Main {
 
-    private static boolean IS_FULLSCREEN = false;
-
     public static void main(String[] args) {
         showWindow();
     }
@@ -24,7 +22,7 @@ public class Main {
                 Screen.WIDTH,
                 Screen.HEIGHT,
                 "My game",
-                IS_FULLSCREEN ? glfwGetPrimaryMonitor() : 0, 0
+                Screen.IS_FULLSCREEN ? glfwGetPrimaryMonitor() : 0, 0
         );
 
         if (window == 0) {

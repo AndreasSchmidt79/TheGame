@@ -11,8 +11,9 @@ public enum TextureFilepath {
     UI_HEALTHBAR("./res/UI/healthbar.png"),
     UI_HEALTHBAR_BG("./res/UI/healthbar_bg.png"),
     UI_INVENTORY("./res/UI/inventory.png"),
-    UI_BUTTON_SPRITE("./res/UI/button_sprite.png"),
+    UI_TEXT_BUTTON("./res/UI/button_sprite.png"),
     UI_SIMPLE_BUTTON("./res/UI/button_square.png"),
+    UI_CLOSE_BUTTON("./res/UI/button_close2.png"),
 
     UI_ICON_EQUIPMENT("./res/UI/icons/equipment_icon.png"),
 
