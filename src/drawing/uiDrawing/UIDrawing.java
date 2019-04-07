@@ -28,11 +28,11 @@ public class UIDrawing {
     }
 
     public void drawInfoPanel(TextureCache textureCache) {
-        int infoPanelHeight = 200;
+
         baseDrawing.drawRectangle(
-                new Position(Screen.HEIGHT, Screen.HEIGHT - infoPanelHeight - Screen.PADDING),
+                new Position(Screen.HEIGHT, Screen.HEIGHT - Screen.INFO_PANEL_HEIGHT - Screen.PADDING),
                 Screen.WIDTH - Screen.HEIGHT - Screen.PADDING,
-                infoPanelHeight,
+                Screen.INFO_PANEL_HEIGHT,
                 textureCache.getTexture(TextureFilepath.UI_TEXT_PANEL.getFilepath())
         );
     }

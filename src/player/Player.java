@@ -5,13 +5,19 @@ import inventory.Inventory;
 
 public class Player {
 	private int level = 1;
-	private int ExperiencePoints = 0;
+	private int experiencePoints = 0;
 	private String name = "Player 1";
 	public Inventory inventory = new Inventory();
 	private int health = 100;
 	private int maxHealth = 100;
 	private Position pos;
 	private String faceDirection = "right";
+	private int gold = 5;
+	private int strength = 10;
+	private int agility = 10;
+	private int intelligence = 10;
+	private int wisdom = 10;
+	private int stamina = 10;
 
 	public Player(Position pos) {		
 		this.pos = pos;
@@ -72,11 +78,11 @@ public class Player {
 	}
 
 	public int getExperiencePoints() {
-		return ExperiencePoints;
+		return experiencePoints;
 	}
 
 	public void setExperiencePoints(int experiencePoints) {
-		ExperiencePoints = experiencePoints;
+		this.experiencePoints = experiencePoints;
 	}
 
 	public String getName() {
@@ -85,5 +91,53 @@ public class Player {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public void setGold(int gold) {
+		this.gold = gold;
+	}
+
+	public void setStrength(int strength) {
+		this.strength = strength;
+	}
+
+	public void setAgility(int agility) {
+		this.agility = agility;
+	}
+
+	public void setIntelligence(int intelligence) {
+		this.intelligence = intelligence;
+	}
+
+	public void setWisdom(int wisdom) {
+		this.wisdom = wisdom;
+	}
+
+	public void setStamina(int stamina) {
+		this.stamina = stamina;
+	}
+
+	public int getGold() {
+		return gold;
+	}
+
+	public int getStrength() {
+		return strength;
+	}
+
+	public int getAgility() {
+		return agility;
+	}
+
+	public int getIntelligence() {
+		return intelligence;
+	}
+
+	public int getWisdom() {
+		return wisdom;
+	}
+
+	public int getStamina() {
+		return stamina;
 	}
 }

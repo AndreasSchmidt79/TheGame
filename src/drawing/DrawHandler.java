@@ -41,7 +41,7 @@ public class DrawHandler {
 
         textDrawing = new TextDrawing(baseDrawing);
         uiDrawing = new UIDrawing(baseDrawing, new TextDrawing(baseDrawing));
-        characterDrawing = new CharacterDrawing(baseDrawing);
+        characterDrawing = new CharacterDrawing(baseDrawing, new TextDrawing(baseDrawing));
         inventoryDrawing = new InventoryDrawing(baseDrawing);
         mapDrawing = new MapDrawing(baseDrawing);
     }
