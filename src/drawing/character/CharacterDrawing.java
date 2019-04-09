@@ -56,9 +56,9 @@ public class CharacterDrawing {
     private void drawHealthbar(Player player, TextureCache textureCache) {
         Position healthBarPos = charPanelPos.getNewPosWithOffset(Screen.PADDING + characterPanelWidth/2, Screen.PADDING);
         baseDrawing.drawRectangle(
-                healthBarPos.getNewPosWithOffset(PixelRelative.getWidth(30,1400), PixelRelative.getHeight(12, 1400*9/16)),
-                Math.round(PixelRelative.getWidth(158, 1400) * player.getHealth() / player.getMaxHealth()),
-                PixelRelative.getHeight(10,1400*9/16),
+                healthBarPos.getNewPosWithOffset((int) Math.round(Screen.WIDTH*0.0214),(int) Math.round(Screen.HEIGHT*0.0152)),
+                (int) Math.round(Screen.HEIGHT*0.113 * player.getHealth() / player.getMaxHealth()),
+                (int) Math.round(Screen.HEIGHT*0.0127),
                 textureCache.getTexture(TextureFilepath.UI_HEALTHBAR_BG.getFilepath())
         );
         baseDrawing.drawRectangle(healthBarPos, PixelRelative.getWidth(192,1400), PixelRelative.getHeight(32, 1400*9/16), textureCache.getTexture(TextureFilepath.UI_HEALTHBAR.getFilepath()));

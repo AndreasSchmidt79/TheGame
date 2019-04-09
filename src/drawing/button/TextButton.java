@@ -3,13 +3,14 @@ package drawing.button;
 import drawing.Position;
 import drawing.SpriteElement;
 import drawing.TextureFilepath;
+import game.UserAction;
 
 public class TextButton extends AbstractButton {
 
     private static final int SPRITEELEMENT_WIDTH = 300;
     private static final int SPRITEELEMENT_HEIGHT = 63;
 
-    public TextButton(ButtonAction action, Position pos, int width, int height, String text) {
+    public TextButton(UserAction action, Position pos, int width, int height, String text) {
         super(action, pos, width, height);
 
         spriteElementDefault =  new SpriteElement(new Position(0,0), SPRITEELEMENT_WIDTH, SPRITEELEMENT_HEIGHT);

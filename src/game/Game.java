@@ -42,7 +42,7 @@ public class Game {
 		player = new Player(new Position(0,0));
 	}
 	
-	public void startNewGame() {
+	private void startNewGame() {
 		getGameMaps();
 
 		player = new Player(gameMaps.get(0).getStartPosition());
@@ -54,6 +54,7 @@ public class Game {
 
 		currentGameState.setGlobalState(GlobalState.GAME);
 		currentGameState.setDisplayState(DisplayState.MAP);
+		currentGameState.clearUserAction();
 	}
 	
 	private void getGameMaps() {
@@ -76,6 +77,7 @@ public class Game {
 			startNewGame();
 		}
 		if(currentGameState.isExitGame()) {
+			currentGameState.clearUserAction();
 			glfwTerminate();
 		}
         drawHandler.drawAll(player, currentGameMap, currentGameState, fps, infoText, userInteractions.getButtons());

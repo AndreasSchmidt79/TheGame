@@ -19,13 +19,13 @@ public class TextDrawing {
         this.glyphs = glyphDataReader.glyphs;
     }
 
-    public void drawChar(Position pos, GlyphData glyph, float fontsize, TextureCache textureCache) {
+    private void drawChar(Position pos, GlyphData glyph, float fontsize, TextureCache textureCache) {
 
         float glyphWidth = (float) glyph.width / (float) Screen.WIDTH;
         float glyphHeight = (float) glyph.height / (float) Screen.HEIGHT;
 
         float posX = -1 + (float) pos.getX() * 2 / (float) Screen.WIDTH;
-        float posY = 1 - (float) (pos.getY() + glyph.yoffset * fontsize) * 2 / (float) Screen.HEIGHT;
+        float posY = 1 - (pos.getY() + glyph.yoffset * fontsize) * 2 / (float) Screen.HEIGHT;
 
         float[] texture = getGlyphTexture(glyph);
         float[] vertices = baseDrawing.getVertices(posX, posY, glyphWidth * fontsize, glyphHeight * fontsize);
@@ -54,8 +54,11 @@ public class TextDrawing {
 
     public void drawText(Position pos, String string, float fontsize, int boxWidth, int textOffsetX, boolean centered, TextureCache textureCache) {
 
+        float fontsizeHeight =Screen.HEIGHT * fontsize / 787.5f;
+        float fontsizeWidth = Screen.WIDTH * fontsize / 1400;
+
         if (centered) {
-            int length = Math.round(getTextLength(string) * fontsize);
+            int length = Math.round(getTextLength(string) * fontsizeWidth);
             pos.setX(pos.getX() + Math.round((boxWidth - length) / 2));
         } else {
             pos.setX(pos.getX() + textOffsetX);
@@ -64,8 +67,8 @@ public class TextDrawing {
         for (int i = 0; i < string.length(); i++) {
             GlyphData glyph = glyphs.get(string.charAt(i) + "");
             if (glyph != null) {
-                drawChar(pos, glyph, fontsize, textureCache);
-                pos.setX(pos.getX() + Math.round(glyph.xadvance * fontsize));
+                drawChar(pos, glyph, fontsizeHeight, textureCache);
+                pos.setX(pos.getX() + Math.round(glyph.xadvance * fontsizeWidth));
             }
         }
     }
@@ -86,7 +89,7 @@ public class TextDrawing {
     }
 
     public void drawInfoPanelText(String string, TextureCache textureCache) {
-        drawText(new Position(Screen.WIDTH + Screen.PADDING, Screen.HEIGHT - 200), string, 0.4f, Screen.WIDTH - Screen.HEIGHT - Screen.PADDING, 20, false, textureCache);
+        drawText(new Position(Screen.WIDTH + Screen.PADDING, Screen.HEIGHT - Screen.INFO_PANEL_HEIGHT), string, 0.4f, Screen.WIDTH - Screen.HEIGHT - Screen.PADDING, 20, false, textureCache);
     }
 
 }
