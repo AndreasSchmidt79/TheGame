@@ -1,6 +1,5 @@
 package userInteractions;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import drawing.Position;
@@ -9,6 +8,7 @@ import drawing.button.*;
 import game.DisplayState;
 import game.GameState;
 import game.GlobalState;
+import game.UserAction;
 import gameMap.GameMap;
 import gameMap.MapTile;
 import helper.Direction;
@@ -22,12 +22,12 @@ public class UserInteractions {
     private HashMap<String, AbstractButton> buttons = new HashMap<>();
 
     public UserInteractions() {
-        buttons.put("inventory", new IconButton(ButtonAction.INVENTORY, new Position(0, 0), 50, 50, TextureFilepath.UI_ICON_EQUIPMENT));
-        buttons.put("closeinv", new CloseButton(ButtonAction.CLOSE_INVENTORY, new Position(0, 0), 30, 30));
+        buttons.put("inventory", new IconButton(UserAction.INVENTORY, new Position(0, 0), 50, 50, TextureFilepath.UI_ICON_EQUIPMENT));
+        buttons.put("closeinv", new CloseButton(UserAction.CLOSE_INVENTORY, new Position(0, 0), 30, 30));
 
-        TextButton continueButton = new TextButton(ButtonAction.CONTINUE, new Position(0, 0), AbstractButton.MAIN_MENU_BUTTON_WIDTH, AbstractButton.MAIN_MENU_BUTTON_HEIGHT, "Continue");
-        TextButton newGameButton = new TextButton(ButtonAction.NEW_GAME, new Position(0, 0), AbstractButton.MAIN_MENU_BUTTON_WIDTH, AbstractButton.MAIN_MENU_BUTTON_HEIGHT, "New game");
-        TextButton exitButton = new TextButton(ButtonAction.EXIT, new Position(0, 0), AbstractButton.MAIN_MENU_BUTTON_WIDTH, AbstractButton.MAIN_MENU_BUTTON_HEIGHT, "Exit");
+        TextButton continueButton = new TextButton(UserAction.CONTINUE, new Position(0, 0), AbstractButton.MAIN_MENU_BUTTON_WIDTH, AbstractButton.MAIN_MENU_BUTTON_HEIGHT, "Continue");
+        TextButton newGameButton = new TextButton(UserAction.NEW_GAME, new Position(0, 0), AbstractButton.MAIN_MENU_BUTTON_WIDTH, AbstractButton.MAIN_MENU_BUTTON_HEIGHT, "New game");
+        TextButton exitButton = new TextButton(UserAction.EXIT, new Position(0, 0), AbstractButton.MAIN_MENU_BUTTON_WIDTH, AbstractButton.MAIN_MENU_BUTTON_HEIGHT, "Exit");
 
         buttons.put("continue", continueButton);
         buttons.put("newgame", newGameButton);
@@ -82,10 +82,10 @@ public class UserInteractions {
                         gameState.setGlobalState(GlobalState.GAME);
                         break;
                     case NEW_GAME:
-                        gameState.setGlobalState(GlobalState.NEWGAME);
+                        gameState.setUserAction(UserAction.NEW_GAME);
                         break;
                     case EXIT:
-                        gameState.setGlobalState(GlobalState.EXIT);
+                        gameState.setUserAction(UserAction.EXIT);
                         break;
                     case INVENTORY:
                         gameState.setDisplayState(DisplayState.INVENTORY);

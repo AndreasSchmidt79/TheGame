@@ -1,19 +1,20 @@
 package drawing.button;
 
 import drawing.Position;
+import drawing.Screen;
 import drawing.SpriteElement;
 import drawing.TextureFilepath;
-import helper.PixelRelative;
+import game.UserAction;
 
 public abstract class AbstractButton {
 
-    public static final int MAIN_MENU_BUTTON_WIDTH = PixelRelative.getWidth(400,1400);
-    public static final int MAIN_MENU_BUTTON_HEIGHT = PixelRelative.getWidth(80,1400);
-    private static final int BUTTON_TEXT_OFFSET_X = 60;
-    private static final int BUTTON_TEXT_OFFSET_Y = 20;
+    public static final int MAIN_MENU_BUTTON_WIDTH = (int)Math.round(Screen.WIDTH * 0.3);
+    public static final int MAIN_MENU_BUTTON_HEIGHT = (int)Math.round(Screen.HEIGHT * 0.1);
+    private static final int BUTTON_TEXT_OFFSET_X = (int)Math.round(Screen.WIDTH * 0.042);
+    private static final int BUTTON_TEXT_OFFSET_Y = (int)Math.round(Screen.HEIGHT * 0.025);
 
     private TextureFilepath spriteFilePath;
-    private ButtonAction action;
+    private UserAction action;
     private Position pos;
     private int width;
     private int height;
@@ -26,7 +27,7 @@ public abstract class AbstractButton {
     protected SpriteElement spriteElementInactive;
     protected SpriteElement spriteElementClicked;
 
-    public AbstractButton(ButtonAction action, Position pos, int width, int height) {
+    public AbstractButton(UserAction action, Position pos, int width, int height) {
         this.action = action;
         this.pos = pos;
         this.width = width;
@@ -60,11 +61,11 @@ public abstract class AbstractButton {
         this.currentDisplayState = spriteElementDefault;
     }
 
-    public ButtonAction getAction() {
+    public UserAction getAction() {
         return action;
     }
 
-    public void setAction(ButtonAction action) {
+    public void setAction(UserAction action) {
         this.action = action;
     }
 
